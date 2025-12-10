@@ -44,10 +44,7 @@
     margin-bottom:4px;
   }
 
-  select,
-  input[type="number"],
-  input[type="text"],
-  textarea {
+  select, input, textarea {
     width:100%;
     padding:6px 8px;
     font-size:14px;
@@ -76,86 +73,28 @@
     color:#fff;
   }
 
-  button:disabled {
-    opacity:0.6;
-    cursor:not-allowed;
-  }
+  #timer { font-size:18px; font-weight:bold; color:#e11d48; }
+  #modeDesc { font-size:13px; color:#4b5563; margin-top:4px; }
 
-  #timer {
-    font-size:18px;
-    font-weight:bold;
-    color:#e11d48;
-  }
-
-  #modeDesc {
-    font-size:13px;
-    color:#4b5563;
-    margin-top:4px;
-  }
-
+  /* 문제 영역 */
   .question-block {
     margin-bottom:20px;
     padding-bottom:12px;
     border-bottom:1px solid #e5e7eb;
   }
 
-  .question-title {
-    font-weight:bold;
-    margin-bottom:8px;
-  }
-
-  .meta {
-    font-size:12px;
-    color:#6b7280;
-    margin-bottom:4px;
-  }
-
-  .option { margin:4px 0; font-size:14px; }
-
-  /* ------------ 2단(영/한) 문제 영역 ---------------- */
-  .question-block.dual {
-    display:flex;
-    gap:16px;
-  }
-
-  .q-left, .q-right {
-    width:50%;
-    box-sizing:border-box;
-  }
-
+  /* 2단 보기 */
+  .question-block.dual { display:flex; gap:16px; }
+  .q-left, .q-right { width:50%; box-sizing:border-box; }
   .q-right {
     border-left:1px solid #e5e7eb;
     padding-left:14px;
     font-size:13px;
-    color:#374151;
-  }
-
-  .ko-header {
-    font-weight:bold;
-    margin-bottom:4px;
-    font-size:13px;
-    color:#111827;
-  }
-
-  .ko-label {
-    font-size:12px;
-    font-weight:bold;
-    color:#4b5563;
-    margin-top:4px;
-  }
-
-  .ko-option {
-    font-size:13px;
-    margin:3px 0;
   }
 
   @media (max-width: 900px){
-    .question-block.dual{
-      flex-direction:column;
-    }
-    .q-left,.q-right{
-      width:100%;
-    }
+    .question-block.dual{ flex-direction:column; }
+    .q-left,.q-right{ width:100%; }
     .q-right{
       border-left:none;
       border-top:1px solid #e5e7eb;
@@ -172,19 +111,13 @@
     border:1px solid #7dd3fc;
   }
 
-  .explanation {
-    font-size:13px;
-    margin-top:4px;
-    color:#334155;
-  }
-
+  /* 오답/점수 패널 */
   .panel-row {
     display:flex;
     gap:12px;
     flex-wrap:wrap;
     margin-top:20px;
   }
-
   .panel {
     flex:1;
     min-width:260px;
@@ -196,33 +129,7 @@
     overflow:auto;
   }
 
-  .panel h3 {
-    margin-top:0;
-    font-size:15px;
-  }
-
-  .note-item,
-  .score-item {
-    font-size:12px;
-    margin-bottom:6px;
-    border-bottom:1px dashed #e5e7eb;
-    padding-bottom:4px;
-  }
-
-  /* 태그 */
-  .tag {
-    display:inline-block;
-    font-size:11px;
-    padding:1px 6px;
-    border-radius:999px;
-    margin-left:4px;
-    background:#e5e7eb;
-  }
-
-  .tag.A { background:#dbeafe; }
-  .tag.C { background:#fef3c7; }
-
-  /* ------- 비밀번호 게이트 ------- */
+  /* 비밀번호 게이트 */
   #gateOverlay {
     position:fixed;
     inset:0;
@@ -232,7 +139,6 @@
     justify-content:center;
     z-index:9999;
   }
-
   #gateBox {
     background:#f9fafb;
     border-radius:12px;
@@ -240,29 +146,12 @@
     width:320px;
     box-shadow:0 10px 30px rgba(0,0,0,0.4);
   }
-
-  #gateBox h2 { margin-top:0; margin-bottom:12px; }
-
-  #gateMessage {
-    font-size:12px;
-    color:#dc2626;
-    height:16px;
-    margin-top:6px;
-  }
-
-  #gateBox input {
-    width:100%;
-    padding:8px;
-    margin-top:8px;
-    box-sizing:border-box;
-  }
-
-  #gateBox button { margin-top:12px; width:100%; }
+  #gateMessage { font-size:12px; color:#dc2626; height:16px; margin-top:6px; }
 </style>
 </head>
-
 <body>
-<!-- 비밀번호 게이트 -->
+
+<!-- 🔐 비밀번호 게이트 -->
 <div id="gateOverlay">
   <div id="gateBox">
     <h2>CRE 연습 사이트</h2>
@@ -273,12 +162,139 @@
   </div>
 </div>
 
-<!-- 메인 컨테이너 -->
+<!-- 🧱 메인 CBT 컨테이너 -->
 <div class="container" id="appContainer">
   <h1>CRE Practice CBT</h1>
   <p style="font-size:13px;color:#4b5563;">
-    기기 간 동기화가 가능한 CBT 시스템입니다.<br/>
+    기기 간 동기화가 가능한 CBT 시스템입니다.
   </p>
+
+  <!-- 🔧 상단 컨트롤 패널 -->
+  <div class="controls">
+    <div>
+      <label>챕터</label>
+      <select id="chapterSelect"></select>
+    </div>
+
+    <div>
+      <label>문제 타입</label>
+      <select id="typeSelect">
+        <option value="all">전체</option>
+        <option value="A">A</option>
+        <option value="C">C</option>
+      </select>
+    </div>
+
+    <div>
+      <label>출제 모드</label>
+      <select id="modeSelect">
+        <option value="normal">일반모드</option>
+        <option value="wrong">오답모드</option>
+        <option value="weak">약점모드</option>
+      </select>
+      <div id="modeDesc"></div>
+    </div>
+
+    <div>
+      <label>문항 수</label>
+      <input type="number" id="countInput" value="20" min="1" />
+    </div>
+
+    <div>
+      <label>타이머 (분)</label>
+      <input type="number" id="timerInput" value="0" min="0" />
+    </div>
+
+    <div>
+      <label>&nbsp;</label>
+      <button id="startBtn">시작</button>
+    </div>
+
+    <div>
+      <label>&nbsp;</label>
+      <button id="resetBtn" disabled>초기화</button>
+    </div>
+
+    <div>
+      <label>&nbsp;</label>
+      <button id="submitBtn" disabled>제출</button>
+    </div>
+
+    <div>
+      <label>2단 보기</label>
+      <input type="checkbox" id="dualViewToggle" />
+    </div>
+
+    <div style="flex:1;">
+      <label>타이머 상태</label>
+      <div id="timer">Timer: OFF</div>
+    </div>
+  </div>
+
+  <!-- 📝 문제 출력 -->
+  <div id="quizBox"></div>
+
+  <!-- 🧾 결과 -->
+  <div id="resultBox"></div>
+
+  <!-- 📚 오답노트 + 점수 패널 -->
+  <div class="panel-row">
+    <div class="panel">
+      <h3>오답 노트</h3>
+      <div id="wrongNotesBox"></div>
+      <button class="danger" id="clearWrongBtn">오답 삭제</button>
+    </div>
+
+    <div class="panel">
+      <h3>점수 기록</h3>
+      <div id="scoreHistoryBox"></div>
+      <button class="danger" id="clearScoreBtn">기록 삭제</button>
+    </div>
+  </div>
+
+  <!-- ➕ 사용자 문제 추가 -->
+  <h3 style="margin-top:30px;">사용자 문제 추가</h3>
+  <form id="addQuestionForm">
+    <div class="controls">
+      <div><label>ID</label><input id="addId" /></div>
+      <div><label>챕터</label><select id="addChapter"></select></div>
+      <div><label>타입</label>
+        <select id="addType">
+          <option value="A">A</option>
+          <option value="C">C</option>
+        </select>
+      </div>
+      <div><label>정답 (0~3)</label><input id="addAnswer" type="number" min="0" max="3" /></div>
+    </div>
+
+    <label>문제</label>
+    <textarea id="addText"></textarea>
+
+    <label>보기 A</label><input id="addOpA" />
+    <label>보기 B</label><input id="addOpB" />
+    <label>보기 C</label><input id="addOpC" />
+    <label>보기 D</label><input id="addOpD" />
+
+    <label>해설</label>
+    <textarea id="addExplanation"></textarea>
+
+    <button style="margin-top:12px;">문제 추가</button>
+  </form>
+
+  <!-- 📤 JSON 업로드 -->
+  <h3 style="margin-top:30px;">문제 JSON 업로드</h3>
+  <input type="file" id="uploadFileInput" />
+  <button id="uploadFileBtn">업로드</button>
+
+  <!-- 사용자 문제 관리 -->
+  <div style="margin-top:20px;">
+    <button class="danger" id="clearCustomBtn">사용자 문제 전체 삭제</button>
+    <button class="secondary" id="exportCustomBtn">사용자 문제 내보내기</button>
+  </div>
+
+</div> <!-- appContainer 끝 -->
+
+<!-- ▼▼▼ PART 2 시작 ▼▼▼ -->
 <script>
 /*******************************************************
  * 0. 비밀번호 설정
@@ -298,7 +314,7 @@ const firebaseConfig = {
 };
 </script>
 
-<!-- Firebase SDK (v8 호환 모드: GitHub Pages에서 안정적으로 동작함) -->
+<!-- Firebase SDK (v8) -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
@@ -310,7 +326,7 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 /*******************************************************
- * 3. 브라우저 고유 Device ID 생성 (로그인 없이 동기화)
+ * 3. 브라우저 Device ID (로그인 없이 기기 간 동기화)
  *******************************************************/
 let deviceId = localStorage.getItem("creDeviceId");
 if (!deviceId) {
@@ -333,7 +349,7 @@ async function syncFromCloud() {
     wSnap.forEach(doc => wn.push(doc.data()));
     localStorage.setItem("creWrongNotes", JSON.stringify(wn));
 
-    // SCORES
+    // SCORE HISTORY
     const sc = [];
     const sSnap = await db.collection(`${userPath()}/scores`).get();
     sSnap.forEach(doc => sc.push(doc.data()));
@@ -376,8 +392,8 @@ function setupGate() {
   const overlay = document.getElementById("gateOverlay");
   const app = document.getElementById("appContainer");
   const input = document.getElementById("gatePassword");
-  const msg = document.getElementById("gateMessage");
   const btn = document.getElementById("gateBtn");
+  const msg = document.getElementById("gateMessage");
 
   function enterGate() {
     if (input.value === APP_PASSWORD) {
@@ -396,17 +412,19 @@ function setupGate() {
   }
 
   btn.addEventListener("click", enterGate);
+
   input.addEventListener("keydown", e => {
     if (e.key === "Enter") enterGate();
   });
 }
+
 </script>
-
-
-<!-- 이어서 다음 PART 3에서 CBT 엔진 전체가 붙습니다 -->
+<!-- ▲▲▲ PART 2 끝 ▲▲▲ -->
+<!-- ▼▼▼ PART 3 시작 ▼▼▼ -->
 <script>
 /******************************************************************
- * 7. 기본 문제 데이터 (원하면 나중에 JSON 업로드로 확장 가능)
+ * 7. 기본 문제 데이터 (샘플)
+ *   → 네가 JSON 업로드로 원하는 만큼 확장할 수 있음
  ******************************************************************/
 const BASE_QUESTIONS = [
   {
@@ -425,7 +443,7 @@ const BASE_QUESTIONS = [
     text:"In a Weibull distribution, what does a shape parameter β greater than 1 indicate?",
     options:["Early failures","Wear-out failures","Constant failure rate","Random failures"],
     answer:1,
-    explanation:"β>1 indicates wear-out region."
+    explanation:"β > 1 indicates wear-out failures"
   }
 ];
 
@@ -551,8 +569,7 @@ function clearScoreHistory() {
 /******************************************************************
  * 13. 타이머
  ******************************************************************/
-let timerId = null,
-  timerSeconds = 0;
+let timerId = null, timerSeconds = 0;
 
 function stopTimer() {
   if (timerId !== null) {
@@ -590,7 +607,7 @@ function startTimer(sec) {
 }
 
 /******************************************************************
- * 14. 섞기
+ * 14. 섞기 (Fisher-Yates)
  ******************************************************************/
 const shuffleArray = arr => {
   const a = arr.slice();
@@ -602,7 +619,7 @@ const shuffleArray = arr => {
 };
 
 /******************************************************************
- * 15. 번역 엔진
+ * 15. 번역 엔진 (기술 + 자연 번역)
  ******************************************************************/
 function translateTechTerm(text) {
   if (!text) return "";
@@ -615,7 +632,6 @@ function translateTechTerm(text) {
     "exponential distribution": "지수분포",
     weibull: "와이블",
     "failure rate": "고장률",
-    "hazard rate": "위험률",
     availability: "가용도",
     "preventive maintenance": "예방정비"
   };
@@ -643,6 +659,7 @@ function translateNaturalSentence(text) {
 function buildKoreanBlock(q) {
   return `
     <div class="ko-header">Q${q._no} 한글 번역</div>
+
     <div class="ko-label">기술 번역</div>
     <div>${translateTechTerm(q.text)}</div>
 
@@ -690,8 +707,9 @@ function renderQuiz() {
       });
       h += `</div>`;
       box.innerHTML += h;
+
     } else {
-      // 2단
+      // 2단 보기
       let left = `
         <div class="q-left">
           <div class="question-title">Q${q._no}. ${q.text}</div>
@@ -750,14 +768,14 @@ function buildQuestionPool() {
       count[n.chapter] = (count[n.chapter] || 0) + n.missCount;
     });
 
-    let weak = null,
-      max = -1;
+    let weak = null, max = -1;
     for (const c in count) {
       if (count[c] > max) {
         weak = c;
         max = count[c];
       }
     }
+
     return all.filter(q => q.chapter === weak);
   }
 
@@ -790,7 +808,7 @@ function startQuiz() {
 }
 
 /******************************************************************
- * 19. 제출 & 채점
+ * 19. 제출 + 채점
  ******************************************************************/
 function submitQuiz(auto = false) {
   stopTimer();
@@ -811,38 +829,37 @@ function submitQuiz(auto = false) {
     html += `
       <div style="margin-bottom:12px;">
         <b>Q${i + 1} (${q.id})</b><br>
-        선택: ${
+
+        선택:
+        ${
           userAnswer === null
             ? "무응답"
-            : `${String.fromCharCode(65 + userAnswer)}. ${
-                q.options[userAnswer]
-              }`
+            : `${String.fromCharCode(65 + userAnswer)}. ${q.options[userAnswer]}`
         }<br>
+
         정답:
         <span style="color:${ok ? "#16a34a" : "#dc2626"}">
-          ${String.fromCharCode(65 + q.answer)}.
-          ${q.options[q.answer]}
+          ${String.fromCharCode(65 + q.answer)}. ${q.options[q.answer]}
         </span>
+
         <div class="explanation">${q.explanation || ""}</div>
       </div>
     `;
   });
 
   const pct = Math.round((correct / currentQuiz.length) * 100);
-  const duration = 0;
 
-  document.getElementById(
-    "resultBox"
-  ).innerHTML = `<h3>점수: ${correct}/${currentQuiz.length} (${pct}%)</h3>${html}`;
+  document.getElementById("resultBox").innerHTML =
+    `<h3>점수: ${correct}/${currentQuiz.length} (${pct}%)</h3>${html}`;
 
   document.getElementById("submitBtn").disabled = true;
 
   saveWrongAndSync(wrong);
-  saveScoreAndSync(correct, currentQuiz.length, duration);
+  saveScoreAndSync(correct, currentQuiz.length, 0);
 }
 
 /******************************************************************
- * 20. 오답 저장 + Firestore 업로드
+ * 20. 오답 저장 + 동기화
  ******************************************************************/
 function saveWrongAndSync(wrongList) {
   if (!wrongList.length) return;
@@ -891,9 +908,11 @@ function saveScoreAndSync(correct, total, duration) {
   syncToCloud();
 }
 </script>
+<!-- ▲▲▲ PART 3 끝 ▲▲▲ -->
+<!-- ▼▼▼ PART 4 시작 ▼▼▼ -->
 <script>
 /******************************************************************
- * 22. 초기화 (reset)
+ * 22. 초기화 (Reset)
  ******************************************************************/
 function resetQuiz() {
   stopTimer();
@@ -972,7 +991,7 @@ function setupUploadQuestions() {
         saveCustomQuestions(custom);
         refreshChapterDropdown();
 
-        alert(`${arr.length}문제가 추가되었습니다.`);
+        alert(`${arr.length} 문제가 추가되었습니다.`);
       } catch (err) {
         alert("JSON 파싱 오류");
       }
@@ -983,7 +1002,7 @@ function setupUploadQuestions() {
 }
 
 /******************************************************************
- * 25. 커스텀 문제 관리
+ * 25. 사용자 문제 관리
  ******************************************************************/
 function setupCustomManagement() {
   document.getElementById("clearCustomBtn").addEventListener("click", () => {
@@ -997,8 +1016,8 @@ function setupCustomManagement() {
     const blob = new Blob([JSON.stringify(data, null, 2)], {
       type: "application/json"
     });
-    const url = URL.createObjectURL(blob);
 
+    const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
     a.download = "cre_custom_questions.json";
@@ -1007,7 +1026,7 @@ function setupCustomManagement() {
 }
 
 /******************************************************************
- * 26. 2단 보기 옵션
+ * 26. 2단 보기 스위치
  ******************************************************************/
 function setupDualToggle() {
   const cb = document.getElementById("dualViewToggle");
@@ -1020,7 +1039,7 @@ function setupDualToggle() {
 }
 
 /******************************************************************
- * 27. 초기 실행 (이게 매우 중요!)
+ * 27. 초기 실행 (페이지 로딩 시 실행)
  ******************************************************************/
 window.addEventListener("DOMContentLoaded", () => {
   setupGate();
@@ -1029,11 +1048,19 @@ window.addEventListener("DOMContentLoaded", () => {
   setupCustomManagement();
   setupDualToggle();
 
+  // 버튼 이벤트 연결
   document.getElementById("startBtn").addEventListener("click", startQuiz);
   document.getElementById("resetBtn").addEventListener("click", resetQuiz);
-  document.getElementById("submitBtn").addEventListener("click", () => submitQuiz(false));
+
+  document.getElementById("submitBtn").addEventListener("click", () => {
+    submitQuiz(false);
+  });
+
+  document.getElementById("clearWrongBtn").addEventListener("click", clearWrongNotes);
+  document.getElementById("clearScoreBtn").addEventListener("click", clearScoreHistory);
 });
 </script>
+<!-- ▲▲▲ PART 4 끝 ▲▲▲ -->
 
 </body>
 </html>
