@@ -889,11 +889,21 @@ function setupGate() {
       overlay.style.display = "none";
       app.style.display = "block";
 
+      // 1) 문제 로딩 (로컬)
       await initializeApp();
-      await loadWrongNotesFromCloud();
-      await loadScoreHistoryFromCloud();
-      await loadFavorites();
-      await loadAllMemos();
+
+      // 2) 클라우드 로딩은 실패해도 그냥 넘어가도록
+      try {
+        await loadWrongNotesFromCloud();
+        await loadScoreHistoryFromCloud();
+        await loadFavorites();
+        await loadAllMemos();
+      } catch (e) {
+        console.warn("Firestore load error:", e);
+        alert("클라우드 동기화에 실패해서, 지금은 이 기기에서만 기록이 저장됩니다.");
+      }
+
+      // 3) UI 그리기 + 버튼 연결
       renderWrongNotes();
       renderScoreHistory();
       wireUI();
@@ -903,10 +913,10 @@ function setupGate() {
   }
 
   btn.addEventListener("click", enter);
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") enter();
-  });
+  input.addEventListener("keydown", e => { if (e.key === "Enter") enter(); });
 }
+
+
 
 document.addEventListener("DOMContentLoaded", () => {
   setupGate();
