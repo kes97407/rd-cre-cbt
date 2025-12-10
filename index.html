@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>CRE Practice CBT</title>
+
+<style>
+  body {
+    font-family: Arial, system-ui, sans-serif;
+    margin: 0;
+    padding: 0;
+    background:#f2f4f7;
+  }
+
+  /* 메인 컨테이너 */
+  .container {
+    max-width: 1100px;
+    margin: 20px auto;
+    background:#fff;
+    border-radius:10px;
+    padding:20px 24px 40px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    display:none;
+  }
+
+  h1 { margin-top:0; }
+
+  .controls {
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-bottom:16px;
+    padding:12px;
+    background:#f7f9fc;
+    border-radius:8px;
+  }
+
+  .controls > div { min-width: 180px; }
+
+  label {
+    font-size:14px;
+    font-weight:600;
+    display:block;
+    margin-bottom:4px;
+  }
+
+  select,
+  input[type="number"],
+  input[type="text"],
+  textarea {
+    width:100%;
+    padding:6px 8px;
+    font-size:14px;
+    box-sizing:border-box;
+  }
+
+  button {
+    padding:8px 14px;
+    font-size:14px;
+    cursor:pointer;
+    border-radius:6px;
+    border:1px solid #1f6feb;
+    background:#1f6feb;
+    color:#fff;
+  }
+
+  button.secondary {
+    background:#fff;
+    color:#1f2933;
+    border-color:#cbd2e1;
+  }
+
+  button.danger {
+    background:#e11d48;
+    border-color:#e11d48;
+    color:#fff;
+  }
+
+  button:disabled {
+    opacity:0.6;
+    cursor:not-allowed;
+  }
+
+  #timer {
+    font-size:18px;
+    font-weight:bold;
+    color:#e11d48;
+  }
+
+  #modeDesc {
+    font-size:13px;
+    color:#4b5563;
+    margin-top:4px;
+  }
+
+  .question-block {
+    margin-bottom:20px;
+    padding-bottom:12px;
+    border-bottom:1px solid #e5e7eb;
+  }
+
+  .question-title {
+    font-weight:bold;
+    margin-bottom:8px;
+  }
+
+  .meta {
+    font-size:12px;
+    color:#6b7280;
+    margin-bottom:4px;
+  }
+
+  .option { margin:4px 0; font-size:14px; }
+
+  /* ------------ 2단(영/한) 문제 영역 ---------------- */
+  .question-block.dual {
+    display:flex;
+    gap:16px;
+  }
+
+  .q-left, .q-right {
+    width:50%;
+    box-sizing:border-box;
+  }
+
+  .q-right {
+    border-left:1px solid #e5e7eb;
+    padding-left:14px;
+    font-size:13px;
+    color:#374151;
+  }
+
+  .ko-header {
+    font-weight:bold;
+    margin-bottom:4px;
+    font-size:13px;
+    color:#111827;
+  }
+
+  .ko-label {
+    font-size:12px;
+    font-weight:bold;
+    color:#4b5563;
+    margin-top:4px;
+  }
+
+  .ko-option {
+    font-size:13px;
+    margin:3px 0;
+  }
+
+  @media (max-width: 900px){
+    .question-block.dual{
+      flex-direction:column;
+    }
+    .q-left,.q-right{
+      width:100%;
+    }
+    .q-right{
+      border-left:none;
+      border-top:1px solid #e5e7eb;
+      padding-left:0;
+      padding-top:8px;
+    }
+  }
+
+  #resultBox {
+    margin-top:24px;
+    padding:16px;
+    border-radius:8px;
+    background:#ecfeff;
+    border:1px solid #7dd3fc;
+  }
+
+  .explanation {
+    font-size:13px;
+    margin-top:4px;
+    color:#334155;
+  }
+
+  .panel-row {
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:20px;
+  }
+
+  .panel {
+    flex:1;
+    min-width:260px;
+    background:#f9fafb;
+    border-radius:8px;
+    padding:10px 12px;
+    border:1px solid #e5e7eb;
+    max-height:300px;
+    overflow:auto;
+  }
+
+  .panel h3 {
+    margin-top:0;
+    font-size:15px;
+  }
+
+  .note-item,
+  .score-item {
+    font-size:12px;
+    margin-bottom:6px;
+    border-bottom:1px dashed #e5e7eb;
+    padding-bottom:4px;
+  }
+
+  /* 태그 */
+  .tag {
+    display:inline-block;
+    font-size:11px;
+    padding:1px 6px;
+    border-radius:999px;
+    margin-left:4px;
+    background:#e5e7eb;
+  }
+
+  .tag.A { background:#dbeafe; }
+  .tag.C { background:#fef3c7; }
+
+  /* ------- 비밀번호 게이트 ------- */
+  #gateOverlay {
+    position:fixed;
+    inset:0;
+    background:rgba(15,23,42,0.9);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+  }
+
+  #gateBox {
+    background:#f9fafb;
+    border-radius:12px;
+    padding:24px 26px;
+    width:320px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.4);
+  }
+
+  #gateBox h2 { margin-top:0; margin-bottom:12px; }
+
+  #gateMessage {
+    font-size:12px;
+    color:#dc2626;
+    height:16px;
+    margin-top:6px;
+  }
+
+  #gateBox input {
+    width:100%;
+    padding:8px;
+    margin-top:8px;
+    box-sizing:border-box;
+  }
+
+  #gateBox button { margin-top:12px; width:100%; }
+
+</style>
+</head>
+<body>
+
+<!-- 비밀번호 게이트 -->
+<div id="gateOverlay">
+  <div id="gateBox">
+    <h2>CRE 연습 사이트</h2>
+    <p style="font-size:13px;color:#4b5563;">비밀번호를 입력하세요.</p>
+    <input type="password" id="gatePassword" placeholder="비밀번호" />
+    <div id="gateMessage"></div>
+    <button id="gateBtn">입장</button>
+  </div>
+</div>
+
+<!-- 메인 컨테이너 -->
+<div class="container" id="appContainer">
+  <h1>CRE Practice CBT</h1>
+  <p style="font-size:13px;color:#4b5563;">
+    기기 간 동기화가 가능한 CBT 시스템입니다.<br/>
+  </p>
+<script>
+/*******************************************************
+ * 0. 비밀번호 설정
+ *******************************************************/
+const APP_PASSWORD = "cre2025";
+
+/*******************************************************
+ * 1. Firebase 설정 (너가 마지막 단계에서 값 채워넣음)
+ *******************************************************/
+const firebaseConfig = {
+  apiKey: "AIzaSyBYrsPIpbP7wBMJk8QrU9vUtF0JDhfn2C4",
+  authDomain: "rd-cre-cbt-sync.firebaseapp.com",
+  projectId: "rd-cre-cbt-sync",
+  storageBucket: "rd-cre-cbt-sync.firebasestorage.app",
+  messagingSenderId: "1085101263930",
+  appId: "1:1085101263930:web:06d1339169b431b63e3903"
+};
+
+/*******************************************************
+ * 2. Firebase SDK 로드
+ *******************************************************/
+</script>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
+
+<script>
+/*******************************************************
+ * 3. Firebase 초기화
+ *******************************************************/
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+/*******************************************************
+ * 4. 각 브라우저 고유 ID 생성 (로그인 없이 동기화)
+ *******************************************************/
+let deviceId = localStorage.getItem("creDeviceId");
+if (!deviceId) {
+  deviceId = "dev-" + crypto.randomUUID();
+  localStorage.setItem("creDeviceId", deviceId);
+}
+
+/*******************************************************
+ * 5. Firestore 저장 경로
+ *******************************************************/
+function userPath() {
+  return `users/${deviceId}`;
+}
+
+/*******************************************************
+ * 6. Firestore → LocalStorage 동기화 엔진
+ *******************************************************/
+async function syncFromCloud() {
+  try {
+    // WRONG NOTES
+    const wrongSnap = await db.collection(`${userPath()}/wrongNotes`).get();
+    const wrongArr = [];
+    wrongSnap.forEach(doc => wrongArr.push(doc.data()));
+    localStorage.setItem("creWrongNotes", JSON.stringify(wrongArr));
+
+    // SCORES
+    const scoreSnap = await db.collection(`${userPath()}/scores`).get();
+    const scoreArr = [];
+    scoreSnap.forEach(doc => scoreArr.push(doc.data()));
+    localStorage.setItem("creScoreHistory", JSON.stringify(scoreArr));
+
+    console.log("☁ 클라우드 → 로컬 동기화 완료");
+  } catch (e) {
+    console.error("동기화 실패:", e);
+  }
+}
+
+/*******************************************************
+ * 7. LocalStorage → Firestore 동기화 엔진
+ *******************************************************/
+async function syncToCloud() {
+  try {
+    // WRONG NOTES
+    const wrongArr = JSON.parse(localStorage.getItem("creWrongNotes") || "[]");
+    for (const item of wrongArr) {
+      await db.collection(`${userPath()}/wrongNotes`).doc(item.id).set(item);
+    }
+
+    // SCORES
+    const scoreArr = JSON.parse(localStorage.getItem("creScoreHistory") || "[]");
+    for (const item of scoreArr) {
+      await db.collection(`${userPath()}/scores`).doc(item.date.replace(/[\s:]/g,"_")).set(item);
+    }
+
+    console.log("💾 로컬 → 클라우드 업로드 완료");
+  } catch (e) {
+    console.error("업로드 실패:", e);
+  }
+}
+</script>
+<script>
+/******************************************************************
+ * 8. 비밀번호 게이트 동작
+ ******************************************************************/
+function setupGate() {
+  const overlay = document.getElementById("gateOverlay");
+  const app = document.getElementById("appContainer");
+  const input = document.getElementById("gatePassword");
+  const btn = document.getElementById("gateBtn");
+  const msg = document.getElementById("gateMessage");
+
+  function enterGate() {
+    if (input.value === APP_PASSWORD) {
+      overlay.style.display = "none";
+      app.style.display = "block";
+
+      // 사이트 입장 시 클라우드 → 로컬 동기화
+      syncFromCloud().then(() => {
+        renderWrongNotes();
+        renderScoreHistory();
+        refreshChapterDropdown();
+      });
+
+    } else {
+      msg.textContent = "비밀번호가 올바르지 않습니다.";
+    }
+  }
+
+  btn.addEventListener("click", enterGate);
+  input.addEventListener("keydown", e => {
+    if (e.key === "Enter") enterGate();
+  });
+}
+
+/******************************************************************
+ * 9. 기본 문제 데이터 (필요한 만큼 계속 JSON 로드 가능)
+ ******************************************************************/
+const BASE_QUESTIONS = [
+  {
+    id:"Q1",
+    chapter:"Sample - Statistical Concepts",
+    type:"C",
+    text:"For an exponential distribution with MTBF = 800 hours, what is the reliability at 400 hours?",
+    options:["0.50","0.61","0.37","0.80"],
+    answer:1,
+    explanation:"R(t) = exp(-t/MTBF) = exp(-0.5) = 0.606"
+  },
+  {
+    id:"Q2",
+    chapter:"Sample - Statistical Concepts",
+    type:"A",
+    text:"In a Weibull distribution, what does a shape parameter β greater than 1 indicate?",
+    options:["Early failures","Wear-out failures","Constant failure rate","Random failures"],
+    answer:1,
+    explanation:"β>1 indicates wear-out region."
+  }
+];
+
+/******************************************************************
+ * 10. LocalStorage Helper
+ ******************************************************************/
+const loadWrongNotes = () => JSON.parse(localStorage.getItem("creWrongNotes") || "[]");
+const saveWrongNotes = v => localStorage.setItem("creWrongNotes", JSON.stringify(v));
+
+const loadScoreHistory = () => JSON.parse(localStorage.getItem("creScoreHistory") || "[]");
+const saveScoreHistory = v => localStorage.setItem("creScoreHistory", JSON.stringify(v));
+
+const loadCustomQuestions = () => JSON.parse(localStorage.getItem("creCustomQuestions") || "[]");
+const saveCustomQuestions = v => localStorage.setItem("creCustomQuestions", JSON.stringify(v));
+
+/******************************************************************
+ * 11. 챕터 드롭다운 구성
+ ******************************************************************/
+function refreshChapterDropdown() {
+  const main = document.getElementById("chapterSelect");
+  const add = document.getElementById("addChapter");
+
+  const all = BASE_QUESTIONS.concat(loadCustomQuestions());
+  const chapters = new Set(["전체"]);
+
+  all.forEach(q => chapters.add(q.chapter));
+
+  let mainHtml = "";
+  let addHtml = "";
+
+  chapters.forEach(ch => {
+    mainHtml += `<option value="${ch === "전체" ? "all" : ch}">${ch}</option>`;
+    if (ch !== "전체") addHtml += `<option value="${ch}">${ch}</option>`;
+  });
+
+  main.innerHTML = mainHtml;
+  add.innerHTML = addHtml;
+}
+
+/******************************************************************
+ * 12. 전체 문제 목록(기본 + 커스텀)
+ ******************************************************************/
+const getAllQuestions = () => BASE_QUESTIONS.concat(loadCustomQuestions());
+</script>
+<script>
+/******************************************************************
+ * 13. 오답노트 UI
+ ******************************************************************/
+function renderWrongNotes() {
+  const notes = loadWrongNotes();
+  const box = document.getElementById("wrongNotesBox");
+
+  if (!notes.length) {
+    box.innerHTML = `<div style="font-size:12px;color:#888;">오답 없음</div>`;
+    return;
+  }
+
+  box.innerHTML =
+    notes.map(n => `
+      <div class="note-item">
+        <b>${n.id}</b> <span class="tag ${n.type}">${n.type}</span>
+        <div>${n.text}</div>
+        <div style="font-size:11px;color:#666;">${n.chapter} · ${n.missCount}회 · ${n.lastDate}</div>
+      </div>
+    `).join("");
+}
+
+function clearWrongNotes() {
+  if (!confirm("오답노트를 모두 삭제할까요?")) return;
+  saveWrongNotes([]);
+  renderWrongNotes();
+  syncToCloud();
+}
+
+/******************************************************************
+ * 14. 점수 기록 UI
+ ******************************************************************/
+function renderScoreHistory() {
+  const hist = loadScoreHistory();
+  const box = document.getElementById("scoreHistoryBox");
+
+  if (!hist.length) {
+    box.innerHTML = `<div style="font-size:12px;color:#888;">기록 없음</div>`;
+    return;
+  }
+
+  box.innerHTML =
+    hist.slice().reverse().map(h => `
+      <div class="score-item">
+        <b>${h.date}</b> — ${h.correct}/${h.total} (${Math.round(h.correct/h.total * 100)}%)
+        <div style="font-size:11px;color:#555;">${h.mode} · ${h.durationSec}s</div>
+      </div>
+    `).join("");
+}
+
+function clearScoreHistory() {
+  if (!confirm("점수 기록을 삭제할까요?")) return;
+  saveScoreHistory([]);
+  renderScoreHistory();
+  syncToCloud();
+}
+
+/******************************************************************
+ * 15. 타이머
+ ******************************************************************/
+let timerId = null, timerSeconds = 0;
+
+function stopTimer() {
+  if (timerId !== null) {
+    clearInterval(timerId);
+    timerId = null;
+  }
+}
+
+function updateTimerDisplay() {
+  const el = document.getElementById("timer");
+  if (timerSeconds <= 0) {
+    el.textContent = "Timer: OFF";
+    return;
+  }
+  const m = String(Math.floor(timerSeconds / 60)).padStart(2, "0");
+  const s = String(timerSeconds % 60).padStart(2, "0");
+  el.textContent = `남은 시간: ${m}:${s}`;
+}
+
+function startTimer(sec) {
+  stopTimer();
+  timerSeconds = sec;
+  updateTimerDisplay();
+  if (sec <= 0) return;
+
+  timerId = setInterval(() => {
+    timerSeconds--;
+    updateTimerDisplay();
+    if (timerSeconds <= 0) {
+      stopTimer();
+      alert("시간 종료! 자동 제출됩니다.");
+      submitQuiz(true);
+    }
+  }, 1000);
+}
+
+/******************************************************************
+ * 16. 배열 섞기
+ ******************************************************************/
+const shuffleArray = arr => {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+};
+
+/******************************************************************
+ * 17. 영어 → 한국어 번역 엔진 (기술 용어 중심)
+ ******************************************************************/
+function translateTechTerm(text) {
+  if (!text) return "";
+  let out = text;
+
+  const dict = {
+    "reliability": "신뢰도",
+    "MTBF": "평균고장간격(MTBF)",
+    "MTTR": "평균수리시간(MTTR)",
+    "exponential distribution": "지수분포",
+    "weibull": "와이블",
+    "failure rate": "고장률",
+    "hazard rate": "위험률",
+    "availability": "가용도",
+    "preventive maintenance": "예방정비"
+  };
+
+  for (const [en, ko] of Object.entries(dict)) {
+    const reg = new RegExp(en, "gi");
+    out = out.replace(reg, `${ko} (${en})`);
+  }
+
+  return out;
+}
+
+function translateNaturalSentence(text) {
+  if (!text) return "";
+  let out = text;
+
+  out = out.replace(/Which of the following/gi, "다음 중");
+  out = out.replace(/Which is NOT/gi, "다음 중 옳지 않은 것은");
+  out = out.replace(/is/gi, "은(는)");
+  out = out.replace(/\?/g, "인가?");
+  return out;
+}
+
+/******************************************************************
+ * 18. 한국어 번역 패널 생성
+ ******************************************************************/
+function buildKoreanBlock(q) {
+  return `
+    <div class="ko-header">Q${q._no} 한글 번역</div>
+    <div class="ko-label">기술 번역</div>
+    <div>${translateTechTerm(q.text)}</div>
+
+    <div class="ko-label">자연 번역</div>
+    <div>${translateNaturalSentence(q.text)}</div>
+
+    <div class="ko-label" style="margin-top:6px;">보기 번역</div>
+    ${q.options.map((op, idx) =>
+      `<div class="ko-option"><b>${String.fromCharCode(65+idx)}.</b> ${translateTechTerm(op)}</div>`
+    ).join("")}
+  `;
+}
+
+/******************************************************************
+ * 19. 문제 화면 렌더링 (1단/2단)
+ ******************************************************************/
+let currentQuiz = [];
+let dualView = false;
+
+function renderQuiz() {
+  const box = document.getElementById("quizBox");
+  box.innerHTML = "";
+
+  currentQuiz.forEach((q, i) => {
+    q._no = i + 1;
+
+    if (!dualView) {
+      // 영어만보기
+      let h = `
+        <div class="question-block">
+          <div class="question-title">Q${q._no}. ${q.text}</div>
+          <div class="meta">${q.id} · ${q.chapter} · ${q.type}</div>
+      `;
+      q.options.forEach((op, j) => {
+        h += `
+          <div class="option">
+            <label><input type="radio" name="q${i}" value="${j}"> ${String.fromCharCode(65+j)}. ${op}</label>
+          </div>`;
+      });
+      h += `</div>`;
+      box.innerHTML += h;
+
+    } else {
+      // 2단 보기 (영어 + 한국어)
+      let left = `
+        <div class="q-left">
+          <div class="question-title">Q${q._no}. ${q.text}</div>
+          <div class="meta">${q.id} · ${q.chapter} · ${q.type}</div>
+      `;
+      q.options.forEach((op, j) => {
+        left += `
+          <div class="option">
+            <label><input type="radio" name="q${i}" value="${j}">
+              ${String.fromCharCode(65+j)}. ${op}</label>
+          </div>`;
+      });
+      left += `</div>`;
+
+      const right = `<div class="q-right">${buildKoreanBlock(q)}</div>`;
+
+      box.innerHTML += `<div class="question-block dual">${left}${right}</div>`;
+    }
+  });
+}
+
+/******************************************************************
+ * 20. 출제 모드 처리
+ ******************************************************************/
+function buildQuestionPool() {
+  const ch = document.getElementById("chapterSelect").value;
+  const tp = document.getElementById("typeSelect").value;
+  const mode = document.getElementById("modeSelect").value;
+
+  const all = getAllQuestions();
+  const notes = loadWrongNotes();
+
+  if (mode === "normal") {
+    return all.filter(q =>
+      (ch === "all" || q.chapter === ch) &&
+      (tp === "all" || q.type === tp)
+    );
+  }
+
+  if (mode === "wrong") {
+    const wrongIds = new Set(notes.map(n => n.id));
+    return all.filter(q =>
+      wrongIds.has(q.id) &&
+      (ch === "all" || q.chapter === ch) &&
+      (tp === "all" || q.type === tp)
+    );
+  }
+
+  if (mode === "weak") {
+    if (!notes.length) return [];
+
+    // 가장 많이 틀린 챕터 찾기
+    const count = {};
+    notes.forEach(n => count[n.chapter] = (count[n.chapter] || 0) + n.missCount);
+
+    let weak = null, max = -1;
+    for (const c in count) {
+      if (count[c] > max) {
+        weak = c;
+        max = count[c];
+      }
+    }
+    return all.filter(q => q.chapter === weak);
+  }
+
+  return [];
+}
+
+/******************************************************************
+ * 21. 시험 시작
+ ******************************************************************/
+function startQuiz() {
+  const pool = buildQuestionPool();
+  if (!pool.length) {
+    alert("출제 가능한 문제가 없습니다.");
+    return;
+  }
+
+  const cnt = Number(document.getElementById("countInput").value);
+  const tm = Number(document.getElementById("timerInput").value);
+
+  currentQuiz = shuffleArray(pool).slice(0, cnt || pool.length);
+
+  renderQuiz();
+
+  document.getElementById("resultBox").innerHTML = "";
+  document.getElementById("startBtn").disabled = true;
+  document.getElementById("submitBtn").disabled = false;
+  document.getElementById("resetBtn").disabled = false;
+
+  startTimer(tm > 0 ? tm * 60 : 0);
+}
+</script>
+<script>
+/******************************************************************
+ * 22. 제출 & 채점
+ ******************************************************************/
+function submitQuiz(auto = false) {
+  stopTimer();
+
+  let correct = 0;
+  const wrong = [];
+  const startTime = Date.now();
+
+  let html = "";
+
+  currentQuiz.forEach((q, i) => {
+    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+    const userAnswer = sel ? Number(sel.value) : null;
+
+    const ok = userAnswer === q.answer;
+    if (ok) correct++;
+    else wrong.push(q);
+
+    html += `
+      <div style="margin-bottom:12px;">
+        <b>Q${i + 1} (${q.id})</b><br>
+        선택: ${
+          userAnswer === null ? "무응답" :
+          `${String.fromCharCode(65 + userAnswer)}. ${q.options[userAnswer]}`
+        }<br>
+        정답:
+        <span style="color:${ok ? "#16a34a" : "#dc2626"}">
+          ${String.fromCharCode(65 + q.answer)}. ${q.options[q.answer]}
+        </span>
+        <div class="explanation">${q.explanation || ""}</div>
+      </div>
+    `;
+  });
+
+  const pct = Math.round(correct / currentQuiz.length * 100);
+  const duration = Math.round((Date.now() - startTime) / 1000);
+
+  document.getElementById("resultBox").innerHTML = `
+    <h3>점수: ${correct}/${currentQuiz.length} (${pct}%)</h3>
+    <div style="font-size:12px;color:#666;">소요시간: ${duration}s ${auto ? "(자동 제출)" : ""}</div>
+    ${html}
+  `;
+
+  document.getElementById("submitBtn").disabled = true;
+
+  saveWrongAndSync(wrong);
+  saveScoreAndSync(correct, currentQuiz.length, duration);
+}
+
+/******************************************************************
+ * 23. 오답 저장 + 클라우드 업로드
+ ******************************************************************/
+function saveWrongAndSync(wrongList) {
+  if (!wrongList.length) return;
+
+  const now = new Date().toLocaleString();
+  let notes = loadWrongNotes();
+
+  wrongList.forEach(q => {
+    const exist = notes.find(n => n.id === q.id);
+    if (exist) {
+      exist.missCount++;
+      exist.lastDate = now;
+    } else {
+      notes.push({
+        id: q.id,
+        text: q.text,
+        chapter: q.chapter,
+        type: q.type,
+        missCount: 1,
+        lastDate: now
+      });
+    }
+  });
+
+  saveWrongNotes(notes);
+  renderWrongNotes();
+  syncToCloud();
+}
+
+/******************************************************************
+ * 24. 점수 저장 + 클라우드 업로드
+ ******************************************************************/
+function saveScoreAndSync(correct, total, duration) {
+  const hist = loadScoreHistory();
+
+  hist.push({
+    date: new Date().toLocaleString(),
+    correct,
+    total,
+    durationSec: duration,
+    mode: document.getElementById("modeDesc").textContent
+  });
+
+  saveScoreHistory(hist);
+  renderScoreHistory();
+  syncToCloud();
+}
+
+/******************************************************************
+ * 25. 초기화(reset)
+ ******************************************************************/
+function resetQuiz() {
+  stopTimer();
+  currentQuiz = [];
+
+  document.getElementById("quizBox").innerHTML = "";
+  document.getElementById("resultBox").innerHTML = "";
+
+  document.getElementById("startBtn").disabled = false;
+  document.getElementById("submitBtn").disabled = true;
+  document.getElementById("resetBtn").disabled = true;
+
+  document.getElementById("modeDesc").textContent = "";
+  document.getElementById("timer").textContent = "Timer: OFF";
+}
+
+/******************************************************************
+ * 26. 커스텀 문제 추가
+ ******************************************************************/
+function setupAddQuestionForm() {
+  const form = document.getElementById("addQuestionForm");
+
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+
+    const custom = loadCustomQuestions();
+    const id = document.getElementById("addId").value.trim();
+
+    const q = {
+      id,
+      chapter: document.getElementById("addChapter").value,
+      type: document.getElementById("addType").value,
+      text: document.getElementById("addText").value.trim(),
+      options: [
+        document.getElementById("addOpA").value.trim(),
+        document.getElementById("addOpB").value.trim(),
+        document.getElementById("addOpC").value.trim(),
+        document.getElementById("addOpD").value.trim()
+      ],
+      answer: Number(document.getElementById("addAnswer").value),
+      explanation: document.getElementById("addExplanation").value.trim()
+    };
+
+    custom.push(q);
+    saveCustomQuestions(custom);
+    refreshChapterDropdown();
+
+    alert(`문제 추가 완료! (${id})`);
+
+    form.reset();
+  });
+}
+
+/******************************************************************
+ * 27. JSON 파일 업로드
+ ******************************************************************/
+function setupUploadQuestions() {
+  const input = document.getElementById("uploadFileInput");
+  const btn = document.getElementById("uploadFileBtn");
+
+  btn.addEventListener("click", () => {
+    const file = input.files?.[0];
+    if (!file) {
+      alert("파일을 먼저 선택하세요.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const arr = JSON.parse(e.target.result);
+        if (!Array.isArray(arr)) {
+          alert("JSON은 배열이어야 합니다.");
+          return;
+        }
+
+        const custom = loadCustomQuestions();
+        arr.forEach(q => custom.push(q));
+        saveCustomQuestions(custom);
+        refreshChapterDropdown();
+
+        alert(`${arr.length}문제가 추가되었습니다.`);
+      } catch (err) {
+        alert("JSON 파싱 오류");
+      }
+    };
+
+    reader.readAsText(file);
+  });
+}
+
+/******************************************************************
+ * 28. 사용자 문제 삭제 + 내보내기
+ ******************************************************************/
+function setupCustomManagement() {
+  document.getElementById("clearCustomBtn").addEventListener("click", () => {
+    if (!confirm("사용자 문제 전체 삭제?")) return;
+    saveCustomQuestions([]);
+    refreshChapterDropdown();
+  });
+
+  document.getElementById("exportCustomBtn").addEventListener("click", () => {
+    const data = loadCustomQuestions();
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "cre_custom_questions.json";
+    a.click();
+  });
+}
+
+/******************************************************************
+ * 29. 2단 보기 토글
+ ******************************************************************/
+function setupDualToggle() {
+  const cb = document.getElementById("dualViewToggle");
+  dualView = cb.checked;
+
+  cb.addEventListener("change", () => {
+    dualView = cb.checked;
+    if (currentQuiz.length) renderQuiz();
+  });
+}
+
+/******************************************************************
+ * 30. 초기 실행
+ ******************************************************************/
+setupGate();
+setupAddQuestionForm();
+setupUploadQuestions();
+setupCustomManagement();
+setupDualToggle();
+
+document.getElementById("startBtn").addEventListener("click", startQuiz);
+document.getElementById("resetBtn").addEventListener("click", resetQuiz);
+document.getElementById("submitBtn").addEventListener("click", () => submitQuiz(false));
+</script>
+
+</body>
+</html>
