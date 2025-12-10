@@ -258,11 +258,10 @@
   }
 
   #gateBox button { margin-top:12px; width:100%; }
-
 </style>
 </head>
-<body>
 
+<body>
 <!-- 비밀번호 게이트 -->
 <div id="gateOverlay">
   <div id="gateBox">
@@ -287,7 +286,7 @@
 const APP_PASSWORD = "cre2025";
 
 /*******************************************************
- * 1. Firebase 설정 (너가 마지막 단계에서 값 채워넣음)
+ * 1. Firebase 설정 (네 프로젝트 값)
  *******************************************************/
 const firebaseConfig = {
   apiKey: "AIzaSyBYrsPIpbP7wBMJk8QrU9vUtF0JDhfn2C4",
@@ -297,77 +296,71 @@ const firebaseConfig = {
   messagingSenderId: "1085101263930",
   appId: "1:1085101263930:web:06d1339169b431b63e3903"
 };
-
-/*******************************************************
- * 2. Firebase SDK 로드
- *******************************************************/
 </script>
 
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
+<!-- Firebase SDK (v8 호환 모드: GitHub Pages에서 안정적으로 동작함) -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
 <script>
 /*******************************************************
- * 3. Firebase 초기화
+ * 2. Firebase 초기화
  *******************************************************/
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 /*******************************************************
- * 4. 각 브라우저 고유 ID 생성 (로그인 없이 동기화)
+ * 3. 브라우저 고유 Device ID 생성 (로그인 없이 동기화)
  *******************************************************/
 let deviceId = localStorage.getItem("creDeviceId");
 if (!deviceId) {
-  deviceId = "dev-" + crypto.randomUUID();
+  deviceId = "dev-" + Math.random().toString(36).substring(2) + Date.now();
   localStorage.setItem("creDeviceId", deviceId);
 }
 
-/*******************************************************
- * 5. Firestore 저장 경로
- *******************************************************/
 function userPath() {
   return `users/${deviceId}`;
 }
 
 /*******************************************************
- * 6. Firestore → LocalStorage 동기화 엔진
+ * 4. Firestore → LocalStorage 동기화
  *******************************************************/
 async function syncFromCloud() {
   try {
     // WRONG NOTES
-    const wrongSnap = await db.collection(`${userPath()}/wrongNotes`).get();
-    const wrongArr = [];
-    wrongSnap.forEach(doc => wrongArr.push(doc.data()));
-    localStorage.setItem("creWrongNotes", JSON.stringify(wrongArr));
+    const wn = [];
+    const wSnap = await db.collection(`${userPath()}/wrongNotes`).get();
+    wSnap.forEach(doc => wn.push(doc.data()));
+    localStorage.setItem("creWrongNotes", JSON.stringify(wn));
 
     // SCORES
-    const scoreSnap = await db.collection(`${userPath()}/scores`).get();
-    const scoreArr = [];
-    scoreSnap.forEach(doc => scoreArr.push(doc.data()));
-    localStorage.setItem("creScoreHistory", JSON.stringify(scoreArr));
+    const sc = [];
+    const sSnap = await db.collection(`${userPath()}/scores`).get();
+    sSnap.forEach(doc => sc.push(doc.data()));
+    localStorage.setItem("creScoreHistory", JSON.stringify(sc));
 
     console.log("☁ 클라우드 → 로컬 동기화 완료");
   } catch (e) {
-    console.error("동기화 실패:", e);
+    console.error("동기화 오류:", e);
   }
 }
 
 /*******************************************************
- * 7. LocalStorage → Firestore 동기화 엔진
+ * 5. LocalStorage → Firestore 업로드
  *******************************************************/
 async function syncToCloud() {
   try {
     // WRONG NOTES
     const wrongArr = JSON.parse(localStorage.getItem("creWrongNotes") || "[]");
-    for (const item of wrongArr) {
-      await db.collection(`${userPath()}/wrongNotes`).doc(item.id).set(item);
+    for (const w of wrongArr) {
+      await db.collection(`${userPath()}/wrongNotes`).doc(w.id).set(w);
     }
 
     // SCORES
     const scoreArr = JSON.parse(localStorage.getItem("creScoreHistory") || "[]");
-    for (const item of scoreArr) {
-      await db.collection(`${userPath()}/scores`).doc(item.date.replace(/[\s:]/g,"_")).set(item);
+    for (const h of scoreArr) {
+      const key = h.date.replace(/[\s:]/g, "_");
+      await db.collection(`${userPath()}/scores`).doc(key).set(h);
     }
 
     console.log("💾 로컬 → 클라우드 업로드 완료");
@@ -375,24 +368,22 @@ async function syncToCloud() {
     console.error("업로드 실패:", e);
   }
 }
-</script>
-<script>
-/******************************************************************
- * 8. 비밀번호 게이트 동작
- ******************************************************************/
+
+/*******************************************************
+ * 6. 비밀번호 게이트
+ *******************************************************/
 function setupGate() {
   const overlay = document.getElementById("gateOverlay");
   const app = document.getElementById("appContainer");
   const input = document.getElementById("gatePassword");
-  const btn = document.getElementById("gateBtn");
   const msg = document.getElementById("gateMessage");
+  const btn = document.getElementById("gateBtn");
 
   function enterGate() {
     if (input.value === APP_PASSWORD) {
       overlay.style.display = "none";
       app.style.display = "block";
 
-      // 사이트 입장 시 클라우드 → 로컬 동기화
       syncFromCloud().then(() => {
         renderWrongNotes();
         renderScoreHistory();
@@ -409,9 +400,13 @@ function setupGate() {
     if (e.key === "Enter") enterGate();
   });
 }
+</script>
 
+
+<!-- 이어서 다음 PART 3에서 CBT 엔진 전체가 붙습니다 -->
+<script>
 /******************************************************************
- * 9. 기본 문제 데이터 (필요한 만큼 계속 JSON 로드 가능)
+ * 7. 기본 문제 데이터 (원하면 나중에 JSON 업로드로 확장 가능)
  ******************************************************************/
 const BASE_QUESTIONS = [
   {
@@ -435,19 +430,28 @@ const BASE_QUESTIONS = [
 ];
 
 /******************************************************************
- * 10. LocalStorage Helper
+ * 8. LocalStorage Helper
  ******************************************************************/
-const loadWrongNotes = () => JSON.parse(localStorage.getItem("creWrongNotes") || "[]");
-const saveWrongNotes = v => localStorage.setItem("creWrongNotes", JSON.stringify(v));
+const loadWrongNotes = () =>
+  JSON.parse(localStorage.getItem("creWrongNotes") || "[]");
 
-const loadScoreHistory = () => JSON.parse(localStorage.getItem("creScoreHistory") || "[]");
-const saveScoreHistory = v => localStorage.setItem("creScoreHistory", JSON.stringify(v));
+const saveWrongNotes = v =>
+  localStorage.setItem("creWrongNotes", JSON.stringify(v));
 
-const loadCustomQuestions = () => JSON.parse(localStorage.getItem("creCustomQuestions") || "[]");
-const saveCustomQuestions = v => localStorage.setItem("creCustomQuestions", JSON.stringify(v));
+const loadScoreHistory = () =>
+  JSON.parse(localStorage.getItem("creScoreHistory") || "[]");
+
+const saveScoreHistory = v =>
+  localStorage.setItem("creScoreHistory", JSON.stringify(v));
+
+const loadCustomQuestions = () =>
+  JSON.parse(localStorage.getItem("creCustomQuestions") || "[]");
+
+const saveCustomQuestions = v =>
+  localStorage.setItem("creCustomQuestions", JSON.stringify(v));
 
 /******************************************************************
- * 11. 챕터 드롭다운 구성
+ * 9. 챕터 드롭다운 갱신
  ******************************************************************/
 function refreshChapterDropdown() {
   const main = document.getElementById("chapterSelect");
@@ -455,7 +459,6 @@ function refreshChapterDropdown() {
 
   const all = BASE_QUESTIONS.concat(loadCustomQuestions());
   const chapters = new Set(["전체"]);
-
   all.forEach(q => chapters.add(q.chapter));
 
   let mainHtml = "";
@@ -467,17 +470,17 @@ function refreshChapterDropdown() {
   });
 
   main.innerHTML = mainHtml;
-  add.innerHTML = addHtml;
+  add.innerinnerHTML = addHtml;
 }
 
 /******************************************************************
- * 12. 전체 문제 목록(기본 + 커스텀)
+ * 10. 전체 문제 조회
  ******************************************************************/
-const getAllQuestions = () => BASE_QUESTIONS.concat(loadCustomQuestions());
-</script>
-<script>
+const getAllQuestions = () =>
+  BASE_QUESTIONS.concat(loadCustomQuestions());
+
 /******************************************************************
- * 13. 오답노트 UI
+ * 11. 오답 표시
  ******************************************************************/
 function renderWrongNotes() {
   const notes = loadWrongNotes();
@@ -488,14 +491,17 @@ function renderWrongNotes() {
     return;
   }
 
-  box.innerHTML =
-    notes.map(n => `
+  box.innerHTML = notes
+    .map(n => `
       <div class="note-item">
         <b>${n.id}</b> <span class="tag ${n.type}">${n.type}</span>
         <div>${n.text}</div>
-        <div style="font-size:11px;color:#666;">${n.chapter} · ${n.missCount}회 · ${n.lastDate}</div>
+        <div style="font-size:11px;color:#666;">
+          ${n.chapter} · ${n.missCount}회 · ${n.lastDate}
+        </div>
       </div>
-    `).join("");
+    `)
+    .join("");
 }
 
 function clearWrongNotes() {
@@ -506,7 +512,7 @@ function clearWrongNotes() {
 }
 
 /******************************************************************
- * 14. 점수 기록 UI
+ * 12. 점수 기록 UI
  ******************************************************************/
 function renderScoreHistory() {
   const hist = loadScoreHistory();
@@ -517,13 +523,22 @@ function renderScoreHistory() {
     return;
   }
 
-  box.innerHTML =
-    hist.slice().reverse().map(h => `
+  box.innerHTML = hist
+    .slice()
+    .reverse()
+    .map(
+      h => `
       <div class="score-item">
-        <b>${h.date}</b> — ${h.correct}/${h.total} (${Math.round(h.correct/h.total * 100)}%)
-        <div style="font-size:11px;color:#555;">${h.mode} · ${h.durationSec}s</div>
+        <b>${h.date}</b> — ${h.correct}/${h.total} (${Math.round(
+        (h.correct / h.total) * 100
+      )}%)
+        <div style="font-size:11px;color:#555;">
+          ${h.mode} · ${h.durationSec}s
+        </div>
       </div>
-    `).join("");
+    `
+    )
+    .join("");
 }
 
 function clearScoreHistory() {
@@ -534,9 +549,10 @@ function clearScoreHistory() {
 }
 
 /******************************************************************
- * 15. 타이머
+ * 13. 타이머
  ******************************************************************/
-let timerId = null, timerSeconds = 0;
+let timerId = null,
+  timerSeconds = 0;
 
 function stopTimer() {
   if (timerId !== null) {
@@ -574,7 +590,7 @@ function startTimer(sec) {
 }
 
 /******************************************************************
- * 16. 배열 섞기
+ * 14. 섞기
  ******************************************************************/
 const shuffleArray = arr => {
   const a = arr.slice();
@@ -586,21 +602,21 @@ const shuffleArray = arr => {
 };
 
 /******************************************************************
- * 17. 영어 → 한국어 번역 엔진 (기술 용어 중심)
+ * 15. 번역 엔진
  ******************************************************************/
 function translateTechTerm(text) {
   if (!text) return "";
   let out = text;
 
   const dict = {
-    "reliability": "신뢰도",
-    "MTBF": "평균고장간격(MTBF)",
-    "MTTR": "평균수리시간(MTTR)",
+    reliability: "신뢰도",
+    MTBF: "평균고장간격(MTBF)",
+    MTTR: "평균수리시간(MTTR)",
     "exponential distribution": "지수분포",
-    "weibull": "와이블",
+    weibull: "와이블",
     "failure rate": "고장률",
     "hazard rate": "위험률",
-    "availability": "가용도",
+    availability: "가용도",
     "preventive maintenance": "예방정비"
   };
 
@@ -620,12 +636,10 @@ function translateNaturalSentence(text) {
   out = out.replace(/Which is NOT/gi, "다음 중 옳지 않은 것은");
   out = out.replace(/is/gi, "은(는)");
   out = out.replace(/\?/g, "인가?");
+
   return out;
 }
 
-/******************************************************************
- * 18. 한국어 번역 패널 생성
- ******************************************************************/
 function buildKoreanBlock(q) {
   return `
     <div class="ko-header">Q${q._no} 한글 번역</div>
@@ -636,14 +650,19 @@ function buildKoreanBlock(q) {
     <div>${translateNaturalSentence(q.text)}</div>
 
     <div class="ko-label" style="margin-top:6px;">보기 번역</div>
-    ${q.options.map((op, idx) =>
-      `<div class="ko-option"><b>${String.fromCharCode(65+idx)}.</b> ${translateTechTerm(op)}</div>`
-    ).join("")}
+    ${q.options
+      .map(
+        (op, idx) =>
+          `<div class="ko-option"><b>${String.fromCharCode(
+            65 + idx
+          )}.</b> ${translateTechTerm(op)}</div>`
+      )
+      .join("")}
   `;
 }
 
 /******************************************************************
- * 19. 문제 화면 렌더링 (1단/2단)
+ * 16. 문제 출력
  ******************************************************************/
 let currentQuiz = [];
 let dualView = false;
@@ -656,7 +675,7 @@ function renderQuiz() {
     q._no = i + 1;
 
     if (!dualView) {
-      // 영어만보기
+      // 영어만 보기
       let h = `
         <div class="question-block">
           <div class="question-title">Q${q._no}. ${q.text}</div>
@@ -665,14 +684,14 @@ function renderQuiz() {
       q.options.forEach((op, j) => {
         h += `
           <div class="option">
-            <label><input type="radio" name="q${i}" value="${j}"> ${String.fromCharCode(65+j)}. ${op}</label>
+            <label><input type="radio" name="q${i}" value="${j}">
+            ${String.fromCharCode(65 + j)}. ${op}</label>
           </div>`;
       });
       h += `</div>`;
       box.innerHTML += h;
-
     } else {
-      // 2단 보기 (영어 + 한국어)
+      // 2단
       let left = `
         <div class="q-left">
           <div class="question-title">Q${q._no}. ${q.text}</div>
@@ -682,20 +701,19 @@ function renderQuiz() {
         left += `
           <div class="option">
             <label><input type="radio" name="q${i}" value="${j}">
-              ${String.fromCharCode(65+j)}. ${op}</label>
+            ${String.fromCharCode(65 + j)}. ${op}</label>
           </div>`;
       });
       left += `</div>`;
 
       const right = `<div class="q-right">${buildKoreanBlock(q)}</div>`;
-
       box.innerHTML += `<div class="question-block dual">${left}${right}</div>`;
     }
   });
 }
 
 /******************************************************************
- * 20. 출제 모드 처리
+ * 17. 출제 모드 처리
  ******************************************************************/
 function buildQuestionPool() {
   const ch = document.getElementById("chapterSelect").value;
@@ -706,18 +724,20 @@ function buildQuestionPool() {
   const notes = loadWrongNotes();
 
   if (mode === "normal") {
-    return all.filter(q =>
-      (ch === "all" || q.chapter === ch) &&
-      (tp === "all" || q.type === tp)
+    return all.filter(
+      q =>
+        (ch === "all" || q.chapter === ch) &&
+        (tp === "all" || q.type === tp)
     );
   }
 
   if (mode === "wrong") {
     const wrongIds = new Set(notes.map(n => n.id));
-    return all.filter(q =>
-      wrongIds.has(q.id) &&
-      (ch === "all" || q.chapter === ch) &&
-      (tp === "all" || q.type === tp)
+    return all.filter(
+      q =>
+        wrongIds.has(q.id) &&
+        (ch === "all" || q.chapter === ch) &&
+        (tp === "all" || q.type === tp)
     );
   }
 
@@ -726,9 +746,12 @@ function buildQuestionPool() {
 
     // 가장 많이 틀린 챕터 찾기
     const count = {};
-    notes.forEach(n => count[n.chapter] = (count[n.chapter] || 0) + n.missCount);
+    notes.forEach(n => {
+      count[n.chapter] = (count[n.chapter] || 0) + n.missCount;
+    });
 
-    let weak = null, max = -1;
+    let weak = null,
+      max = -1;
     for (const c in count) {
       if (count[c] > max) {
         weak = c;
@@ -742,7 +765,7 @@ function buildQuestionPool() {
 }
 
 /******************************************************************
- * 21. 시험 시작
+ * 18. 시험 시작
  ******************************************************************/
 function startQuiz() {
   const pool = buildQuestionPool();
@@ -765,17 +788,15 @@ function startQuiz() {
 
   startTimer(tm > 0 ? tm * 60 : 0);
 }
-</script>
-<script>
+
 /******************************************************************
- * 22. 제출 & 채점
+ * 19. 제출 & 채점
  ******************************************************************/
 function submitQuiz(auto = false) {
   stopTimer();
 
   let correct = 0;
   const wrong = [];
-  const startTime = Date.now();
 
   let html = "";
 
@@ -791,26 +812,28 @@ function submitQuiz(auto = false) {
       <div style="margin-bottom:12px;">
         <b>Q${i + 1} (${q.id})</b><br>
         선택: ${
-          userAnswer === null ? "무응답" :
-          `${String.fromCharCode(65 + userAnswer)}. ${q.options[userAnswer]}`
+          userAnswer === null
+            ? "무응답"
+            : `${String.fromCharCode(65 + userAnswer)}. ${
+                q.options[userAnswer]
+              }`
         }<br>
         정답:
         <span style="color:${ok ? "#16a34a" : "#dc2626"}">
-          ${String.fromCharCode(65 + q.answer)}. ${q.options[q.answer]}
+          ${String.fromCharCode(65 + q.answer)}.
+          ${q.options[q.answer]}
         </span>
         <div class="explanation">${q.explanation || ""}</div>
       </div>
     `;
   });
 
-  const pct = Math.round(correct / currentQuiz.length * 100);
-  const duration = Math.round((Date.now() - startTime) / 1000);
+  const pct = Math.round((correct / currentQuiz.length) * 100);
+  const duration = 0;
 
-  document.getElementById("resultBox").innerHTML = `
-    <h3>점수: ${correct}/${currentQuiz.length} (${pct}%)</h3>
-    <div style="font-size:12px;color:#666;">소요시간: ${duration}s ${auto ? "(자동 제출)" : ""}</div>
-    ${html}
-  `;
+  document.getElementById(
+    "resultBox"
+  ).innerHTML = `<h3>점수: ${correct}/${currentQuiz.length} (${pct}%)</h3>${html}`;
 
   document.getElementById("submitBtn").disabled = true;
 
@@ -819,7 +842,7 @@ function submitQuiz(auto = false) {
 }
 
 /******************************************************************
- * 23. 오답 저장 + 클라우드 업로드
+ * 20. 오답 저장 + Firestore 업로드
  ******************************************************************/
 function saveWrongAndSync(wrongList) {
   if (!wrongList.length) return;
@@ -850,7 +873,7 @@ function saveWrongAndSync(wrongList) {
 }
 
 /******************************************************************
- * 24. 점수 저장 + 클라우드 업로드
+ * 21. 점수 저장 + 동기화
  ******************************************************************/
 function saveScoreAndSync(correct, total, duration) {
   const hist = loadScoreHistory();
@@ -860,21 +883,20 @@ function saveScoreAndSync(correct, total, duration) {
     correct,
     total,
     durationSec: duration,
-    mode: document.getElementById("modeDesc").textContent
+    mode: document.getElementById("modeDesc")?.textContent || ""
   });
 
   saveScoreHistory(hist);
   renderScoreHistory();
   syncToCloud();
 }
-
+<script>
 /******************************************************************
- * 25. 초기화(reset)
+ * 22. 초기화 (reset)
  ******************************************************************/
 function resetQuiz() {
   stopTimer();
   currentQuiz = [];
-
   document.getElementById("quizBox").innerHTML = "";
   document.getElementById("resultBox").innerHTML = "";
 
@@ -887,7 +909,7 @@ function resetQuiz() {
 }
 
 /******************************************************************
- * 26. 커스텀 문제 추가
+ * 23. 사용자 문제 추가
  ******************************************************************/
 function setupAddQuestionForm() {
   const form = document.getElementById("addQuestionForm");
@@ -896,10 +918,9 @@ function setupAddQuestionForm() {
     e.preventDefault();
 
     const custom = loadCustomQuestions();
-    const id = document.getElementById("addId").value.trim();
 
     const q = {
-      id,
+      id: document.getElementById("addId").value.trim(),
       chapter: document.getElementById("addChapter").value,
       type: document.getElementById("addType").value,
       text: document.getElementById("addText").value.trim(),
@@ -917,14 +938,13 @@ function setupAddQuestionForm() {
     saveCustomQuestions(custom);
     refreshChapterDropdown();
 
-    alert(`문제 추가 완료! (${id})`);
-
+    alert(`문제 추가 완료: ${q.id}`);
     form.reset();
   });
 }
 
 /******************************************************************
- * 27. JSON 파일 업로드
+ * 24. JSON 파일 업로드
  ******************************************************************/
 function setupUploadQuestions() {
   const input = document.getElementById("uploadFileInput");
@@ -933,16 +953,16 @@ function setupUploadQuestions() {
   btn.addEventListener("click", () => {
     const file = input.files?.[0];
     if (!file) {
-      alert("파일을 먼저 선택하세요.");
+      alert("파일을 선택하세요.");
       return;
     }
 
     const reader = new FileReader();
-    reader.onload = (e) => {
+    reader.onload = e => {
       try {
         const arr = JSON.parse(e.target.result);
         if (!Array.isArray(arr)) {
-          alert("JSON은 배열이어야 합니다.");
+          alert("JSON 형식 오류: 배열이 아닙니다.");
           return;
         }
 
@@ -962,18 +982,20 @@ function setupUploadQuestions() {
 }
 
 /******************************************************************
- * 28. 사용자 문제 삭제 + 내보내기
+ * 25. 커스텀 문제 관리
  ******************************************************************/
 function setupCustomManagement() {
   document.getElementById("clearCustomBtn").addEventListener("click", () => {
-    if (!confirm("사용자 문제 전체 삭제?")) return;
+    if (!confirm("사용자 생성 문제 전체 삭제?")) return;
     saveCustomQuestions([]);
     refreshChapterDropdown();
   });
 
   document.getElementById("exportCustomBtn").addEventListener("click", () => {
     const data = loadCustomQuestions();
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const blob = new Blob([JSON.stringify(data, null, 2)], {
+      type: "application/json"
+    });
     const url = URL.createObjectURL(blob);
 
     const a = document.createElement("a");
@@ -984,7 +1006,7 @@ function setupCustomManagement() {
 }
 
 /******************************************************************
- * 29. 2단 보기 토글
+ * 26. 2단 보기 옵션
  ******************************************************************/
 function setupDualToggle() {
   const cb = document.getElementById("dualViewToggle");
@@ -997,17 +1019,19 @@ function setupDualToggle() {
 }
 
 /******************************************************************
- * 30. 초기 실행
+ * 27. 초기 실행 (이게 매우 중요!)
  ******************************************************************/
-setupGate();
-setupAddQuestionForm();
-setupUploadQuestions();
-setupCustomManagement();
-setupDualToggle();
+window.addEventListener("DOMContentLoaded", () => {
+  setupGate();
+  setupAddQuestionForm();
+  setupUploadQuestions();
+  setupCustomManagement();
+  setupDualToggle();
 
-document.getElementById("startBtn").addEventListener("click", startQuiz);
-document.getElementById("resetBtn").addEventListener("click", resetQuiz);
-document.getElementById("submitBtn").addEventListener("click", () => submitQuiz(false));
+  document.getElementById("startBtn").addEventListener("click", startQuiz);
+  document.getElementById("resetBtn").addEventListener("click", resetQuiz);
+  document.getElementById("submitBtn").addEventListener("click", () => submitQuiz(false));
+});
 </script>
 
 </body>
