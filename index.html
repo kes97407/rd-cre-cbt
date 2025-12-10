@@ -470,7 +470,7 @@ function refreshChapterDropdown() {
   });
 
   main.innerHTML = mainHtml;
-  add.innerinnerHTML = addHtml;
+  add.innerHTML = addHtml;
 }
 
 /******************************************************************
@@ -890,6 +890,7 @@ function saveScoreAndSync(correct, total, duration) {
   renderScoreHistory();
   syncToCloud();
 }
+</script>
 <script>
 /******************************************************************
  * 22. 초기화 (reset)
