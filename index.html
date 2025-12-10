@@ -210,6 +210,14 @@
       </select>
     </div>
     <div>
+  <label>표시 언어</label>
+  <select id="langSelect">
+    <option value="en">영어 우선</option>
+    <option value="ko">한글 우선</option>
+  </select>
+</div>
+
+    <div>
       <label>문제 유형</label>
       <select id="typeSelect">
         <option value="all">전체</option>
@@ -626,7 +634,25 @@ async function saveMemo() {
  *******************************************************/
 let currentQuiz = [];
 let dualView = false;
+let currentLang = "en";   // ← 추가
 
+function getQuestionText(q) {
+  // currentLang이 'ko'이고 text_ko가 있으면 한글, 아니면 영어
+  if (currentLang === "ko" && q.text_ko) {
+    return q.text_ko;
+  }
+  return q.text;
+}
+
+function getQuestionOptions(q) {
+  // currentLang이 'ko'이고 options_ko가 있으면 한글 보기 배열, 아니면 영어 배열
+  if (currentLang === "ko" && Array.isArray(q.options_ko)) {
+    return q.options_ko;
+  }
+  return q.options;
+}
+
+  
 function renderQuiz() {
   const box = document.getElementById("quizBox");
   box.innerHTML = "";
@@ -644,36 +670,43 @@ function renderQuiz() {
                    font-size:18px; color:#3b82f6;"
             onclick="openMemo('${q.id}')">📝</span>`;
 
-    if (!dualView) {
-      let html = `
-        <div class="question-block">
-          ${starBtn} ${memoBtn}
-          <div class="question-title">Q${idx + 1}. ${q.text}</div>
-          <div class="meta">${q.id} · ${q.chapter} · ${q.type}</div>
+     if (!dualView) {
+    const shownText = getQuestionText(q);
+    const shownOptions = getQuestionOptions(q);
+
+    let html = `
+      <div class="question-block">
+        ${starBtn} ${memoBtn}
+        <div class="question-title">Q${idx + 1}. ${shownText}</div>
+        <div class="meta">${q.id} · ${q.chapter} · ${q.type}</div>
+    `;
+    shownOptions.forEach((op, j) => {
+      html += `
+        <div class="option">
+          <label>
+            <input type="radio" name="q${idx}" value="${j}">
+            ${String.fromCharCode(65 + j)}. ${op}
+          </label>
+        </div>
       `;
-      q.options.forEach((op, j) => {
-        html += `
-          <div class="option">
-            <label>
-              <input type="radio" name="q${idx}" value="${j}">
-              ${String.fromCharCode(65 + j)}. ${op}
-            </label>
-          </div>
-        `;
-      });
-      html += `</div>`;
-      box.innerHTML += html;
-      return;
-    }
+    });
+    html += `</div>`;
+    box.innerHTML += html;
+    return;
+  }
+
 
     // 2단 보기
+    const shownText = getQuestionText(q);
+    const shownOptions = getQuestionOptions(q);
+
     let left = `
       <div class="q-left">
         ${starBtn} ${memoBtn}
-        <div class="question-title">Q${idx + 1}. ${q.text}</div>
+        <div class="question-title">Q${idx + 1}. ${shownText}</div>
         <div class="meta">${q.id} · ${q.chapter} · ${q.type}</div>
     `;
-    q.options.forEach((op, j) => {
+    shownOptions.forEach((op, j) => {
       left += `
         <div class="option">
           <label>
@@ -684,6 +717,7 @@ function renderQuiz() {
       `;
     });
     left += `</div>`;
+
 
     const right = `<div class="q-right">${buildKoreanPanel(q, idx)}</div>`;
 
@@ -904,7 +938,17 @@ function wireUI() {
       qb.style.opacity = 1;
     }, 200);
   });
+
+  // ★ 언어 선택 이벤트 추가
+  const langSelect = document.getElementById("langSelect");
+  langSelect.addEventListener("change", (e) => {
+    currentLang = e.target.value;   // 'en' or 'ko'
+    if (currentQuiz.length) {
+      renderQuiz();  // 현재 출제된 문제를 선택 언어로 다시 렌더링
+    }
+  });
 }
+
 
 /*******************************************************
  * Gate + app start
