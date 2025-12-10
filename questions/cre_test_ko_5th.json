@@ -1,0 +1,3152 @@
+[
+  {
+    "id": "Q1",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "A resister is rated at 1 watt. One example of using this resister in a derated condition is:",
+    "options": [
+      "Use the resister in a 1/2-watt application.",
+      "Use the resister in a 2-watt application.",
+      "Use the resister as a standby unit.",
+      "Use two resisters in series."
+    ],
+    "answer": 0,
+    "explanation": "",
+    "text_ko": "저항기의 정격 용량은 1와트입니다. 정격 용량을 낮춰서 사용하는 예는 다음과 같습니다.",
+    "options_ko": [
+      "1/2와트 용량의 애플리케이션에 저항기를 사용하십시오.",
+      "2와트 용량의 기기에 저항기를 사용하십시오.",
+      "저항기를 예비 장치로 사용하십시오.",
+      "저항 두 개를 직렬로 연결하세요."
+    ]
+  },
+  {
+    "id": "Q2",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "It is appropriate to use the homogeneous Poisson process (HPP) when the failure rate of a system:",
+    "options": [
+      "Decreases continuously.",
+      "Increases continuously.",
+      "Is unchanged.",
+      "Decreases first and then increases."
+    ],
+    "answer": 2,
+    "explanation": "",
+    "text_ko": "시스템의 고장률이 다음과 같을 때 균질 포아송 과정(HPP)을 사용하는 것이 적절합니다.",
+    "options_ko": [
+      "지속적으로 감소합니다.",
+      "지속적으로 증가합니다.",
+      "변경되지 않았습니다.",
+      "처음에는 감소하다가 그 다음에는 증가합니다."
+    ]
+  },
+  {
+    "id": "Q3",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "From a company's point of view, which of the following costs would be LEAST appropriate for determining the cost of reliability?",
+    "options": [
+      "Warranty cost",
+      "Reliability training",
+      "Life testing",
+      "Equipment depreciation"
+    ],
+    "answer": 3,
+    "explanation": "",
+    "text_ko": "기업의 관점에서 볼 때, 다음 비용 중 신뢰성 비용을 결정하는 데 가장 부적절한 것은 무엇일까요?",
+    "options_ko": [
+      "보증 비용",
+      "신뢰성 교육",
+      "수명 테스트",
+      "장비 감가상각"
+    ]
+  },
+  {
+    "id": "Q4",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "In an elevated-temperature test on an electronic system, which of the following models is used to calculate the acceleration factor?",
+    "options": [
+      "Arrhenius model",
+      "Inverse power law model",
+      "Lognormal model",
+      "Exponential model"
+    ],
+    "answer": 0,
+    "explanation": "",
+    "text_ko": "전자 시스템에 대한 고온 테스트에서 가속 계수를 계산하는 데 사용되는 모델은 다음 중 무엇입니까?",
+    "options_ko": [
+      "아레니우스 모델",
+      "역멱법칙 모델",
+      "로그정규 모델",
+      "지수 모델"
+    ]
+  },
+  {
+    "id": "Q5",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which of the following prioritizes failure modes based on probability of failure, severity, and consequences?",
+    "options": [
+      "FMEA",
+      "FTA",
+      "FURPS",
+      "FRACAS"
+    ],
+    "answer": 0,
+    "explanation": "",
+    "text_ko": "다음 중 고장 발생 확률, 심각도 및 결과에 따라 고장 모드의 우선순위를 정하는 것은 무엇입니까?",
+    "options_ko": [
+      "FMEA",
+      "FTA",
+      "퍼프스",
+      "소동"
+    ]
+  },
+  {
+    "id": "Q6",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Fault isolation is BEST facilitated using which of the following?",
+    "options": [
+      "Preventive maintenance and built-in test equipment",
+      "Interchangeability and corrective maintenance",
+      "Trouble reports and inspection data",
+      "Periodic inspections and correction of detected deterioration"
+    ],
+    "answer": 3,
+    "explanation": "",
+    "text_ko": "다음 중 어떤 방법을 사용하면 고장 분리를 가장 효과적으로 수행할 수 있습니까?",
+    "options_ko": [
+      "예방 정비 및 내장형 테스트 장비",
+      "호환성 및 시정 유지보수",
+      "문제 보고서 및 검사 데이터",
+      "정기적인 점검 및 발견된 손상에 대한 시정 조치"
+    ]
+  },
+  {
+    "id": "Q7",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which reliability technique is commonly used during the design phase?",
+    "options": [
+      "Worst-case analysis",
+      "Field-failure analysis",
+      "Environmental hazard plotting",
+      "Supplier reliability rating"
+    ],
+    "answer": 1,
+    "explanation": "",
+    "text_ko": "설계 단계에서 일반적으로 사용되는 신뢰성 분석 기법은 무엇입니까?",
+    "options_ko": [
+      "최악의 경우 분석",
+      "현장 고장 분석",
+      "환경 위험도 표시",
+      "공급업체 신뢰도 평가"
+    ]
+  },
+  {
+    "id": "Q8",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "A life test was conducted on 10 units. The average failure time is 100 hours with a standard deviation of 5 hours. What is the 90% confidence interval for the mean time to failure?",
+    "options": [
+      "(86.87, 113.13)",
+      "(95.85, 104.15)",
+      "(92.10, 107.90)",
+      "(84.02, 115.98)"
+    ],
+    "answer": 0,
+    "explanation": "",
+    "text_ko": "10개 제품에 대해 수명 시험을 실시했습니다. 평균 고장 시간은 100시간이고 표준 편차는 5시간입니다. 평균 고장 시간에 대한 90% 신뢰 구간은 무엇입니까?",
+    "options_ko": [
+      "(86.87, 113.13)",
+      "(95.85, 104.15)",
+      "(92.10, 107.90)",
+      "(84.02, 115.98)"
+    ]
+  },
+  {
+    "id": "Q9",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Reliability growth can BEST be achieved by which of the following?",
+    "options": [
+      "Fault tree analysis",
+      "Analyzing failure data and implementing corrective actions",
+      "Concurrent engineering and robust design",
+      "Concurrent engineering and process design improvement"
+    ],
+    "answer": 3,
+    "explanation": "",
+    "text_ko": "다음 중 신뢰성 향상을 가장 효과적으로 달성할 수 있는 방법은 무엇입니까?",
+    "options_ko": [
+      "결함 트리 분석",
+      "고장 데이터 분석 및 시정 조치 시행",
+      "동시 공학 및 견고한 설계",
+      "동시 공학 및 프로세스 설계 개선"
+    ]
+  },
+  {
+    "id": "Q10",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which statement is TRUE about hypothesis testing?",
+    "options": [
+      "Type I (α) risk is the risk of rejecting a true null hypothesis.",
+      "Type I (α) risk is the consumer's risk.",
+      "Type II (β) risk is the risk of rejecting a null hypothesis when the alternative is true.",
+      "Type II (β) risk is the producer's risk."
+    ],
+    "answer": 0,
+    "explanation": "",
+    "text_ko": "가설 검정에 대한 다음 설명 중 옳은 것은 무엇입니까?",
+    "options_ko": [
+      "제1종 오류(α) 위험은 참인 귀무 가설을 기각할 위험입니다.",
+      "제1종(α) 위험은 소비자의 위험입니다.",
+      "제2종 오류(β) 위험은 대립 가설이 참일 때 귀무 가설을 기각할 위험입니다.",
+      "제2형(β) 위험은 생산자의 위험입니다."
+    ]
+  },
+  {
+    "id": "Q11",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which graph represents a product undergoing step-stress testing?",
+    "options": [
+      "Graph A",
+      "Graph B",
+      "Graph C",
+      "Graph D"
+    ],
+    "answer": 1,
+    "explanation": "",
+    "text_ko": "단계별 스트레스 테스트를 거치는 제품을 나타내는 그래프는 무엇입니까?",
+    "options_ko": [
+      "그래프 A",
+      "그래프 B",
+      "그래프 C",
+      "그래프 D"
+    ]
+  },
+  {
+    "id": "Q12",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which of the following is the first step in establishing an RCM program?",
+    "options": [
+      "Determining who is responsible for responding to improvements",
+      "Determining who will perform the analysis",
+      "Determining at what level assembly analysis will occur",
+      "Determining the budget and software tools needed"
+    ],
+    "answer": 0,
+    "explanation": "",
+    "text_ko": "다음 중 RCM 프로그램을 구축하는 첫 번째 단계는 무엇입니까?",
+    "options_ko": [
+      "개선 사항에 대한 대응 책임자를 결정합니다.",
+      "분석을 수행할 사람을 결정합니다.",
+      "조립 분석이 어느 단계에서 이루어질지 결정하기",
+      "예산 및 필요한 소프트웨어 도구 결정"
+    ]
+  },
+  {
+    "id": "Q13",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "A key distinction between Taguchi designed experiments and classical designs is:",
+    "options": [
+      "Classical designs do not rely on randomization",
+      "Classical designs are never orthogonal",
+      "Taguchi designs employ signal-to-noise ratios",
+      "Taguchi designs do not include factor interactions"
+    ],
+    "answer": 2,
+    "explanation": "",
+    "text_ko": "다구치식 실험설계와 고전적인 실험설계의 핵심적인 차이점은 다음과 같습니다.",
+    "options_ko": [
+      "고전적인 설계 방식은 무작위화에 의존하지 않습니다.",
+      "고전적인 디자인은 결코 직교하지 않습니다.",
+      "타구치 설계는 신호 대 잡음비를 활용합니다.",
+      "타구치 설계에는 요인 간 상호작용이 포함되지 않습니다."
+    ]
+  },
+  {
+    "id": "Q14",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "A primary purpose of burn-in testing is:",
+    "options": [
+      "Ensure parts are safe",
+      "Ensure parts operate at elevated temperatures",
+      "Measure temperature distribution",
+      "Eliminate substandard parts"
+    ],
+    "answer": 1,
+    "explanation": "",
+    "text_ko": "번인 테스트의 주요 목적은 다음과 같습니다.",
+    "options_ko": [
+      "부품이 안전한지 확인하십시오.",
+      "부품이 고온에서 작동하는지 확인하십시오.",
+      "온도 분포를 측정합니다.",
+      "불량 부품을 제거하십시오"
+    ]
+  },
+  {
+    "id": "Q15",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Corrective maintenance is performed in order to:",
+    "options": [
+      "Restore a system after failure",
+      "Restore a system during scheduled downtime",
+      "Reduce failure occurrence",
+      "Correct potential failure before occurrence"
+    ],
+    "answer": 2,
+    "explanation": "",
+    "text_ko": "시정 정비는 다음과 같은 목적으로 수행됩니다.",
+    "options_ko": [
+      "시스템 장애 복구",
+      "예정된 시스템 점검 시간 동안 시스템을 복원합니다.",
+      "고장 발생률 감소",
+      "잠재적 오류 발생 전에 수정하십시오."
+    ]
+  },
+  {
+    "id": "Q16",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "A test machine detects 95% of defective parts. A second test machine detects 90% of the remaining defects. What is the total improvement?",
+    "options": [
+      "4.5%",
+      "5%",
+      "9.5%",
+      "14.5%"
+    ],
+    "answer": 1,
+    "explanation": "",
+    "text_ko": "한 검사 장비는 불량 부품의 95%를 감지합니다. 다른 검사 장비는 나머지 불량품의 90%를 감지합니다. 전체적인 개선율은 얼마입니까?",
+    "options_ko": [
+      "4.50%",
+      "5%",
+      "9.50%",
+      "14.50%"
+    ]
+  },
+  {
+    "id": "Q17",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Three identical subsystems are connected in parallel. What is the system reliability expression?",
+    "options": [
+      "3e – 2λt – 2e – 3λt",
+      "3e – 3λt – 2e – 2λt",
+      "3e – λt – 2e – 2λt",
+      "3e – 2λt – 2e – λt"
+    ],
+    "answer": 0,
+    "explanation": "",
+    "text_ko": "세 개의 동일한 하위 시스템이 병렬로 연결되어 있습니다. 이 시스템의 신뢰도 표현식은 무엇입니까?",
+    "options_ko": [
+      "3e – 2λt – 2e – 3λt",
+      "3e – 3λt – 2e – 2λt",
+      "3e – λt – 2e – 2λt",
+      "3e – 2λt – 2e – λt"
+    ]
+  },
+  {
+    "id": "Q18",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "When analyzing life data where some units have not failed and failure time is only known to exceed the current time, the data is:",
+    "options": [
+      "Right censoring",
+      "Censoring on the left",
+      "Interval censoring",
+      "Weibull censoring"
+    ],
+    "answer": 1,
+    "explanation": "",
+    "text_ko": "일부 장치가 고장 나지 않았고 고장 발생 시점이 현재 시점을 초과하는 것만 알려진 경우, 수명 데이터를 분석할 때 데이터는 다음과 같습니다.",
+    "options_ko": [
+      "우파 검열",
+      "좌파 검열",
+      "구간 검열",
+      "와이블 검열"
+    ]
+  },
+  {
+    "id": "Q19",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "A system is made of several identical parts. Which statement is TRUE?",
+    "options": [
+      "Oldest part fails first",
+      "System failure rate = product of parts' failure rates",
+      "System failure rate = sum of parts' failure rates",
+      "System failure probability = individual failure probability"
+    ],
+    "answer": 2,
+    "explanation": "",
+    "text_ko": "시스템은 여러 개의 동일한 부품으로 구성됩니다. 다음 중 참인 설명은 무엇입니까?",
+    "options_ko": [
+      "가장 오래된 부품이 먼저 고장납니다.",
+      "시스템 고장률 = 부품 고장률의 곱",
+      "시스템 고장률 = 각 부품의 고장률의 합",
+      "시스템 고장 확률 = 개별 고장 확률"
+    ]
+  },
+  {
+    "id": "Q20",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Five motors were run to failure. What is the 90% confidence interval of the mean time to failure?",
+    "options": [
+      "1051 hours & 1942 hours",
+      "653 hours & 3033 hours",
+      "647 hours & 2650 hours",
+      "347 hours & 2650 hours"
+    ],
+    "answer": 0,
+    "explanation": "",
+    "text_ko": "모터 5개를 고장 날 때까지 작동시켰습니다. 평균 고장 시간의 90% 신뢰 구간은 무엇입니까?",
+    "options_ko": [
+      "10시 51분 & 19시 42분",
+      "653시간 & 3033시간",
+      "647시간 & 2650시간",
+      "347시간 & 2650시간"
+    ]
+  },
+  {
+    "id": "Q21",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "A randomly failing component is tested to r failures, and n observations are made. Degrees of freedom for calculating confidence limits on the mean should be:",
+    "options": [
+      "2r",
+      "2r+2",
+      "n",
+      "n−1"
+    ],
+    "answer": 2,
+    "explanation": "",
+    "text_ko": "무작위로 고장나는 부품을 r번 고장낼 때까지 테스트하고 n번 관측합니다. 평균에 대한 신뢰 구간을 계산하기 위한 자유도는 다음과 같습니다.",
+    "options_ko": [
+      "2r",
+      "2r+2",
+      "N",
+      "n−1"
+    ]
+  },
+  {
+    "id": "Q22",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "If a company monitors field reliability using both 6 and 12 month MTBF moving average, generally the 12-month moving averages will:",
+    "options": [
+      "Be greater than the 6-month values",
+      "Be less than the 6-month values",
+      "Vary more than the 6-month values",
+      "Vary less than the 6-month values"
+    ],
+    "answer": 3,
+    "explanation": "",
+    "text_ko": "만약 기업이 6개월 및 12개월 MTBF 이동평균을 모두 사용하여 현장 신뢰성을 모니터링한다면, 일반적으로 12개월 이동평균은 다음과 같은 결과를 보일 것입니다:",
+    "options_ko": [
+      "6개월 평균값보다 커야 합니다.",
+      "6개월치 값보다 낮아야 합니다.",
+      "6개월 평균값보다 더 큰 변동을 보인다",
+      "6개월 값보다 변동폭이 작다"
+    ]
+  },
+  {
+    "id": "Q23",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "The control of input data for a failure reporting, analysis, and corrective action system is BEST determined by:",
+    "options": [
+      "Use of a form",
+      "Possible cause identification",
+      "A failure review board",
+      "Training of data collectors"
+    ],
+    "answer": 0,
+    "explanation": "",
+    "text_ko": "고장 보고, 분석 및 시정 조치 시스템의 입력 데이터 관리는 다음 요소에 의해 가장 잘 결정됩니다.",
+    "options_ko": [
+      "양식 사용",
+      "가능한 원인 규명",
+      "실패 검토 위원회",
+      "데이터 수집가 교육"
+    ]
+  },
+  {
+    "id": "Q24",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Given the reliability block diagram with components A, B, C, D, E and reliabilities Ra, Rb, Rc, Rd, Re, what is the system reliability?",
+    "options": [
+      "Ra[1−(1−Rb)Rc(1−(1−Rd)Re)]",
+      "Ra Rc[1−(1−Rd)Re] + (1−Ra)Rb Rc[1−(1−Rd)Re]",
+      "Ra Rb[1−(1−Rd)Re] Rc[1−(1−Ra)Rb Rc]",
+      "Ra Rc[1−(1−Rd)] + Rb Rc[1−(1−Rd)]"
+    ],
+    "answer": 1,
+    "explanation": "",
+    "text_ko": "구성 요소 A, B, C, D, E와 각 구성 요소의 신뢰도 Ra, Rb, Rc, Rd, Re가 주어진 신뢰도 블록 다이어그램에서 시스템의 신뢰도는 얼마입니까?",
+    "options_ko": [
+      "Ra[1−(1−Rb)Rc(1−(1−Rd)Re)]",
+      "Ra Rc[1−(1−Rd)Re] + (1−Ra)Rb Rc[1−(1−Rd)Re]",
+      "Ra Rb[1−(1−Rd)Re] Rc[1−(1−Ra)Rb Rc]",
+      "Ra Rc[1−(1−Rd)] + Rb Rc[1−(1−Rd)]"
+    ]
+  },
+  {
+    "id": "Q25",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Top probability of the top event in the fault tree equals?",
+    "options": [
+      "Pr(B1)+Pr(B2)−Pr(B1)Pr(B2)",
+      "Pr(B1)Pr(B2)",
+      "Pr(B1)+Pr(B2)",
+      "Pr(B1)+Pr(B2)−Pr(B1)"
+    ],
+    "answer": 0,
+    "explanation": "",
+    "text_ko": "고장수목에서 최상위 사건이 발생할 확률이 가장 높은 값은 얼마입니까?",
+    "options_ko": [
+      "Pr(B1)+Pr(B2)−Pr(B1)Pr(B2)",
+      "Pr(B1)Pr(B2)",
+      "Pr(B1)+Pr(B2)",
+      "Pr(B1)+Pr(B2)−Pr(B1)"
+    ]
+  },
+  {
+    "id": "Q26",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which of the following provides the maximum benefit of parts standardization?",
+    "options": [
+      "Lower product life cycle costs",
+      "Fewer warranty claims",
+      "Fewer inspection errors",
+      "More reliable processes"
+    ],
+    "answer": 0,
+    "explanation": "",
+    "text_ko": "다음 중 부품 표준화의 최대 이점을 제공하는 것은 무엇입니까?",
+    "options_ko": [
+      "제품 수명 주기 비용 절감",
+      "보증 청구 건수 감소",
+      "검사 오류 감소",
+      "더욱 신뢰할 수 있는 프로세스"
+    ]
+  },
+  {
+    "id": "Q27",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "For a corrective action system to be effective, which is MOST important?",
+    "options": [
+      "Prevent recurrence of the problem",
+      "Testing the process for robustness",
+      "Improving design maturity",
+      "Analyzing error data to uncover trends"
+    ],
+    "answer": 0,
+    "explanation": "",
+    "text_ko": "시정 조치 시스템이 효과적이려면 무엇이 가장 중요할까요?",
+    "options_ko": [
+      "문제의 재발을 방지하십시오",
+      "프로세스의 견고성 테스트",
+      "디자인 성숙도 향상",
+      "오류 데이터를 분석하여 추세를 파악합니다."
+    ]
+  },
+  {
+    "id": "Q28",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Probability plotting for single-failure modes is applicable only when data are:",
+    "options": [
+      "Gathered for repairable systems",
+      "Independently and normally distributed",
+      "Independently and identically distributed",
+      "Exponentially distributed"
+    ],
+    "answer": 2,
+    "explanation": "",
+    "text_ko": "단일 고장 모드에 대한 확률 그래프는 다음과 같은 데이터가 있을 때만 적용 가능합니다.",
+    "options_ko": [
+      "수리 가능한 시스템을 위해 수집됨",
+      "독립적으로 정규 분포를 따른다",
+      "독립적이고 동일하게 분포됨",
+      "지수적으로 분포됨"
+    ]
+  },
+  {
+    "id": "Q29",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Maintainability for a system is based on:",
+    "options": [
+      "Time to start up redundant system",
+      "Operating time",
+      "Total preventive-maintenance time",
+      "Total repair time"
+    ],
+    "answer": 3,
+    "explanation": "",
+    "text_ko": "시스템의 유지보수성은 다음 요소들을 기반으로 합니다:",
+    "options_ko": [
+      "이제 예비 시스템을 가동할 시간입니다",
+      "작동 시간",
+      "총 예방 정비 시간",
+      "총 수리 시간"
+    ]
+  },
+  {
+    "id": "Q30",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Switch fails at rate 10^-4. Used 20 times/week for 3 years. Probability of failing by 3 years?",
+    "options": [
+      "7.32×10^-5",
+      "2.68×10^-1",
+      "3.12×10^-1",
+      "7.32×10^-1"
+    ],
+    "answer": 1,
+    "explanation": "",
+    "text_ko": "스위치의 고장률은 10^-4입니다. 3년 동안 주 20회 사용한다고 가정할 때, 3년 안에 스위치가 고장날 확률은 얼마입니까?",
+    "options_ko": [
+      "7.32×10^-5",
+      "2.68×10^-1",
+      "3.12×10^-1",
+      "7.32×10^-1"
+    ]
+  },
+  {
+    "id": "Q31",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which distribution has standard deviation equal to the mean?",
+    "options": [
+      "Negative binomial",
+      "Binomial",
+      "Exponential",
+      "Poisson"
+    ],
+    "answer": 2,
+    "explanation": "",
+    "text_ko": "표준편차가 평균과 같은 분포는 무엇입니까?",
+    "options_ko": [
+      "음이항분포",
+      "이항식",
+      "지수적",
+      "푸아송"
+    ]
+  },
+  {
+    "id": "Q32",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which is the BEST continuous improvement approach?",
+    "options": [
+      "PDCA cycle",
+      "Original seven tools",
+      "New quality management tools",
+      "Multi-vari charts"
+    ],
+    "answer": 0,
+    "explanation": "",
+    "text_ko": "어떤 지속적 개선 접근 방식이 가장 좋을까요?",
+    "options_ko": [
+      "PDCA 사이클",
+      "오리지널 7가지 도구",
+      "새로운 품질 관리 도구",
+      "다변수 차트"
+    ]
+  },
+  {
+    "id": "Q33",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "System has two parallel unequal units with constant failure rates λ1 and λ2. Mean life = ?",
+    "options": [
+      "1/(λ1+λ2)",
+      "3/(2λ1+λ2)",
+      "λ1/(λ1+λ2)",
+      "1/λ1 + 1/λ2"
+    ],
+    "answer": 0,
+    "explanation": "",
+    "text_ko": "이 시스템은 고장률이 λ1과 λ2로 일정한 두 개의 병렬로 연결된 불균등한 유닛으로 구성됩니다. 평균 수명은 얼마입니까?",
+    "options_ko": [
+      "1/(λ1+λ2)",
+      "3/(2λ1+λ2)",
+      "λ1/(λ1+λ2)",
+      "1/λ1 + 1/λ2"
+    ]
+  },
+  {
+    "id": "Q34",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which characteristics apply to Latin Square design?",
+    "options": [
+      "Restrictions equal number of treatments",
+      "Interest is centered on treatments",
+      "Fully randomized design",
+      "Each treatment appears once per row and per column"
+    ],
+    "answer": 3,
+    "explanation": "",
+    "text_ko": "라틴 스퀘어 디자인에는 어떤 특징들이 적용되나요?",
+    "options_ko": [
+      "제한사항: 치료 횟수 동일",
+      "관심은 치료법에 집중되어 있습니다.",
+      "완전 무작위 설계",
+      "각 치료법은 행과 열에 한 번씩 나타납니다."
+    ]
+  },
+  {
+    "id": "Q35",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which factors must be considered to discriminate differences in input parameters when calculating sample size?",
+    "options": [
+      "I and II only",
+      "II and III only",
+      "I, III only",
+      "I, II, III and IV"
+    ],
+    "answer": 3,
+    "explanation": "",
+    "text_ko": "표본 크기를 계산할 때 입력 변수의 차이를 구분하기 위해 어떤 요소를 고려해야 합니까?",
+    "options_ko": [
+      "I과 II만",
+      "II와 III만 해당",
+      "I, III만",
+      "I, II, III 및 IV"
+    ]
+  },
+  {
+    "id": "Q36",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Under a cost of reliability model, which factor is used to determine warranty costs?",
+    "options": [
+      "Repair costs",
+      "Environmental costs",
+      "Product design costs",
+      "Screening costs"
+    ],
+    "answer": 0,
+    "explanation": "",
+    "text_ko": "신뢰성 비용 모델에서 보증 비용을 결정하는 데 사용되는 요소는 무엇입니까?",
+    "options_ko": [
+      "수리 비용",
+      "환경 비용",
+      "제품 설계 비용",
+      "검진 비용"
+    ]
+  },
+  {
+    "id": "Q37",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Fractional design: saturated design allows estimation of which?",
+    "options": [
+      "Main effects and two-way interactions confounded",
+      "Main effects only, unconfounded",
+      "Main effects confounded with interactions",
+      "Main effects unconfounded + two-way interactions unconfounded"
+    ],
+    "answer": 1,
+    "explanation": "",
+    "text_ko": "부분 설계: 포화 설계는 무엇을 추정할 수 있게 해줍니까?",
+    "options_ko": [
+      "주효과와 이원 상호작용이 혼동되었습니다.",
+      "주요 효과만 분석, 교란 변수 미적용",
+      "주효과가 상호작용 효과와 혼동됨",
+      "주효과 (교란 변수 미적용) + 이원 상호작용 (교란 변수 미적용)"
+    ]
+  },
+  {
+    "id": "Q38",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Extruder runs continuously and experiences 24 actions/year. What is MAR?",
+    "options": [
+      "0.0054",
+      "0.0417",
+      "0.0027",
+      "0.00135"
+    ],
+    "answer": 1,
+    "explanation": "",
+    "text_ko": "압출기는 지속적으로 가동되며 연간 24회의 작동을 합니다. MAR이란 무엇입니까?",
+    "options_ko": [
+      "0.0054",
+      "0.0417",
+      "0.0027",
+      "0.00135"
+    ]
+  },
+  {
+    "id": "Q39",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Given fault tree with component probabilities, compute system fault probability:",
+    "options": [
+      "0.3073",
+      "0.3686",
+      "0.4977",
+      "0.5034"
+    ],
+    "answer": 1,
+    "explanation": "",
+    "text_ko": "구성 요소별 확률이 포함된 고장 트리가 주어졌을 때, 시스템 고장 확률을 계산하십시오.",
+    "options_ko": [
+      "0.3073",
+      "0.3686",
+      "0.4977",
+      "0.5034"
+    ]
+  },
+  {
+    "id": "Q40",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which statement is NOT true about a standard part program?",
+    "options": [
+      "Reduces cost of qualifying suppliers",
+      "Reduces number of new part specifications",
+      "Includes freedom to select optimal performance parts",
+      "Improves economy of scale by large quantities"
+    ],
+    "answer": 2,
+    "explanation": "",
+    "text_ko": "표준 부품 프로그램에 대한 설명 중 사실이 아닌 것은 무엇입니까?",
+    "options_ko": [
+      "공급업체 검증 비용 절감",
+      "새로운 부품 사양의 수를 줄입니다.",
+      "최적의 성능을 발휘하는 부품을 자유롭게 선택할 수 있습니다.",
+      "대량 생산을 통해 규모의 경제를 향상시킵니다."
+    ]
+  },
+  {
+    "id": "Q41",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Your supervisor asks you to announce company achievements at ASQ meeting. Proper response?",
+    "options": [
+      "No problem, I can do it",
+      "You must resign",
+      "If I clarify that it is personal opinion, I can do it",
+      "Announcement must not be done"
+    ],
+    "answer": 3,
+    "explanation": "",
+    "text_ko": "상사가 ASQ 회의에서 회사 성과를 발표해달라고 요청했습니다. 적절한 답변은 무엇일까요?",
+    "options_ko": [
+      "문제없어요, 제가 할 수 있어요.",
+      "당신은 사임해야 합니다",
+      "개인적인 의견이라는 점을 명확히 밝히면 가능합니다.",
+      "공지는 해서는 안 됩니다."
+    ]
+  },
+  {
+    "id": "Q42",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which graph represents a product suitable for accelerated overstress test?",
+    "options": [
+      "Graph A",
+      "Graph B",
+      "Graph C",
+      "Graph D"
+    ],
+    "answer": 0,
+    "explanation": "",
+    "text_ko": "가속 과부하 시험에 적합한 제품을 나타내는 그래프는 무엇입니까?",
+    "options_ko": [
+      "그래프 A",
+      "그래프 B",
+      "그래프 C",
+      "그래프 D"
+    ]
+  },
+  {
+    "id": "Q43",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which corporate reliability strategy is MOST effective for multiple product lines?",
+    "options": [
+      "Each line has many plans",
+      "Each line has one plan",
+      "Reliability dept responsible for each product line",
+      "Plan based on overall corporate goals"
+    ],
+    "answer": 3,
+    "explanation": "",
+    "text_ko": "다양한 제품 라인에 가장 효과적인 기업 신뢰성 전략은 무엇일까요?",
+    "options_ko": [
+      "각 라인에는 여러 계획이 있습니다.",
+      "각 라인에는 하나의 계획이 있습니다.",
+      "각 제품 라인에 대한 신뢰성 관리 부서",
+      "전반적인 기업 목표를 기반으로 한 계획"
+    ]
+  },
+  {
+    "id": "Q44",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "TRUE for nonrepairable items?",
+    "options": [
+      "Reliability is survival probability with >1 failures",
+      "Reliability is survival probability over mission time",
+      "Primary unit is mean time to repair",
+      "Primary unit is failure severity"
+    ],
+    "answer": 1,
+    "explanation": "",
+    "text_ko": "수리 불가능한 품목에도 적용되나요?",
+    "options_ko": [
+      "신뢰성은 1회 이상의 고장 발생 시 생존 확률입니다.",
+      "신뢰성은 임무 시간 동안의 생존 확률입니다.",
+      "주요 장치의 평균 수리 시간",
+      "기본 단위는 고장 심각도입니다."
+    ]
+  },
+  {
+    "id": "Q45",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which AC unit has lowest life cycle cost?",
+    "options": [
+      "Unit A",
+      "Unit B",
+      "Not enough information",
+      "Costs too similar"
+    ],
+    "answer": 1,
+    "explanation": "",
+    "text_ko": "수명주기 비용이 가장 낮은 에어컨 모델은 무엇입니까?",
+    "options_ko": [
+      "유닛 A",
+      "유닛 B",
+      "정보가 부족합니다",
+      "비용이 너무 비슷해요"
+    ]
+  },
+  {
+    "id": "Q46",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Chi-square goodness-of-fit is used for which distribution?",
+    "options": [
+      "Exponential",
+      "Normal",
+      "Weibull",
+      "Any assumed distribution"
+    ],
+    "answer": 3,
+    "explanation": "",
+    "text_ko": "카이제곱 적합도 검정은 어떤 분포에 사용됩니까?",
+    "options_ko": [
+      "지수적",
+      "정상",
+      "와이블",
+      "가정된 분배"
+    ]
+  },
+  {
+    "id": "Q47",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which is NOT required to calculate reliability?",
+    "options": [
+      "Probability distribution",
+      "Desired time limit",
+      "Failure rate",
+      "Failure mechanism"
+    ],
+    "answer": 3,
+    "explanation": "",
+    "text_ko": "신뢰도 계산에 필요하지 않은 것은 무엇입니까?",
+    "options_ko": [
+      "확률 분포",
+      "원하는 시간 제한",
+      "실패율",
+      "고장 메커니즘"
+    ]
+  },
+  {
+    "id": "Q48",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Derating enhances reliability EXCEPT by:",
+    "options": [
+      "Reducing parameter variations",
+      "Reducing likelihood of marginal component failure",
+      "Including marginal components",
+      "Providing allowance for uncertainty"
+    ],
+    "answer": 2,
+    "explanation": "",
+    "text_ko": "디레이팅은 다음의 경우를 제외하고 신뢰성을 향상시킵니다.",
+    "options_ko": [
+      "매개변수 변동 감소",
+      "부품 고장 가능성 감소",
+      "한계 구성요소 포함",
+      "불확실성을 고려하여"
+    ]
+  },
+  {
+    "id": "Q49",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Monte Carlo simulation can be used EXCEPT:",
+    "options": [
+      "Non-constant failure rates",
+      "Constant failure rates",
+      "Designing burn-in when events are rare",
+      "Evaluating repairs"
+    ],
+    "answer": 3,
+    "explanation": "",
+    "text_ko": "몬테카를로 시뮬레이션은 다음의 경우를 제외하고 사용할 수 있습니다:",
+    "options_ko": [
+      "비정상적인 고장률",
+      "일정한 고장률",
+      "이벤트 발생 빈도가 낮은 경우 번인 테스트 설계",
+      "수리 평가"
+    ]
+  },
+  {
+    "id": "Q50",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "According to Arrhenius Model, expected life of a component should:",
+    "options": [
+      "Decrease exponentially with ↑ temperature",
+      "Decrease linearly with ↑ temperature",
+      "Increase linearly with ↑ temperature",
+      "Increase exponentially with ↑ temperature"
+    ],
+    "answer": 0,
+    "explanation": "",
+    "text_ko": "아레니우스 모델에 따르면 부품의 예상 수명은 다음과 같아야 합니다.",
+    "options_ko": [
+      "온도가 증가함에 따라 지수적으로 감소합니다.",
+      "온도가 증가함에 따라 선형적으로 감소합니다.",
+      "온도가 증가함에 따라 선형적으로 증가합니다.",
+      "온도가 높아질수록 기하급수적으로 증가합니다."
+    ]
+  },
+  {
+    "id": "Q51",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Yi are independent observations from a normal distribution with a hazard rate λ. What distribution represents the sum r = Σ (1 / Yi) ?",
+    "options": [
+      "Normal",
+      "F",
+      "Chi-square",
+      "Student t"
+    ],
+    "answer": "A",
+    "explanation": "",
+    "text_ko": "Yi는 위험률 λ를 갖는 정규 분포에서 추출한 독립적인 관측값입니다. 합 r = Σ (1 / Yi)를 나타내는 분포는 무엇입니까?",
+    "options_ko": [
+      "정상",
+      "에프",
+      "카이제곱",
+      "학생 t"
+    ]
+  },
+  {
+    "id": "Q52",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "At the mean time between failure for a non-repairable system with a constant failure rate, what percentage of the systems are expected to have failed?",
+    "options": [
+      "37%",
+      "50%",
+      "63%",
+      "100%"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "수리 불가능한 시스템에서 고장률이 일정할 때, 평균 고장 간격(MTBF) 동안 고장이 발생할 것으로 예상되는 시스템의 비율은 몇 퍼센트입니까?",
+    "options_ko": [
+      "37%",
+      "50%",
+      "63%",
+      "100%"
+    ]
+  },
+  {
+    "id": "Q53",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which EVOP experiment characteristics minimize the possibility of degrading a process?",
+    "options": [
+      "EVOP experiments are conducted by process operators",
+      "A large number of experiments are conducted",
+      "Experiments are run under normal production",
+      "A limited number of factors are varied"
+    ],
+    "answer": "A",
+    "explanation": "",
+    "text_ko": "EVOP 실험의 어떤 특성이 공정 저하 가능성을 최소화합니까?",
+    "options_ko": [
+      "EVOP 실험은 공정 운영자에 의해 수행됩니다.",
+      "수많은 실험이 진행됩니다.",
+      "실험은 정상적인 생산 환경에서 진행됩니다.",
+      "제한된 수의 요인들이 다양하게 나타납니다."
+    ]
+  },
+  {
+    "id": "Q54",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which failure-over-time plot is expected for software with multiple debug cycles?",
+    "options": [
+      "Graph A",
+      "Graph B",
+      "Graph C",
+      "Graph D"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "여러 번의 디버깅 주기를 거친 소프트웨어의 경우, 어떤 형태의 시간 경과에 따른 고장률 그래프가 예상됩니까?",
+    "options_ko": [
+      "그래프 A",
+      "그래프 B",
+      "그래프 C",
+      "그래프 D"
+    ]
+  },
+  {
+    "id": "Q55",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Five treatments with two categories (success/failure) are analyzed with chi-square. Degrees of freedom?",
+    "options": [
+      "10",
+      "4",
+      "5",
+      "9"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "성공/실패의 두 가지 범주를 가진 다섯 가지 처리 방법을 카이제곱 검정으로 분석합니다. 자유도는 얼마입니까?",
+    "options_ko": [
+      "10",
+      "4",
+      "5",
+      "9"
+    ]
+  },
+  {
+    "id": "Q56",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "For a 4-hour mission requiring system reliability 0.9999, what MTBF is required?",
+    "options": [
+      "55 hours",
+      "2,500 hours",
+      "10,000 hours",
+      "40,000 hours"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "시스템 신뢰도 0.9999가 요구되는 4시간 임무에 필요한 평균 고장 간격(MTBF)은 얼마입니까?",
+    "options_ko": [
+      "55시간",
+      "2,500시간",
+      "10,000시간",
+      "40,000시간"
+    ]
+  },
+  {
+    "id": "Q57",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which statement about Human Factors Points is TRUE?",
+    "options": [
+      "Should be incorporated during design",
+      "Not required until testing",
+      "Most costly in concept phase",
+      "Cause scheduling slippage"
+    ],
+    "answer": "A",
+    "explanation": "",
+    "text_ko": "인적 요소 관련 설명 중 옳은 것은 무엇입니까?",
+    "options_ko": [
+      "설계 단계에서 포함되어야 합니다.",
+      "테스트 전까지는 필요하지 않습니다.",
+      "개념 구상 단계에서 가장 비용이 많이 든다.",
+      "일정 지연을 초래합니다"
+    ]
+  },
+  {
+    "id": "Q58",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Field-failure reports must have all of the following EXCEPT:",
+    "options": [
+      "Common data points in checklist",
+      "Common failure modes and corrective actions",
+      "Adequate space for handwritten comments",
+      "Customer symptom description"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "현장 고장 보고서에는 다음 사항 중 하나를 제외한 모든 내용이 포함되어야 합니다.",
+    "options_ko": [
+      "체크리스트의 공통 데이터 항목",
+      "일반적인 고장 유형 및 시정 조치",
+      "손으로 의견을 적을 수 있는 충분한 공간",
+      "고객 증상 설명"
+    ]
+  },
+  {
+    "id": "Q59",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which statement about ESS (Environmental Stress Screening) is TRUE?",
+    "options": [
+      "Used to validate design",
+      "Involves random sampling",
+      "A form of accelerated testing",
+      "Stresses equipment beyond design limits"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "ESS(환경 스트레스 스크리닝)에 대한 다음 설명 중 옳은 것은 무엇입니까?",
+    "options_ko": [
+      "설계를 검증하는 데 사용됩니다.",
+      "무작위 표본 추출을 포함합니다.",
+      "가속 시험의 한 형태",
+      "설계 한계를 넘어 장비에 스트레스를 가합니다."
+    ]
+  },
+  {
+    "id": "Q60",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which activity increases reliability the MOST during product life cycle?",
+    "options": [
+      "Improving repeatability",
+      "Developing aggressive testing",
+      "Developing capable processes",
+      "Developing robust design"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "제품 수명 주기 동안 신뢰성을 가장 크게 향상시키는 활동은 무엇입니까?",
+    "options_ko": [
+      "반복성 향상",
+      "공격적인 테스트 개발",
+      "역량 있는 프로세스 개발",
+      "견고한 설계 개발"
+    ]
+  },
+  {
+    "id": "Q61",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which statement about maintainability is TRUE?",
+    "options": [
+      "Should begin during logistics review",
+      "Should begin during design stage",
+      "Primarily field-service issue",
+      "Primarily contractual requirement"
+    ],
+    "answer": "B",
+    "explanation": "",
+    "text_ko": "유지보수성에 관한 다음 설명 중 옳은 것은 무엇입니까?",
+    "options_ko": [
+      "물류 검토 중에 시작해야 합니다.",
+      "설계 단계에서부터 시작해야 합니다.",
+      "주로 현장 서비스 관련 문제",
+      "주로 계약상의 요구 사항"
+    ]
+  },
+  {
+    "id": "Q62",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "In the flat portion of the bathtub curve (useful life), which statement is true?",
+    "options": [
+      "Only one type of failure occurs",
+      "Reliability = exponential function",
+      "Equipment considered highly reliable",
+      "Next failure predictable"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "욕조형 곡선의 평평한 부분(유효 수명)에서 다음 중 어떤 설명이 맞습니까?",
+    "options_ko": [
+      "고장은 한 가지 유형만 발생합니다.",
+      "신뢰도 = 지수 함수",
+      "장비는 매우 신뢰할 수 있는 것으로 간주됩니다.",
+      "다음 실패는 예측 가능합니다"
+    ]
+  },
+  {
+    "id": "Q63",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Four factors: 4×3×2×2 levels. How many treatment combinations?",
+    "options": [
+      "4",
+      "8",
+      "16",
+      "48"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "네 가지 요인: 4×3×2×2 수준. 치료 조합은 몇 가지일까요?",
+    "options_ko": [
+      "4",
+      "8",
+      "16",
+      "48"
+    ]
+  },
+  {
+    "id": "Q64",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Lognormal repair times: mean log = 4.3 hours, σ = 0.7. What is maintainability at 120 hours?",
+    "options": [
+      "0.187",
+      "0.243",
+      "0.757",
+      "0.976"
+    ],
+    "answer": "B",
+    "explanation": "",
+    "text_ko": "수리 시간은 로그정규분포를 따르며, 평균 로그값은 4.3시간, 표준편차는 0.7입니다. 120시간 후의 유지보수성은 얼마입니까?",
+    "options_ko": [
+      "0.187",
+      "0.243",
+      "0.757",
+      "0.976"
+    ]
+  },
+  {
+    "id": "Q65",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Fair coin tossed 10 times. Expected mean and variance of number of heads?",
+    "options": [
+      "0.5 & 0.025",
+      "5.0 & 2.5",
+      "5.0 & 5.0",
+      "10.0 & 5.0"
+    ],
+    "answer": "B",
+    "explanation": "",
+    "text_ko": "공정한 동전을 10번 던졌을 때, 앞면이 나온 횟수의 평균과 분산은 얼마입니까?",
+    "options_ko": [
+      "0.5 & 0.025",
+      "5.0 및 2.5",
+      "5.0 & 5.0",
+      "10.0 & 5.0"
+    ]
+  },
+  {
+    "id": "Q66",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which factor is NOT used in risk assessment?",
+    "options": [
+      "Certainty",
+      "Reliability",
+      "Probability",
+      "Statistics"
+    ],
+    "answer": "A",
+    "explanation": "",
+    "text_ko": "위험 평가에 사용되지 않는 요소는 무엇입니까?",
+    "options_ko": [
+      "확실성",
+      "신뢰할 수 있음",
+      "개연성",
+      "통계"
+    ]
+  },
+  {
+    "id": "Q67",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which block diagram represents system reliability when Unit C must function?",
+    "options": [
+      "Diagram A",
+      "Diagram B",
+      "Diagram C",
+      "Diagram D"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "유닛 C가 반드시 작동해야 할 때 시스템 신뢰성을 나타내는 블록 다이어그램은 무엇입니까?",
+    "options_ko": [
+      "도표 A",
+      "도표 B",
+      "도표 C",
+      "도표 D"
+    ]
+  },
+  {
+    "id": "Q68",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Greatest benefit of fault-tree analysis?",
+    "options": [
+      "Easy to perform",
+      "Converted to computer program",
+      "Systematic, identifies failures",
+      "Bottom-up detailed scenario"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "결함수목분석의 가장 큰 장점은 무엇인가요?",
+    "options_ko": [
+      "수행하기 쉽습니다",
+      "컴퓨터 프로그램으로 변환됨",
+      "체계적이며, 실패를 식별합니다.",
+      "하향식 상세 시나리오"
+    ]
+  },
+  {
+    "id": "Q69",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Reliability predictions initially used to:",
+    "options": [
+      "Estimate system end-of-life",
+      "Estimate component performance",
+      "Measure product readiness",
+      "Establish competitive position"
+    ],
+    "answer": "B",
+    "explanation": "",
+    "text_ko": "초기에 신뢰도 예측은 다음과 같은 용도로 사용되었습니다.",
+    "options_ko": [
+      "시스템 수명 종료 시점을 추정합니다.",
+      "구성 요소 성능을 예측합니다.",
+      "제품 준비 상태를 측정합니다.",
+      "경쟁력 있는 위치를 확보하십시오"
+    ]
+  },
+  {
+    "id": "Q70",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which is NOT a characteristic of testability?",
+    "options": [
+      "Fault detection",
+      "Fault isolation",
+      "Fault repair rate",
+      "False alarm rate"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "다음 중 테스트 가능성의 특징이 아닌 것은 무엇입니까?",
+    "options_ko": [
+      "오류 감지",
+      "결함 격리",
+      "고장 수리율",
+      "오경보율"
+    ]
+  },
+  {
+    "id": "Q71",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Most important for corrective action system?",
+    "options": [
+      "Follow-up",
+      "Robustness testing",
+      "Design maturity",
+      "Warranty analysis"
+    ],
+    "answer": "A",
+    "explanation": "",
+    "text_ko": "시정 조치 시스템에서 가장 중요한 것은 무엇입니까?",
+    "options_ko": [
+      "후속 조치",
+      "견고성 테스트",
+      "설계 성숙도",
+      "보증 분석"
+    ]
+  },
+  {
+    "id": "Q72",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which is NOT used for continuous variable data?",
+    "options": [
+      "Box plots",
+      "Fault-tree diagrams",
+      "Average-range charts",
+      "Cause-effect diagrams"
+    ],
+    "answer": "B",
+    "explanation": "",
+    "text_ko": "연속 변수 데이터에 사용되지 않는 것은 무엇입니까?",
+    "options_ko": [
+      "상자 그림",
+      "결함수목도",
+      "평균 범위 차트",
+      "원인-결과 다이어그램"
+    ]
+  },
+  {
+    "id": "Q73",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Reliability prediction justified if:",
+    "options": [
+      "Sets tolerance limits",
+      "Settles management concerns",
+      "Contract requirement",
+      "Leads to more reliable product"
+    ],
+    "answer": "A",
+    "explanation": "",
+    "text_ko": "신뢰성 예측이 타당한 경우는 다음과 같습니다.",
+    "options_ko": [
+      "허용 오차 범위를 설정합니다.",
+      "경영진의 우려를 해소합니다",
+      "계약 요건",
+      "더욱 안정적인 제품으로 이어진다"
+    ]
+  },
+  {
+    "id": "Q74",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Actions to correct failures usually fail because they focus on:",
+    "options": [
+      "Symptom",
+      "Apparent cause",
+      "Root cause",
+      "Immediate cause"
+    ],
+    "answer": "B",
+    "explanation": "",
+    "text_ko": "실패를 바로잡기 위한 조치는 대개 다음과 같은 점에 초점을 맞추기 때문에 실패합니다.",
+    "options_ko": [
+      "징후",
+      "명백한 원인",
+      "근본 원인",
+      "직접적인 원인"
+    ]
+  },
+  {
+    "id": "Q75",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which is a chargeable reliability failure?",
+    "options": [
+      "Nonrelevant failure",
+      "Repair-induced failure",
+      "Failure beyond expected life",
+      "Unverified failure"
+    ],
+    "answer": "B",
+    "explanation": "",
+    "text_ko": "어떤 것이 유료 신뢰성 실패인가요?",
+    "options_ko": [
+      "무관한 실패",
+      "수리로 인한 실패",
+      "예상 수명 이상의 실패",
+      "검증되지 않은 오류"
+    ]
+  },
+  {
+    "id": "Q76",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Why use CERT testing?",
+    "options": [
+      "Reduce test time",
+      "Match real-life conditions",
+      "Find failure modes not found elsewhere",
+      "All of the above"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "CERT 테스트를 사용하는 이유는 무엇일까요?",
+    "options_ko": [
+      "테스트 시간 단축",
+      "실제 상황과 일치시키세요",
+      "다른 곳에서는 찾을 수 없는 고장 모드를 찾아보세요",
+      "위의 모든 것"
+    ]
+  },
+  {
+    "id": "Q77",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Reliability prediction & measurement are useful in:",
+    "options": [
+      "Establish reliability goals",
+      "Evaluate feasibility",
+      "Establish testing programs",
+      "All of these"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "신뢰성 예측 및 측정은 다음과 같은 경우에 유용합니다.",
+    "options_ko": [
+      "신뢰성 목표를 설정하세요",
+      "실현 가능성 평가",
+      "시험 프로그램을 수립하십시오",
+      "이 모든 것"
+    ]
+  },
+  {
+    "id": "Q78",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Failure preventing mission classified as:",
+    "options": [
+      "Critical",
+      "Major",
+      "Minor",
+      "Independent"
+    ],
+    "answer": "A",
+    "explanation": "",
+    "text_ko": "임무 실패 방지 분류는 다음과 같습니다.",
+    "options_ko": [
+      "비판적인",
+      "주요한",
+      "미성년자",
+      "독립적인"
+    ]
+  },
+  {
+    "id": "Q79",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Best source of reliability & usage information?",
+    "options": [
+      "In-house tests",
+      "Independent tests",
+      "Field support data",
+      "Quality control data"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "신뢰성 및 사용량 정보를 얻을 수 있는 가장 좋은 출처는 어디인가요?",
+    "options_ko": [
+      "자체 테스트",
+      "독립적인 테스트",
+      "현장 지원 데이터",
+      "품질 관리 데이터"
+    ]
+  },
+  {
+    "id": "Q80",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Amount/type of data depends on:",
+    "options": [
+      "Financial consideration",
+      "Customer requirements",
+      "Reliability of product",
+      "Failure modes"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "데이터의 양/유형은 다음 요소에 따라 달라집니다.",
+    "options_ko": [
+      "재정적 고려사항",
+      "고객 요구 사항",
+      "제품의 신뢰성",
+      "고장 모드"
+    ]
+  },
+  {
+    "id": "Q81",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Most important role of a failure review board?",
+    "options": [
+      "Assess failures",
+      "Monitor corrective action",
+      "Monitor reliability growth",
+      "Ensure corrective action is effective"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "실패 검토 위원회의 가장 중요한 역할은 무엇일까요?",
+    "options_ko": [
+      "실패를 평가하세요",
+      "시정 조치를 모니터링합니다",
+      "신뢰성 증가를 모니터링합니다.",
+      "시정 조치가 효과적인지 확인하십시오"
+    ]
+  },
+  {
+    "id": "Q82",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "If plating of tube increases as inside diameter decreases, correlation coefficient would be:",
+    "options": [
+      "Between 0 and +1",
+      "Greater than 1",
+      "Between 0 and -1",
+      "Equal to 1"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "튜브의 도금량이 내경이 감소함에 따라 증가한다면 상관계수는 다음과 같습니다.",
+    "options_ko": [
+      "0과 +1 사이",
+      "1보다 큼",
+      "0과 -1 사이",
+      "1과 같음"
+    ]
+  },
+  {
+    "id": "Q83",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Non-relevant failures include all EXCEPT:",
+    "options": [
+      "Unverified failures",
+      "Mishandling failures",
+      "Operating adjustment failures",
+      "Human error failures"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "무관한 오류에는 다음을 제외한 모든 것이 포함됩니다.",
+    "options_ko": [
+      "검증되지 않은 실패",
+      "잘못된 처리로 인한 실패",
+      "작동 조정 오류",
+      "인간의 실수로 인한 실패"
+    ]
+  },
+  {
+    "id": "Q84",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Best technique for tracking process to see if corrective action needed?",
+    "options": [
+      "Pareto",
+      "Control charts",
+      "Trend analysis",
+      "Time-series plotting"
+    ],
+    "answer": "B",
+    "explanation": "",
+    "text_ko": "시정 조치가 필요한지 여부를 판단하기 위한 프로세스 추적에 가장 적합한 기법은 무엇일까요?",
+    "options_ko": [
+      "파레토",
+      "통제 차트",
+      "추세 분석",
+      "시계열 그래프"
+    ]
+  },
+  {
+    "id": "Q85",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Key component in providing reliable product?",
+    "options": [
+      "Supplier acceptance",
+      "Workforce training",
+      "Reduce variability",
+      "Scheduled maintenance"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "신뢰할 수 있는 제품을 제공하는 데 있어 핵심 요소는 무엇일까요?",
+    "options_ko": [
+      "공급업체 승인",
+      "직업 훈련",
+      "변동성을 줄이세요",
+      "예정된 유지 관리"
+    ]
+  },
+  {
+    "id": "Q86",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Continuous probability distribution?",
+    "options": [
+      "Weibull",
+      "Hypergeometric",
+      "Binomial",
+      "Poisson"
+    ],
+    "answer": "A",
+    "explanation": "",
+    "text_ko": "연속 확률 분포?",
+    "options_ko": [
+      "와이블",
+      "초하 기하급수",
+      "이항식",
+      "푸아송"
+    ]
+  },
+  {
+    "id": "Q87",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Normal distribution, μ=120, σ²=36. What is x for P(X>x)=0.95?",
+    "options": [
+      "112.3",
+      "108.73",
+      "137.62",
+      "127.71"
+    ],
+    "answer": "A",
+    "explanation": "",
+    "text_ko": "정규분포, μ=120, σ²=36. P(X>x)=0.95인 경우 x는 무엇입니까?",
+    "options_ko": [
+      "112.3",
+      "108.73",
+      "137.62",
+      "127.71"
+    ]
+  },
+  {
+    "id": "Q88",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which expression relating f(t), R(t), h(t) is TRUE?",
+    "options": [
+      "I only",
+      "II only",
+      "III only",
+      "IV only"
+    ],
+    "answer": "A",
+    "explanation": "",
+    "text_ko": "f(t), R(t), h(t) 사이의 관계를 나타내는 다음 표현 중 참인 것은 무엇입니까?",
+    "options_ko": [
+      "나는 단지",
+      "II만",
+      "III만 해당",
+      "IV 전용"
+    ]
+  },
+  {
+    "id": "Q89",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which does NOT fit with bathtub curve?",
+    "options": [
+      "Useful life",
+      "Exponential reliability",
+      "Wearout",
+      "Constant failure rate"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "욕조 곡선에 맞지 않는 것은 무엇입니까?",
+    "options_ko": [
+      "유용한 수명",
+      "지수적 신뢰도",
+      "마모",
+      "일정한 고장률"
+    ]
+  },
+  {
+    "id": "Q90",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "15 engines tested 5 hours. 3 failed. 95% CI for MTBF?",
+    "options": [
+      "0.57–8.06",
+      "0.69–8.06",
+      "0.75–9.20",
+      "0.80–9.50"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "엔진 15개를 5시간 동안 테스트한 결과 3개가 불량 판정을 받았습니다. 평균 고장 간격(MTBF)에 대한 95% 신뢰 구간은 얼마입니까?",
+    "options_ko": [
+      "0.57–8.06",
+      "0.69–8.06",
+      "0.75–9.20",
+      "0.80~9.50"
+    ]
+  },
+  {
+    "id": "Q91",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Reliability of switching system after 30,000 hours?",
+    "options": [
+      "0.63",
+      "0.80",
+      "0.77",
+      "0.75"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "3만 시간 작동 후 스위칭 시스템의 신뢰성은 어떠한가?",
+    "options_ko": [
+      "0.63",
+      "0.8",
+      "0.77",
+      "0.75"
+    ]
+  },
+  {
+    "id": "Q92",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Acceptable preventive maintenance form?",
+    "options": [
+      "I only",
+      "II only",
+      "I and II only",
+      "I, II, and III"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "허용 가능한 예방 정비 양식은 무엇입니까?",
+    "options_ko": [
+      "나는 단지",
+      "II만",
+      "I과 II만",
+      "1, 2, 3"
+    ]
+  },
+  {
+    "id": "Q93",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Flat portion of bathtub curve:",
+    "options": [
+      "One failure mode exists",
+      "Reliability = exponential",
+      "Equipment highly reliable",
+      "Failure time predictable"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "욕조 곡선의 평평한 부분:",
+    "options_ko": [
+      "하나의 고장 모드가 존재합니다.",
+      "신뢰도 = 지수적",
+      "장비의 신뢰성이 매우 높습니다.",
+      "실패 시간 예측 가능"
+    ]
+  },
+  {
+    "id": "Q94",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Formal design review controls are called:",
+    "options": [
+      "Quality systems documentation",
+      "Documentation control",
+      "Configuration control",
+      "Standards organization"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "공식적인 설계 검토 통제는 다음과 같이 불립니다:",
+    "options_ko": [
+      "품질 시스템 문서화",
+      "문서 관리",
+      "구성 제어",
+      "표준화 기구"
+    ]
+  },
+  {
+    "id": "Q95",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "What is required for a reliability specification?",
+    "options": [
+      "Usage environment",
+      "Robust design",
+      "Reliability policy",
+      "Mathematical model"
+    ],
+    "answer": "A",
+    "explanation": "",
+    "text_ko": "신뢰성 명세에 필요한 사항은 무엇입니까?",
+    "options_ko": [
+      "사용 환경",
+      "견고한 디자인",
+      "신뢰성 정책",
+      "수학적 모델"
+    ]
+  },
+  {
+    "id": "Q96",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Availability can be defined as:",
+    "options": [
+      "I only",
+      "II only",
+      "I and II only",
+      "I, II, and III"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "가용성은 다음과 같이 정의할 수 있습니다.",
+    "options_ko": [
+      "나는 단지",
+      "II만",
+      "I과 II만",
+      "1, 2, 3"
+    ]
+  },
+  {
+    "id": "Q97",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Maintenance program effectiveness MOST affected by:",
+    "options": [
+      "Spare parts availability",
+      "Ease of installation",
+      "Reliability of replaced items",
+      "Skill level of personnel"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "유지보수 프로그램의 효과성에 가장 큰 영향을 미치는 요인은 다음과 같습니다.",
+    "options_ko": [
+      "예비 부품 재고 현황",
+      "설치 용이성",
+      "교체된 품목의 신뢰성",
+      "직원의 숙련도"
+    ]
+  },
+  {
+    "id": "Q98",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which is NOT appropriate for availability definition?",
+    "options": [
+      "Operable at mission start",
+      "Perform mission when required",
+      "Actual operating time ratio",
+      "Ability to achieve mission under conditions"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "가용성 정의에 적합하지 않은 것은 무엇입니까?",
+    "options_ko": [
+      "임무 시작 시 작동 가능",
+      "필요에 따라 임무를 수행하십시오.",
+      "실제 작동 시간 비율",
+      "주어진 조건에서 임무를 완수할 수 있는 능력"
+    ]
+  },
+  {
+    "id": "Q99",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Ratio of total operating time to total number of failures:",
+    "options": [
+      "Maintenance action rate",
+      "Maintainability",
+      "Failure rate",
+      "Mean time to failure"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "총 작동 시간 대비 총 고장 횟수 비율:",
+    "options_ko": [
+      "유지보수 조치율",
+      "유지 보수성",
+      "실패율",
+      "평균 고장 시간"
+    ]
+  },
+  {
+    "id": "Q100",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Sample size needed at σ=1.2% to estimate error rate within 0.5% at 95% CI?",
+    "options": [
+      "15",
+      "23",
+      "27",
+      "37"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "95% 신뢰구간에서 오차율을 0.5% 이내로 추정하기 위해 필요한 표본 크기는 얼마입니까? (표준편차 σ=1.2%)",
+    "options_ko": [
+      "15",
+      "23",
+      "27",
+      "37"
+    ]
+  },
+  {
+    "id": "Q101",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Equipment and machinery do break down and require repairs over time. Which of the following should you follow first as a plant engineer?",
+    "options": [
+      "Keep repair time as low as possible",
+      "Keep failure rate as low as possible",
+      "Keep operating hours as high as possible",
+      "Keep repair times independent of production time"
+    ],
+    "answer": "B",
+    "explanation": "",
+    "text_ko": "장비와 기계는 시간이 지남에 따라 고장이 나고 수리가 필요하게 됩니다. 플랜트 엔지니어로서 다음 중 어떤 조치를 가장 먼저 취해야 할까요?",
+    "options_ko": [
+      "수리 시간을 최대한 짧게 유지하세요",
+      "실패율을 최대한 낮게 유지하십시오.",
+      "영업시간을 최대한 높게 유지하세요",
+      "수리 시간은 생산 시간과 별개로 유지하십시오."
+    ]
+  },
+  {
+    "id": "Q102",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "50 resistors from a lot of 75,000 were tested. The average was 3,306 ohms with a variance of 21,609 ohms. What is the 95% confidence range for resistance?",
+    "options": [
+      "3,012–3,600 ohms",
+      "2,855–3,747 ohms",
+      "2,927–3,685 ohms",
+      "2,846–3,766 ohms"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "75,000개의 저항기 중에서 50개를 측정했습니다. 평균 저항은 3,306옴이고, 분산은 21,609옴입니다. 저항에 대한 95% 신뢰구간은 얼마입니까?",
+    "options_ko": [
+      "3,012~3,600옴",
+      "2,855~3,747옴",
+      "2,927~3,685옴",
+      "2,846~3,766옴"
+    ]
+  },
+  {
+    "id": "Q103",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "For the ANOVA Table shown, what is the F-table value for α=0.01?",
+    "options": [
+      "0.999",
+      "5.544",
+      "6.570",
+      "6.633"
+    ],
+    "answer": "B",
+    "explanation": "",
+    "text_ko": "제시된 분산 분석표에서 유의수준 α=0.01일 때의 F값은 얼마입니까?",
+    "options_ko": [
+      "0.999",
+      "5.544",
+      "6.57",
+      "6.633"
+    ]
+  },
+  {
+    "id": "Q104",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which of the following is MOST valuable in Human Engineering?",
+    "options": [
+      "FMECA",
+      "Monte-Carlo analysis",
+      "ANOVA",
+      "Full scale model"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "인간공학에서 다음 중 가장 가치 있는 것은 무엇입니까?",
+    "options_ko": [
+      "FMECA",
+      "몬테카를로 분석",
+      "분산 분석",
+      "실물 크기 모형"
+    ]
+  },
+  {
+    "id": "Q105",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which of the following defines a mission profile?",
+    "options": [
+      "Time-phased",
+      "A summary of events and environments",
+      "All activities from initiation to completion",
+      "All of the above"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "다음 중 임무 프로필을 정의하는 것은 무엇입니까?",
+    "options_ko": [
+      "시간 단계별",
+      "사건 및 환경 요약",
+      "시작부터 완료까지 모든 활동",
+      "위의 모든 것"
+    ]
+  },
+  {
+    "id": "Q106",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which of the following does NOT eliminate a hazard?",
+    "options": [
+      "Contingency analysis",
+      "FMEA",
+      "Fault-tree analysis",
+      "Procedure analysis"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "다음 중 위험 요소를 제거하지 않는 것은 무엇입니까?",
+    "options_ko": [
+      "비상 계획 분석",
+      "FMEA",
+      "결함수목분석",
+      "절차 분석"
+    ]
+  },
+  {
+    "id": "Q107",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Reliability safety would be considered which of the following?",
+    "options": [
+      "Completely automated process",
+      "Absence of unacceptable hazards",
+      "Compliance with regulations",
+      "All of the above"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "신뢰성 안전성은 다음 중 어떤 것을 의미하는가?",
+    "options_ko": [
+      "완전 자동화 프로세스",
+      "용납할 수 없는 위험 요소의 부재",
+      "규정 준수",
+      "위의 모든 것"
+    ]
+  },
+  {
+    "id": "Q108",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "While testing a new design, 3 failures occurred in 100 tests. What is the lower 90% confidence limit of reliability?",
+    "options": [
+      "0.9628",
+      "0.950",
+      "0.925",
+      "0.935"
+    ],
+    "answer": "A",
+    "explanation": "",
+    "text_ko": "새로운 설계를 테스트하는 동안 100번의 테스트에서 3번의 실패가 발생했습니다. 신뢰도의 90% 신뢰 하한값은 얼마입니까?",
+    "options_ko": [
+      "0.9628",
+      "0.95",
+      "0.925",
+      "0.935"
+    ]
+  },
+  {
+    "id": "Q109",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "When a potential hazard is identified, which strategies can be used?",
+    "options": [
+      "Design for hazard minimization",
+      "Attach safety devices",
+      "Provide warning labels",
+      "Develop safety procedures"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "잠재적 위험 요소가 확인되었을 때 어떤 전략을 사용할 수 있을까요?",
+    "options_ko": [
+      "위험 최소화를 위한 설계",
+      "안전 장치를 부착하세요",
+      "경고 라벨을 제공하세요",
+      "안전 절차를 개발하십시오"
+    ]
+  },
+  {
+    "id": "Q110",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Products should be tested under which condition?",
+    "options": [
+      "Demonstrate function at minimum cost",
+      "Approximate customer conditions",
+      "Confirm specs under lab conditions",
+      "Assure performance under severe conditions"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "제품은 어떤 조건에서 테스트해야 합니까?",
+    "options_ko": [
+      "최소 비용으로 기능을 입증하십시오",
+      "대략적인 고객 조건",
+      "실험실 조건에서 사양을 확인하십시오.",
+      "극한 조건에서도 성능을 보장합니다"
+    ]
+  },
+  {
+    "id": "Q111",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Most important reliability characteristic of a product is that it:",
+    "options": [
+      "Has higher MTBF",
+      "Has easy maintenance",
+      "Performs required functions throughout life cycle",
+      "Has low warranty costs"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "제품의 신뢰성을 판단하는 데 있어 가장 중요한 특성은 다음과 같습니다.",
+    "options_ko": [
+      "MTBF가 더 높습니다.",
+      "유지 관리가 쉽습니다.",
+      "제품 수명 주기 전반에 걸쳐 필요한 기능을 수행합니다.",
+      "보증 비용이 저렴합니다."
+    ]
+  },
+  {
+    "id": "Q112",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Prototype suspension spring tested 12,000 hours, 6 failures. Failure rate?",
+    "options": [
+      "0.0018/hour",
+      "0.0024/hour",
+      "0.0005/hour",
+      "0.0020/hour"
+    ],
+    "answer": "B",
+    "explanation": "",
+    "text_ko": "시제품 서스펜션 스프링을 12,000시간 동안 테스트한 결과 6건의 고장이 발생했습니다. 고장률은 얼마입니까?",
+    "options_ko": [
+      "0.0018/시간",
+      "0.0024/시간",
+      "0.0005/시간",
+      "0.0020/시간"
+    ]
+  },
+  {
+    "id": "Q113",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Reliability of a complex system can BEST be improved by:",
+    "options": [
+      "Selecting components objectively",
+      "Multiple system testing",
+      "Well-designed and executed maintenance",
+      "Including redundant concepts"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "복잡한 시스템의 신뢰성을 가장 효과적으로 향상시키는 방법은 다음과 같습니다.",
+    "options_ko": [
+      "객관적인 부품 선택",
+      "다중 시스템 테스트",
+      "잘 설계되고 실행된 유지보수",
+      "중복되는 개념을 포함함"
+    ]
+  },
+  {
+    "id": "Q114",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Medium-sized firm reliability test plan should include all EXCEPT:",
+    "options": [
+      "Discover every failure mode",
+      "Estimate MTBF values",
+      "Inspect major parts",
+      "Provide safe test environment"
+    ],
+    "answer": "A",
+    "explanation": "",
+    "text_ko": "중견기업 신뢰성 테스트 계획에는 다음 사항을 제외한 모든 것이 포함되어야 합니다.",
+    "options_ko": [
+      "모든 실패 원인을 파악하세요",
+      "MTBF 값을 추정합니다.",
+      "주요 부품을 검사하십시오",
+      "안전한 테스트 환경을 제공합니다"
+    ]
+  },
+  {
+    "id": "Q115",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Reliability for device with hazard h(t): 0<t<2=λ, 2<t<6=2λ, t>6=λ/2. What is R(t=4)?",
+    "options": [
+      "e^-3λ",
+      "e^-2λ",
+      "e^-4λ",
+      "e^-2.25λ"
+    ],
+    "answer": "A",
+    "explanation": "",
+    "text_ko": "위험 함수 h(t)가 0<t<2=λ, 2<t<6=2λ, t>6=λ/2인 장치의 신뢰도입니다. R(t=4)는 얼마입니까?",
+    "options_ko": [
+      "e^-3λ",
+      "e^-2λ",
+      "e^-4λ",
+      "e^-2.25λ"
+    ]
+  },
+  {
+    "id": "Q116",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Failure rates in exponential case:",
+    "options": [
+      "Multiplied for independent events",
+      "Increase to mean value",
+      "Summed for independent series",
+      "Used for Weibull when β=2"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "지수 함수 형태의 실패율:",
+    "options_ko": [
+      "독립적인 사건에 대해 곱해짐",
+      "평균값으로 증가",
+      "독립 시리즈에 대해 합산",
+      "β=2일 때 Weibull 분포에 사용됩니다."
+    ]
+  },
+  {
+    "id": "Q117",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Reliability for three components in series, each reliability R?",
+    "options": [
+      "3R",
+      "3R-3R²+R³",
+      "(1-R)³",
+      "R³"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "직렬로 연결된 세 구성 요소의 신뢰도(각 구성 요소의 신뢰도 R)는 얼마입니까?",
+    "options_ko": [
+      "3R",
+      "3R-3R²+R³",
+      "(1-R)³",
+      "R³"
+    ]
+  },
+  {
+    "id": "Q118",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "System parameter influencing reliability the most:",
+    "options": [
+      "Capability",
+      "Transfer functions",
+      "Availability and dependability",
+      "Hostile environments"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "시스템 신뢰성에 가장 큰 영향을 미치는 매개변수:",
+    "options_ko": [
+      "능력",
+      "전달 함수",
+      "가용성 및 신뢰성",
+      "적대적 환경"
+    ]
+  },
+  {
+    "id": "Q119",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Four independent components, failure rate 0.005/hour. Reliability at 10 hours?",
+    "options": [
+      "0.8187",
+      "0.8860",
+      "0.9512",
+      "0.9802"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "4개의 독립적인 부품, 고장률 0.005/시간. 10시간 후 신뢰성은 어떨까요?",
+    "options_ko": [
+      "0.8187",
+      "0.886",
+      "0.9512",
+      "0.9802"
+    ]
+  },
+  {
+    "id": "Q120",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Design reviews should be held:",
+    "options": [
+      "During design phase",
+      "After completion",
+      "At least once a year",
+      "At each critical milestone"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "설계 검토 회의를 개최해야 합니다:",
+    "options_ko": [
+      "설계 단계 동안",
+      "완료 후",
+      "적어도 일 년에 한 번은",
+      "각 중요한 이정표에서"
+    ]
+  },
+  {
+    "id": "Q121",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "In FMECA, when data insufficient to quantify severity, what is best method?",
+    "options": [
+      "Automatic classification",
+      "Critical category method",
+      "No assignment due to no data",
+      "Delphi technique"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "FMECA에서 심각도를 정량화하기에 데이터가 불충분할 경우, 가장 적절한 방법은 무엇일까요?",
+    "options_ko": [
+      "자동 분류",
+      "중요 범주 방법",
+      "데이터 부족으로 과제 없음",
+      "델파이 기법"
+    ]
+  },
+  {
+    "id": "Q122",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "In FMECA, determining severity of failure effects is part of:",
+    "options": [
+      "Modeling determination",
+      "Risk analysis",
+      "Design potential",
+      "Criticality analysis"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "FMECA에서 고장 영향의 심각도를 판단하는 것은 다음과 같은 과정의 일부입니다.",
+    "options_ko": [
+      "모델링 결정",
+      "위험 분석",
+      "디자인 잠재력",
+      "중요도 분석"
+    ]
+  },
+  {
+    "id": "Q123",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Reliability prediction is justifiable if:",
+    "options": [
+      "Sets quality tolerance",
+      "Helps management confidence",
+      "Leads to more reliable products",
+      "Contract requirement"
+    ],
+    "answer": "A",
+    "explanation": "",
+    "text_ko": "신뢰성 예측은 다음과 같은 경우에 정당화될 수 있습니다.",
+    "options_ko": [
+      "품질 허용 오차를 설정합니다.",
+      "경영진의 자신감을 높여줍니다",
+      "더욱 신뢰할 수 있는 제품으로 이어진다",
+      "계약 요건"
+    ]
+  },
+  {
+    "id": "Q124",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Design function assigning probability of failures between subsystems is called:",
+    "options": [
+      "Significance",
+      "Prediction",
+      "Qualification",
+      "Apportionment"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "하위 시스템 간 고장 확률을 할당하는 설계 함수를 다음과 같이 부릅니다.",
+    "options_ko": [
+      "중요성",
+      "예측",
+      "자격",
+      "분배"
+    ]
+  },
+  {
+    "id": "Q125",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Valid failure causes used in reliability engineering include:",
+    "options": [
+      "Static causes, brittleness, instability, creep, fatigue",
+      "Thermal, corrosion, fatigue, rust",
+      "Vibration, torque, alignment, heat",
+      "All of the above"
+    ],
+    "answer": "A",
+    "explanation": "",
+    "text_ko": "신뢰성 공학에서 사용되는 유효한 고장 원인은 다음과 같습니다.",
+    "options_ko": [
+      "정적 원인, 취성, 불안정성, 크리프, 피로",
+      "열, 부식, 피로, 녹",
+      "진동, 토크, 정렬, 열",
+      "위의 모든 것"
+    ]
+  },
+  {
+    "id": "Q126",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Derating a component to 50% reduces failure rate by:",
+    "options": [
+      "More than 50%",
+      "More than 30%",
+      "10–30%",
+      "Less than 10%"
+    ],
+    "answer": "B",
+    "explanation": "",
+    "text_ko": "부품의 성능을 50%로 낮추면 고장률이 다음과 같이 감소합니다.",
+    "options_ko": [
+      "50% 이상",
+      "30% 이상",
+      "10~30%",
+      "10% 미만"
+    ]
+  },
+  {
+    "id": "Q127",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Redundant system with 5 parallel components (λ=0.03 at 20h). Reliability?",
+    "options": [
+      "0.9232",
+      "0.9432",
+      "0.9997",
+      "0.9999"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "5개의 병렬 구성 요소로 이루어진 이중화 시스템(λ=0.03, 20시간). 신뢰성은 어떨까요?",
+    "options_ko": [
+      "0.9232",
+      "0.9432",
+      "0.9997",
+      "0.9999"
+    ]
+  },
+  {
+    "id": "Q128",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Series system reliability at 5h = 0.80, with 3 components λ₁=0.04, λ₂=0.07, λ₃=0.01. Which is incorrect?",
+    "options": [
+      "0.9123",
+      "0.9283",
+      "0.8780",
+      "0.9816"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "직렬 시스템의 5시간 신뢰도는 0.80이고, 구성 요소는 λ₁=0.04, λ₂=0.07, λ₃=0.01입니다. 다음 중 틀린 것은 무엇입니까?",
+    "options_ko": [
+      "0.9123",
+      "0.9283",
+      "0.878",
+      "0.9816"
+    ]
+  },
+  {
+    "id": "Q129",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Sequential life testing can be based on which distributions?",
+    "options": [
+      "Binomial",
+      "Weibull",
+      "Exponential",
+      "Monte Carlo"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "순차적 수명 시험은 어떤 분포를 기반으로 할 수 있습니까?",
+    "options_ko": [
+      "이항식",
+      "와이블",
+      "지수적",
+      "몬테카를로"
+    ]
+  },
+  {
+    "id": "Q130",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "For a critical application, which statement about safety margin is FALSE?",
+    "options": [
+      "Safety factor <1.0",
+      "Margin > safety factor",
+      "Std dev of stress < std dev of strength",
+      "All of the above"
+    ],
+    "answer": "B",
+    "explanation": "",
+    "text_ko": "중요 애플리케이션의 경우, 안전 여유에 대한 다음 설명 중 틀린 것은 무엇입니까?",
+    "options_ko": [
+      "안전계수 <1.0",
+      "마진 > 안전계수",
+      "응력의 표준편차 < 강도의 표준편차",
+      "위의 모든 것"
+    ]
+  },
+  {
+    "id": "Q131",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "A reliability test before production is called:",
+    "options": [
+      "Failure analysis",
+      "Acceptance test",
+      "Qualification test",
+      "Significance test"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "생산 전 신뢰성 테스트를 다음과 같이 부릅니다.",
+    "options_ko": [
+      "고장 분석",
+      "인수 테스트",
+      "자격 시험",
+      "유의성 검정"
+    ]
+  },
+  {
+    "id": "Q132",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Why select accelerated life testing for expensive products?",
+    "options": [
+      "Normal test time too long",
+      "Sample size too small",
+      "Part variation too large",
+      "Product follows lognormal/Weibull"
+    ],
+    "answer": "A",
+    "explanation": "",
+    "text_ko": "고가의 제품에 가속 수명 시험을 선택하는 이유는 무엇일까요?",
+    "options_ko": [
+      "정상 검사 시간이 너무 오래 걸립니다.",
+      "표본 크기가 너무 작습니다.",
+      "부품 변동이 너무 큽니다",
+      "해당 제품은 로그정규분포/와이블 분포를 따릅니다."
+    ]
+  },
+  {
+    "id": "Q133",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Automated machinery BEST for conditions:",
+    "options": [
+      "Continuous repetitive processes",
+      "Various originality",
+      "Quick reaction to stimuli",
+      "Interpretation of collected data"
+    ],
+    "answer": "A",
+    "explanation": "",
+    "text_ko": "자동화 장비가 가장 적합한 환경:",
+    "options_ko": [
+      "지속적이고 반복적인 프로세스",
+      "다양한 독창성",
+      "자극에 대한 빠른 반응",
+      "수집된 데이터의 해석"
+    ]
+  },
+  {
+    "id": "Q134",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Probability of failure if stress=20,000 psi, strength=25,000 psi, σ=2,000 psi?",
+    "options": [
+      "2.24%",
+      "1.25%",
+      "2.50%",
+      "5.32%"
+    ],
+    "answer": "A",
+    "explanation": "",
+    "text_ko": "응력=20,000 psi, 강도=25,000 psi, σ=2,000 psi일 때 파손 확률은 얼마입니까?",
+    "options_ko": [
+      "2.24%",
+      "1.25%",
+      "2.50%",
+      "5.32%"
+    ]
+  },
+  {
+    "id": "Q135",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Most important reasons for performing design reviews:",
+    "options": [
+      "Identify anticipated field usage",
+      "Review referenced specs",
+      "Follow-up prior actions",
+      "All of the above"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "설계 검토를 수행하는 가장 중요한 이유:",
+    "options_ko": [
+      "예상되는 현장 사용량을 파악하십시오.",
+      "참조된 사양을 검토하십시오.",
+      "이전 조치에 대한 후속 조치",
+      "위의 모든 것"
+    ]
+  },
+  {
+    "id": "Q136",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Purpose of derating parts is to:",
+    "options": [
+      "Increase part life",
+      "Enhance system reliability",
+      "Improve design circuit",
+      "All of the above"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "부품의 출력 저하 목적은 다음과 같습니다.",
+    "options_ko": [
+      "부품 수명 연장",
+      "시스템 신뢰성 향상",
+      "회로 설계 개선",
+      "위의 모든 것"
+    ]
+  },
+  {
+    "id": "Q137",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Formal design controls (drawings, specs) are referred to as:",
+    "options": [
+      "Configuration control",
+      "Documentation control",
+      "Quality systems documentation",
+      "Standards organization"
+    ],
+    "answer": "B",
+    "explanation": "",
+    "text_ko": "공식적인 설계 관리(도면, 사양서)는 다음과 같이 불립니다.",
+    "options_ko": [
+      "구성 제어",
+      "문서 관리",
+      "품질 시스템 문서화",
+      "표준화 기구"
+    ]
+  },
+  {
+    "id": "Q138",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which is NOT essential to ensure reliable software product?",
+    "options": [
+      "Specify requirements completely",
+      "Ensure requirements tested",
+      "Document changes",
+      "Perform failure mode analysis"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "안정적인 소프트웨어 제품을 보장하는 데 필수적이지 않은 것은 무엇입니까?",
+    "options_ko": [
+      "요구사항을 완전히 명시하십시오.",
+      "요구사항이 테스트되었는지 확인하십시오",
+      "문서 변경 사항",
+      "고장 모드 분석을 수행하십시오."
+    ]
+  },
+  {
+    "id": "Q139",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Noise factors in Taguchi robust design are located where?",
+    "options": [
+      "Outer array",
+      "Extreme value",
+      "Control array",
+      "Quadratic array"
+    ],
+    "answer": "A",
+    "explanation": "",
+    "text_ko": "타구치 강건 설계에서 잡음 인자는 어디에 위치합니까?",
+    "options_ko": [
+      "외부 배열",
+      "극치",
+      "제어 배열",
+      "2차 배열"
+    ]
+  },
+  {
+    "id": "Q140",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which technique is NOT applicable for worst-case analysis?",
+    "options": [
+      "Extreme value",
+      "Eyring model",
+      "Monte Carlo",
+      "All of the above"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "최악의 경우 분석에 적용할 수 없는 기법은 무엇입니까?",
+    "options_ko": [
+      "극치",
+      "아이링 모델",
+      "몬테카를로",
+      "위의 모든 것"
+    ]
+  },
+  {
+    "id": "Q141",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Human reliability is probability that a person will:",
+    "options": [
+      "Be available to perform under adverse conditions",
+      "Successfully complete within time limit",
+      "Perform under ideal conditions",
+      "Avoid product damage"
+    ],
+    "answer": "B",
+    "explanation": "",
+    "text_ko": "인간의 신뢰도는 사람이 다음과 같은 행동을 할 확률입니다.",
+    "options_ko": [
+      "불리한 상황에서도 업무를 수행할 수 있어야 합니다.",
+      "제한 시간 내에 성공적으로 완료하세요",
+      "최적의 조건에서 성능을 발휘합니다.",
+      "제품 손상을 방지하세요"
+    ]
+  },
+  {
+    "id": "Q142",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Primary objectives of a training needs assessment:",
+    "options": [
+      "Determine training being conducted",
+      "Evaluate certification",
+      "Develop training plan",
+      "Set new performance objectives"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "교육 요구 분석의 주요 목표:",
+    "options_ko": [
+      "진행 중인 교육을 확인하십시오",
+      "인증 평가",
+      "훈련 계획을 수립하세요",
+      "새로운 성과 목표를 설정하세요"
+    ]
+  },
+  {
+    "id": "Q143",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "System effectiveness is defined as the extent to which a system may be expected to achieve a set of specific mission requirements. Which of the following is TRUE?",
+    "options": [
+      "It is a function of availability, dependability, and capability",
+      "It can only be expressed as availability",
+      "It cannot be used as a criterion for system justification",
+      "It is unrelated to mission capability"
+    ],
+    "answer": "A",
+    "explanation": "",
+    "text_ko": "시스템 효율성은 시스템이 특정 임무 요구 사항들을 달성할 것으로 예상되는 정도를 의미합니다. 다음 중 옳은 것은 무엇입니까?",
+    "options_ko": [
+      "이는 가용성, 신뢰성 및 역량의 함수입니다.",
+      "이는 가용성으로만 표현될 수 있습니다.",
+      "이는 시스템 정당성의 기준으로 사용될 수 없습니다.",
+      "이는 임무 수행 능력과는 무관합니다."
+    ]
+  },
+  {
+    "id": "Q144",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "System and cost effectiveness analysis results are used to:",
+    "options": [
+      "Determine system performance, cost, and schedule",
+      "Support weapons system decisions",
+      "Guide preliminary design features",
+      "All of the above"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "시스템 및 비용 효율성 분석 결과는 다음과 같은 용도로 사용됩니다.",
+    "options_ko": [
+      "시스템 성능, 비용 및 일정을 결정합니다.",
+      "무기 체계 관련 결정을 지원합니다.",
+      "초기 설계 특징을 안내합니다.",
+      "위의 모든 것"
+    ]
+  },
+  {
+    "id": "Q145",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which term defines the ability of an item to perform required functions for the duration of a specified mission profile?",
+    "options": [
+      "Reliability",
+      "Mission capability",
+      "Reliability growth",
+      "Serviceability"
+    ],
+    "answer": "A",
+    "explanation": "",
+    "text_ko": "특정 임무 프로필 기간 동안 필요한 기능을 수행할 수 있는 품목의 능력을 정의하는 용어는 무엇입니까?",
+    "options_ko": [
+      "신뢰할 수 있음",
+      "임무 수행 능력",
+      "신뢰성 성장",
+      "서비스성"
+    ]
+  },
+  {
+    "id": "Q146",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which statement is TRUE regarding X-bar control charts?",
+    "options": [
+      "Limits are set at observed mean ± 3σ",
+      "Width of control limits is proportional to √n",
+      "2700 ppm will fall outside limits if in control",
+      "If in control, 1/2 of points will fall below centerline"
+    ],
+    "answer": "A",
+    "explanation": "",
+    "text_ko": "X-bar 관리도에 대한 다음 설명 중 옳은 것은 무엇입니까?",
+    "options_ko": [
+      "오차범위는 관측 평균 ± 3σ로 설정됩니다.",
+      "관리 한계의 폭은 √n에 비례합니다.",
+      "2700ppm은 관리가 잘 되고 있는 경우 허용 기준치를 벗어나는 수치가 될 것입니다.",
+      "제어가 잘 될 경우, 점의 절반은 중심선 아래에 위치하게 됩니다."
+    ]
+  },
+  {
+    "id": "Q147",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "The MOST important reliability characteristic of a product is that it:",
+    "options": [
+      "Has a higher MTBF than competitors",
+      "Has easy maintenance and service features",
+      "Performs required functions throughout the life cycle",
+      "Demonstrates low warranty costs"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "제품의 신뢰성을 결정짓는 가장 중요한 특성은 다음과 같습니다.",
+    "options_ko": [
+      "경쟁사보다 평균 고장 간격(MTBF)이 더 높습니다.",
+      "유지보수 및 서비스 기능이 간편합니다.",
+      "제품 수명 주기 전반에 걸쳐 필요한 기능을 수행합니다.",
+      "낮은 보증 비용을 보여줍니다"
+    ]
+  },
+  {
+    "id": "Q148",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which characteristics are essential for a successful design review team?",
+    "options": [
+      "Multi-disciplined functionality",
+      "Engineering and reliability judgment",
+      "Management experience",
+      "Functions only as an investigative research team"
+    ],
+    "answer": "A",
+    "explanation": "",
+    "text_ko": "성공적인 디자인 검토팀에 필수적인 특징은 무엇일까요?",
+    "options_ko": [
+      "다분야 기능성",
+      "공학 및 신뢰성 판단",
+      "경영 경험",
+      "조사 연구팀으로서의 기능만 수행합니다."
+    ]
+  },
+  {
+    "id": "Q149",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "The 80% lower confidence limit requirement for a go/no-go device is 0.997. How many units must be tested with zero failures to meet this requirement?",
+    "options": [
+      "392",
+      "460",
+      "536",
+      "629"
+    ],
+    "answer": "C",
+    "explanation": "",
+    "text_ko": "합격/불합격 판정 장치의 80% 하위 신뢰 한계 요구 사항은 0.997입니다. 이 요구 사항을 충족하려면 불량 없이 몇 대의 장치를 테스트해야 합니까?",
+    "options_ko": [
+      "392",
+      "460",
+      "536",
+      "629"
+    ]
+  },
+  {
+    "id": "Q150",
+    "chapter": "CRE Sample Test 5",
+    "type": "A",
+    "text": "Which of the following is NOT a primary objective of system burn-in (run-in)?",
+    "options": [
+      "Screen infant mortality defects",
+      "Improve customer perception",
+      "Identify defective parts",
+      "Correct design problems"
+    ],
+    "answer": "D",
+    "explanation": "",
+    "text_ko": "다음 중 시스템 번인(러닝인)의 주요 목표가 아닌 것은 무엇입니까?",
+    "options_ko": [
+      "영아 사망률 검사 결함",
+      "고객 인식을 개선하세요",
+      "결함이 있는 부품을 식별합니다.",
+      "설계 문제를 수정하세요"
+    ]
+  }
+]
