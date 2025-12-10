@@ -1,0 +1,1183 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>CRE Practice CBT (Cloud Sync Version)</title>
+
+<!-- Firebase App 초기 설정 -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import {
+    getFirestore,
+    doc,
+    setDoc,
+    getDoc,
+    getDocs,
+    collection
+  } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBYrsPIpbP7wBMJk8QrU9vUtF0JDhfn2C4",
+    authDomain: "rd-cre-cbt-sync.firebaseapp.com",
+    projectId: "rd-cre-cbt-sync",
+    storageBucket: "rd-cre-cbt-sync.firebasestorage.app",
+    messagingSenderId: "1085101263930",
+    appId: "1:1085101263930:web:06d1339169b431b63e3903"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  window.db = getFirestore(app);
+
+  function getUID() {
+    let uid = localStorage.getItem("cre_uid");
+    if (!uid) {
+      uid = crypto.randomUUID();
+      localStorage.setItem("cre_uid", uid);
+    }
+    return uid;
+  }
+  window.USER_UID = getUID();
+</script>
+
+<style>
+body {
+  font-family: Arial, system-ui, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f2f4f7;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 20px auto;
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px 24px 40px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  display: none;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 12px;
+  background: #f7f9fc;
+  border-radius: 8px;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  display: block;
+}
+
+select, input[type="number"], input[type="text"], textarea {
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #1f6feb;
+  background: #1f6feb;
+  color: #fff;
+  cursor: pointer;
+}
+
+button.secondary {
+  background: #fff;
+  color: #1f2933;
+  border-color: #cbd2e1;
+}
+
+button.danger {
+  background: #e11d48;
+  border-color: #e11d48;
+}
+
+#gateOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#gateBox {
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 24px;
+  width: 320px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+</style>
+
+</head>
+<body>
+
+<!-- 출입 게이트 -->
+<div id="gateOverlay">
+  <div id="gateBox">
+    <h2>CRE 연습 사이트</h2>
+    <p style="font-size:13px;color:#4b5563;">비밀번호를 입력하세요.</p>
+    <input type="password" id="gatePassword" placeholder="비밀번호" />
+    <div id="gateMessage"></div>
+    <button id="gateBtn">입장</button>
+  </div>
+</div>
+
+<!-- 메인 컨테이너 -->
+<div class="container" id="appContainer">
+  <h1>CRE Practice CBT (Cloud Sync)</h1>
+
+  <!-- 상단 옵션 -->
+  <div class="controls">
+    <div>
+      <label>챕터 선택</label>
+      <select id="chapterSelect"></select>
+    </div>
+
+    <div>
+      <label>유형 선택</label>
+      <select id="typeSelect">
+        <option value="all">A+C 전체</option>
+        <option value="A">A-type</option>
+        <option value="C">C-type</option>
+      </select>
+    </div>
+
+    <div>
+      <label>문제 수</label>
+      <input id="countInput" type="number" min="1" max="200" value="10" />
+    </div>
+
+    <div>
+      <label>타이머(분)</label>
+      <input id="timerInput" type="number" min="0" max="240" value="60" />
+    </div>
+
+    <div>
+      <label>출제 모드</label>
+      <select id="modeSelect">
+        <option value="normal">일반</option>
+        <option value="wrong">오답만</option>
+        <option value="weak">약점 챕터</option>
+      </select>
+    </div>
+
+    <div>
+      <label>보기 모드</label>
+      <input type="checkbox" id="dualViewToggle"/> 영/한 2단
+    </div>
+
+    <div style="display:flex;align-items:flex-end;gap:8px;">
+      <button id="startBtn">시험 시작</button>
+      <button id="submitBtn" class="secondary" disabled>제출</button>
+      <button id="resetBtn" class="secondary" disabled>초기화</button>
+    </div>
+
+    <div style="margin-left:auto; text-align:right;">
+      <div id="timer">Timer: OFF</div>
+      <div id="modeDesc"></div>
+    </div>
+  </div>
+
+  <!-- 문제 표시 영역 -->
+  <div id="quizBox"></div>
+
+  <!-- 결과 표시 영역 -->
+  <div id="resultBox"></div>
+
+  <!-- 패널 영역 -->
+  <div class="panel-row">
+    <!-- 오답노트 -->
+    <div class="panel">
+      <h3>📒 오답노트 (Cloud Sync)</h3>
+      <div id="wrongNotesBox"></div>
+      <button class="secondary" onclick="clearWrongNotes()">오답노트 초기화</button>
+    </div>
+
+    <!-- 점수 기록 -->
+    <div class="panel">
+      <h3>📊 점수 기록 (Cloud Sync)</h3>
+      <div id="scoreHistoryBox"></div>
+      <button class="secondary" onclick="clearScoreHistory()">점수 기록 초기화</button>
+    </div>
+
+    <!-- 문제 추가 -->
+    <div class="panel">
+      <h3>➕ 문제 추가 (Local Only)</h3>
+
+      <form id="addQuestionForm">
+        <label>문제 ID</label>
+        <input type="text" id="addId" required />
+
+        <label>챕터</label>
+        <select id="addChapter"></select>
+
+        <label>유형</label>
+        <select id="addType">
+          <option value="A">A-type</option>
+          <option value="C">C-type</option>
+        </select>
+
+        <label>문제 내용 (영문)</label>
+        <textarea id="addText" required></textarea>
+
+        <label>보기 A/B/C/D</label>
+        <input type="text" id="addOpA" required />
+        <input type="text" id="addOpB" required />
+        <input type="text" id="addOpC" required />
+        <input type="text" id="addOpD" required />
+
+        <label>정답 (0~3)</label>
+        <input type="number" id="addAnswer" min="0" max="3" class="small-input" required />
+
+        <label>해설 (선택)</label>
+        <textarea id="addExplanation"></textarea>
+
+        <button type="submit" class="secondary" style="margin-top:8px;">문제 추가</button>
+      </form>
+
+      <hr style="margin:10px 0;">
+      <h4>📁 JSON 문제 파일 업로드</h4>
+      <input type="file" id="uploadFileInput" accept=".json" />
+      <button class="secondary" id="uploadFileBtn" style="margin-top:6px;">파일에서 문제 추가</button>
+
+      <p style="font-size:11px;color:#6b7280;">
+        JSON 배열 형식: { id, chapter, type, text, options[4], answer, explanation? }
+      </p>
+
+      <hr style="margin:10px 0;">
+      <h4>📦 사용자 문제 관리</h4>
+      <button class="danger" id="clearCustomBtn">사용자 문제 삭제</button>
+      <button class="secondary" id="exportCustomBtn" style="margin-top:4px;">문제 JSON 다운로드</button>
+    </div>
+  </div>
+
+
+<script>
+/******************************************************************
+ * BLOCK 3-1 — Firestore + LocalStorage 하이브리드 엔진
+ ******************************************************************/
+
+/*********** CUSTOM QUESTIONS (Local Only) ***********/
+const loadCustomQuestions = () =>
+  JSON.parse(localStorage.getItem("creCustomQuestions") || "[]");
+
+const saveCustomQuestions = (v) =>
+  localStorage.setItem("creCustomQuestions", JSON.stringify(v));
+
+/*********** WRONG NOTES — Firestore + LocalStorage ***********/
+async function fsSaveWrongNote(note) {
+  const ref = doc(db, "users", USER_UID, "wrong_notes", note.id);
+  await setDoc(ref, note, { merge: true });
+}
+
+async function fsLoadWrongNotes() {
+  const snap = await getDocs(collection(db, "users", USER_UID, "wrong_notes"));
+  return snap.docs.map((d) => d.data());
+}
+
+async function loadWrongNotes() {
+  const local = JSON.parse(localStorage.getItem("creWrongNotes") || "[]");
+  try {
+    const remote = await fsLoadWrongNotes();
+    localStorage.setItem("creWrongNotes", JSON.stringify(remote));
+    return remote;
+  } catch (err) {
+    return local;
+  }
+}
+
+async function saveWrongNotes(list) {
+  localStorage.setItem("creWrongNotes", JSON.stringify(list));
+  for (const item of list) await fsSaveWrongNote(item);
+}
+
+/*********** SCORE — Firestore + LocalStorage ***********/
+async function fsSaveScore(scoreObj) {
+  const id = String(scoreObj.timestamp);
+  await setDoc(doc(db, "users", USER_UID, "scores", id), scoreObj);
+}
+
+async function fsLoadScores() {
+  const snap = await getDocs(collection(db, "users", USER_UID, "scores"));
+  return snap.docs.map((d) => d.data());
+}
+
+async function loadScoreHistory() {
+  const local = JSON.parse(localStorage.getItem("creScoreHistory") || "[]");
+  try {
+    const remote = await fsLoadScores();
+    localStorage.setItem("creScoreHistory", JSON.stringify(remote));
+    return remote;
+  } catch {
+    return local;
+  }
+}
+
+async function saveScoreHistory(list) {
+  localStorage.setItem("creScoreHistory", JSON.stringify(list));
+  for (const s of list) await fsSaveScore(s);
+}
+
+/******************************************************************
+ * BASE QUESTIONS — 고정 문제 (일부만)
+ ******************************************************************/
+const BASE_QUESTIONS = [
+  {
+    id: "Q1",
+    chapter: "샘플 - Statistical Concepts",
+    type: "C",
+    text:
+      "For an exponential distribution with MTBF = 800 hours, what is the reliability at 400 hours?",
+    options: ["0.50", "0.61", "0.37", "0.80"],
+    answer: 1,
+    explanation:
+      "R(t) = exp(-t/MTBF) = exp(-400/800) = exp(-0.5) ≈ 0.606"
+  },
+  {
+    id: "Q2",
+    chapter: "샘플 - Statistical Concepts",
+    type: "A",
+    text: "In a Weibull distribution, what does a shape parameter β > 1 indicate?",
+    options: [
+      "Early-life failures",
+      "Wear-out failures (increasing failure rate)",
+      "Constant failure rate",
+      "Random failures"
+    ],
+    answer: 1,
+    explanation: "β>1 means wear-out region with increasing hazard rate."
+  }
+];
+
+const getAllQuestions = () =>
+  BASE_QUESTIONS.concat(loadCustomQuestions());
+</script>
+
+<script>
+/******************************************************************
+ * BLOCK 3-2 — 챕터 자동 생성 + 렌더링 기본 함수들
+ ******************************************************************/
+
+/*** 챕터 드롭다운 갱신 ***/
+function refreshChapterDropdown() {
+  const chSel = document.getElementById("chapterSelect");
+  const chAdd = document.getElementById("addChapter");
+
+  const all = getAllQuestions();
+  const chapters = new Set(["전체"]);
+
+  all.forEach((q) => chapters.add(q.chapter));
+
+  let mainHTML = "";
+  let addHTML = "";
+
+  chapters.forEach((ch) => {
+    mainHTML += `<option value="${ch === "전체" ? "all" : ch}">${ch}</option>`;
+    if (ch !== "전체") addHTML += `<option value="${ch}">${ch}</option>`;
+  });
+
+  chSel.innerHTML = mainHTML;
+  chAdd.innerHTML = addHTML;
+}
+
+/******************************************************************
+ * 오답노트 렌더링
+ ******************************************************************/
+async function renderWrongNotes() {
+  const notes = await loadWrongNotes();
+  const box = document.getElementById("wrongNotesBox");
+
+  if (!notes.length) {
+    box.innerHTML = `<div style="font-size:12px;color:#888;">오답 없음</div>`;
+    return;
+  }
+
+  box.innerHTML = notes
+    .map(
+      (n) => `
+      <div class="note-item">
+        <b>${n.id}</b>
+        <span class="tag ${n.type}">${n.type}</span>
+        <div>${n.text}</div>
+        <div style="font-size:11px;color:#666;">
+          ${n.chapter} · ${n.missCount}회 · ${n.lastDate}
+        </div>
+      </div>
+      `
+    )
+    .join("");
+}
+
+/******************************************************************
+ * 점수 기록 렌더링
+ ******************************************************************/
+async function renderScoreHistory() {
+  const hist = await loadScoreHistory();
+  const box = document.getElementById("scoreHistoryBox");
+
+  if (!hist.length) {
+    box.innerHTML = `<div style="font-size:12px;color:#888;">기록 없음</div>`;
+    return;
+  }
+
+  box.innerHTML = hist
+    .slice()
+    .reverse()
+    .map(
+      (h) => `
+      <div class="score-item">
+        <b>${h.date}</b> — ${h.correct}/${h.total}
+        (${Math.round((h.correct / h.total) * 100)}%)
+        <div style="font-size:11px;color:#555;">
+          ${h.mode} · ${h.durationSec}s
+        </div>
+      </div>
+      `
+    )
+    .join("");
+}
+
+/******************************************************************
+ * 오답/점수 초기화 버튼
+ ******************************************************************/
+async function clearWrongNotes() {
+  if (!confirm("오답노트를 모두 삭제할까요?")) return;
+  await saveWrongNotes([]);
+  renderWrongNotes();
+}
+
+async function clearScoreHistory() {
+  if (!confirm("점수 기록을 삭제할까요?")) return;
+  await saveScoreHistory([]);
+  renderScoreHistory();
+}
+
+</script>
+
+<script>
+/******************************************************************
+ * BLOCK 3-3 — 번역 엔진 + 2단 보기 렌더링
+ ******************************************************************/
+
+/*** 기술 번역 사전 기반 변환 ***/
+function translateTechTerm(text) {
+  if (!text) return "";
+  let out = text;
+
+  const dict = {
+    "reliability": "신뢰도",
+    "availability": "가용도",
+    "maintainability": "정비성",
+    "MTBF": "평균고장간격(MTBF)",
+    "MTTR": "평균수리시간(MTTR)",
+    "failure rate": "고장률",
+    "hazard rate": "위험률",
+    "exponential distribution": "지수분포",
+    "weibull distribution": "와이블 분포",
+    "weibull": "와이블"
+  };
+
+  for (const [en, ko] of Object.entries(dict)) {
+    const re = new RegExp(en, "gi");
+    out = out.replace(re, ko + " (" + en + ")");
+  }
+  return out;
+}
+
+/*** 자연 번역 패턴 ***/
+function translateNaturalSentence(text) {
+  if (!text) return "";
+  let out = text;
+
+  out = out.replace(/Which of the following/gi, "다음 중");
+  out = out.replace(/Which is NOT/gi, "다음 중 옳지 않은 것은");
+  out = out.replace(/\?/g, "인가?");
+
+  return out;
+}
+
+/*** 한국어 번역 블록 만들기 ***/
+function buildKoreanQuestionBlock(q) {
+  const techQ = translateTechTerm(q.text);
+  const natQ = translateNaturalSentence(q.text);
+
+  let html = `
+    <div class="ko-header">Q${q._no} 한글 번역</div>
+    <div class="ko-label">기술 번역</div>
+    <div>${techQ}</div>
+    <div class="ko-label">자연 번역</div>
+    <div>${natQ}</div>
+    <div class="ko-label" style="margin-top:6px;">보기 번역</div>
+  `;
+
+  q.options.forEach((op, idx) => {
+    const techOp = translateTechTerm(op);
+    const natOp = translateNaturalSentence(op);
+    const ch = String.fromCharCode(65 + idx);
+
+    html += `
+      <div class="ko-option">
+        <b>${ch}.</b> ${techOp}
+        <div style="margin-left:18px;">${natOp}</div>
+      </div>
+    `;
+  });
+
+  return html;
+}
+
+</script>
+
+<script>
+/******************************************************************
+ * BLOCK 3-4 — 문제 렌더링 + 출제 엔진 + 타이머
+ ******************************************************************/
+
+/*** 타이머 관련 변수 ***/
+let timerId = null;
+let timerSeconds = 0;
+let quizStarted = false;
+let quizStartTime = null;
+let currentQuiz = [];
+let dualViewEnabled = false;
+
+/******************************************************************
+ * 타이머 제어
+ ******************************************************************/
+function stopTimer() {
+  if (timerId !== null) {
+    clearInterval(timerId);
+    timerId = null;
+  }
+}
+
+function updateTimerDisplay() {
+  const el = document.getElementById("timer");
+  if (timerSeconds <= 0) {
+    el.textContent = "Timer: OFF";
+    return;
+  }
+  const m = String(Math.floor(timerSeconds / 60)).padStart(2, "0");
+  const s = String(timerSeconds % 60).padStart(2, "0");
+  el.textContent = `남은 시간: ${m}:${s}`;
+}
+
+function startTimer(sec) {
+  stopTimer();
+  timerSeconds = sec;
+  updateTimerDisplay();
+
+  if (sec <= 0) return;
+
+  timerId = setInterval(() => {
+    timerSeconds--;
+    updateTimerDisplay();
+    if (timerSeconds <= 0) {
+      stopTimer();
+      alert("시간 종료! 자동 제출됩니다.");
+      submitQuiz(true);
+    }
+  }, 1000);
+}
+
+/******************************************************************
+ * 배열 셔플
+ ******************************************************************/
+const shuffleArray = (arr) => {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+};
+
+/******************************************************************
+ * 문제 렌더링
+ ******************************************************************/
+function renderQuiz() {
+  const box = document.getElementById("quizBox");
+  box.innerHTML = "";
+
+  const dual = dualViewEnabled;
+
+  currentQuiz.forEach((q, idx) => {
+    q._no = idx + 1;
+
+    if (!dual) {
+      /* 영어만 표시 */
+      let h = `
+        <div class="question-block">
+          <div class="question-title">Q${idx + 1}. ${q.text}</div>
+          <div class="meta">${q.id} · ${q.chapter} · ${q.type}</div>
+      `;
+      q.options.forEach((op, j) => {
+        h += `
+          <div class="option">
+            <label>
+              <input type="radio" name="q${idx}" value="${j}">
+              ${String.fromCharCode(65 + j)}. ${op}
+            </label>
+          </div>`;
+      });
+      h += "</div>";
+      box.innerHTML += h;
+
+    } else {
+      /* 2단(영/한) 보기 */
+      let left = `
+        <div class="q-left">
+          <div class="question-title">Q${idx + 1}. ${q.text}</div>
+          <div class="meta">${q.id} · ${q.chapter} · ${q.type}</div>
+      `;
+      q.options.forEach((op, j) => {
+        left += `
+          <div class="option">
+            <label>
+              <input type="radio" name="q${idx}" value="${j}">
+              ${String.fromCharCode(65 + j)}. ${op}
+            </label>
+          </div>`;
+      });
+      left += "</div>";
+
+      const right = `<div class="q-right">${buildKoreanQuestionBlock(q)}</div>`;
+
+      box.innerHTML += `<div class="question-block dual">${left}${right}</div>`;
+    }
+  });
+}
+
+/******************************************************************
+ * 출제 엔진 — 모드에 따라 문제 pool 구성
+ ******************************************************************/
+function buildQuestionPool(all, notes) {
+  const ch = document.getElementById("chapterSelect").value;
+  const tp = document.getElementById("typeSelect").value;
+  const mode = document.getElementById("modeSelect").value;
+
+  if (mode === "normal") {
+    return {
+      pool: all.filter(
+        (q) =>
+          (ch === "all" || q.chapter === ch) &&
+          (tp === "all" || q.type === tp)
+      ),
+      autoChapter: null,
+    };
+  }
+
+  if (mode === "wrong") {
+    const wrongIds = new Set(notes.map((n) => n.id));
+    return {
+      pool: all.filter(
+        (q) =>
+          wrongIds.has(q.id) &&
+          (ch === "all" || q.chapter === ch) &&
+          (tp === "all" || q.type === tp)
+      ),
+      autoChapter: null,
+    };
+  }
+
+  if (mode === "weak") {
+    if (!notes.length) return { pool: [], autoChapter: null };
+
+    const count = {};
+    notes.forEach((n) => {
+      count[n.chapter] = (count[n.chapter] || 0) + n.missCount;
+    });
+
+    let weak = null,
+      max = -1;
+    for (const c in count) {
+      if (count[c] > max) {
+        max = count[c];
+        weak = c;
+      }
+    }
+
+    const tp = document.getElementById("typeSelect").value;
+
+    return {
+      pool: all.filter(
+        (q) => q.chapter === weak && (tp === "all" || q.type === tp)
+      ),
+      autoChapter: weak,
+    };
+  }
+}
+
+/******************************************************************
+ * 시험 시작
+ ******************************************************************/
+async function startQuiz() {
+  const cnt = Number(document.getElementById("countInput").value);
+  const tm = Number(document.getElementById("timerInput").value);
+
+  const all = getAllQuestions();
+  const notes = await loadWrongNotes();
+
+  const { pool, autoChapter } = buildQuestionPool(all, notes);
+  if (!pool.length) {
+    alert("출제 가능한 문제가 없습니다!");
+    return;
+  }
+
+  currentQuiz = shuffleArray(pool).slice(0, cnt || pool.length);
+  renderQuiz();
+
+  quizStarted = true;
+  quizStartTime = Date.now();
+
+  document.getElementById("resultBox").innerHTML = "";
+  document.getElementById("startBtn").disabled = true;
+  document.getElementById("submitBtn").disabled = false;
+  document.getElementById("resetBtn").disabled = false;
+
+  const modeTxt = [];
+  const mode = document.getElementById("modeSelect").value;
+
+  modeTxt.push(mode === "normal" ? "일반" : mode === "wrong" ? "오답만" : "약점");
+
+  if (mode === "weak" && autoChapter) {
+    modeTxt.push("챕터=" + autoChapter);
+  } else {
+    const ch = document.getElementById("chapterSelect").value;
+    modeTxt.push(ch === "all" ? "전체" : "챕터=" + ch);
+  }
+
+  const tp = document.getElementById("typeSelect").value;
+  modeTxt.push(tp === "all" ? "A+C" : "유형=" + tp);
+  modeTxt.push("문제=" + currentQuiz.length);
+
+  document.getElementById("modeDesc").textContent = modeTxt.join(" / ");
+
+  startTimer(tm > 0 ? tm * 60 : 0);
+}
+
+</script>
+
+<script>
+/******************************************************************
+ * BLOCK 3-5 — 제출 & 채점 + Firestore 저장 + 자동 복습문제 생성
+ ******************************************************************/
+
+/******************************************************************
+ * 자동 복습문제 생성 엔진
+ ******************************************************************/
+function autoGenerateQuestionsFromWrong(wrongList, notes) {
+  if (!wrongList || !wrongList.length) return;
+
+  const custom = loadCustomQuestions();
+  const allIds = new Set([
+    ...BASE_QUESTIONS.map((q) => q.id),
+    ...custom.map((q) => q.id),
+  ]);
+
+  let added = 0;
+
+  wrongList.forEach((q) => {
+    const note = notes.find((n) => n.id === q.id);
+    if (!note) return;
+
+    if (note.missCount < 2) return;
+
+    const base = q.id + "-R";
+    if (custom.some((c) => c.id.startsWith(base))) return;
+
+    const shuffledOptions = shuffleArray(q.options);
+    const correctValue = q.options[q.answer];
+    const newAnswerIdx = shuffledOptions.indexOf(correctValue);
+    if (newAnswerIdx < 0) return;
+
+    let newId = base;
+    let n = 1;
+    while (allIds.has(newId)) {
+      newId = base + "-" + n;
+      n++;
+    }
+    allIds.add(newId);
+
+    const newQ = {
+      id: newId,
+      chapter: q.chapter,
+      type: q.type,
+      text: "[Review] " + q.text,
+      options: shuffledOptions,
+      answer: newAnswerIdx,
+      explanation:
+        "(Auto-generated review question from " + q.id + ") " +
+        (q.explanation || ""),
+    };
+
+    custom.push(newQ);
+    added++;
+  });
+
+  if (added > 0) {
+    saveCustomQuestions(custom);
+    refreshChapterDropdown();
+  }
+}
+
+/******************************************************************
+ * 제출 / 채점
+ ******************************************************************/
+async function submitQuiz(auto = false) {
+  if (!quizStarted) return;
+  quizStarted = false;
+  stopTimer();
+
+  const duration = Math.round((Date.now() - quizStartTime) / 1000);
+  let correct = 0;
+  const wrong = [];
+
+  let html = "";
+
+  currentQuiz.forEach((q, idx) => {
+    const sel = document.querySelector(`input[name="q${idx}"]:checked`);
+    const userValue = sel ? Number(sel.value) : null;
+
+    const ok = userValue === q.answer;
+    if (ok) correct++;
+    else wrong.push(q);
+
+    const techQ = translateTechTerm(q.text);
+    const natQ = translateNaturalSentence(q.text);
+
+    html += `
+      <div style="margin-bottom:12px;">
+        <b>Q${idx + 1} (${q.id})</b><br>
+        선택: ${
+          userValue === null
+            ? "무응답"
+            : String.fromCharCode(65 + userValue) + ". " + q.options[userValue]
+        }<br>
+        정답:
+        <span style="color:${ok ? "#16a34a" : "#dc2626"}">
+          ${String.fromCharCode(65 + q.answer)}. ${q.options[q.answer]}
+        </span>
+        <div class="explanation">${q.explanation || ""}</div>
+        <div class="ko-result-block">
+          <b>[문제 기술 번역]</b> ${techQ}<br/>
+          <b>[문제 자연 번역]</b> ${natQ}
+        </div>
+      </div>
+    `;
+  });
+
+  const pct = Math.round((correct / currentQuiz.length) * 100);
+
+  document.getElementById("resultBox").innerHTML = `
+    <h3>점수: ${correct}/${currentQuiz.length} (${pct}%)</h3>
+    <div style="font-size:12px;color:#666;">
+      소요시간: ${duration}s ${auto ? "(자동 제출)" : ""}
+    </div>
+    ${html}
+  `;
+  document.getElementById("submitBtn").disabled = true;
+
+  /******************************************************************
+   * 오답 저장 (Local + Firestore)
+   ******************************************************************/
+  let notes = await loadWrongNotes();
+  if (wrong.length) {
+    const now = new Date().toLocaleString();
+
+    wrong.forEach((q) => {
+      const ex = notes.find((n) => n.id === q.id);
+      if (ex) {
+        ex.missCount++;
+        ex.lastDate = now;
+      } else {
+        notes.push({
+          id: q.id,
+          text: q.text,
+          chapter: q.chapter,
+          type: q.type,
+          missCount: 1,
+          lastDate: now,
+        });
+      }
+    });
+
+    await saveWrongNotes(notes);
+    renderWrongNotes();
+
+    autoGenerateQuestionsFromWrong(wrong, notes);
+  }
+
+  /******************************************************************
+   * 점수 저장 (Local + Firestore)
+   ******************************************************************/
+  const hist = await loadScoreHistory();
+  const scoreObj = {
+    timestamp: Date.now(),
+    date: new Date().toLocaleString(),
+    mode: document.getElementById("modeDesc").textContent,
+    total: currentQuiz.length,
+    correct,
+    durationSec: duration,
+  };
+
+  hist.push(scoreObj);
+  await saveScoreHistory(hist);
+  renderScoreHistory();
+}
+
+</script>
+
+<script>
+/******************************************************************
+ * BLOCK 3-6 — 문제 추가 + JSON 업로드 + Gate + DualView + 초기화
+ ******************************************************************/
+
+/******************************************************************
+ * 유니크 ID 강제 부여
+ ******************************************************************/
+function ensureUniqueId(originalId, existingSet) {
+  if (!existingSet.has(originalId)) return originalId;
+  let base = originalId;
+  let n = 1;
+  while (existingSet.has(base + "-" + n)) n++;
+  return base + "-" + n;
+}
+
+/******************************************************************
+ * 문제 추가 폼
+ ******************************************************************/
+function setupAddQuestionForm() {
+  const form = document.getElementById("addQuestionForm");
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const custom = loadCustomQuestions();
+    const existingIds = new Set([
+      ...BASE_QUESTIONS.map((q) => q.id),
+      ...custom.map((q) => q.id),
+    ]);
+
+    const rawId = document.getElementById("addId").value.trim();
+    const id = ensureUniqueId(rawId, existingIds);
+    existingIds.add(id);
+
+    const q = {
+      id,
+      chapter: document.getElementById("addChapter").value,
+      type: document.getElementById("addType").value,
+      text: document.getElementById("addText").value.trim(),
+      options: [
+        document.getElementById("addOpA").value.trim(),
+        document.getElementById("addOpB").value.trim(),
+        document.getElementById("addOpC").value.trim(),
+        document.getElementById("addOpD").value.trim(),
+      ],
+      answer: Number(document.getElementById("addAnswer").value),
+      explanation: document.getElementById("addExplanation").value.trim() || "",
+    };
+
+    custom.push(q);
+    saveCustomQuestions(custom);
+    refreshChapterDropdown();
+
+    alert("문제 추가 완료! (ID: " + id + ")");
+    form.reset();
+  });
+}
+
+/******************************************************************
+ * JSON 문제 파일 업로드
+ ******************************************************************/
+function setupUploadQuestions() {
+  const input = document.getElementById("uploadFileInput");
+  const btn = document.getElementById("uploadFileBtn");
+
+  btn.addEventListener("click", () => {
+    const file = input.files?.[0];
+    if (!file) {
+      alert("파일을 선택하세요.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const arr = JSON.parse(e.target.result);
+        if (!Array.isArray(arr)) {
+          alert("JSON 배열 형식이어야 합니다.");
+          return;
+        }
+
+        const custom = loadCustomQuestions();
+        const existingIds = new Set([
+          ...BASE_QUESTIONS.map((q) => q.id),
+          ...custom.map((q) => q.id),
+        ]);
+
+        const added = [];
+
+        arr.forEach((q) => {
+          if (
+            !q.id ||
+            !q.chapter ||
+            !q.text ||
+            !Array.isArray(q.options) ||
+            q.options.length !== 4 ||
+            typeof q.answer !== "number"
+          )
+            return;
+
+          const newId = ensureUniqueId(q.id, existingIds);
+          existingIds.add(newId);
+          q.id = newId;
+
+          if (!("explanation" in q)) q.explanation = "";
+          added.push(q);
+        });
+
+        if (!added.length) {
+          alert("추가할 문제가 없습니다.");
+          return;
+        }
+
+        saveCustomQuestions(custom.concat(added));
+        refreshChapterDropdown();
+        alert(added.length + "문제가 추가되었습니다!");
+      } catch (err) {
+        alert("JSON 파싱 오류");
+      }
+    };
+
+    reader.readAsText(file);
+  });
+}
+
+/******************************************************************
+ * 사용자 문제 관리
+ ******************************************************************/
+function setupCustomManagement() {
+  document.getElementById("clearCustomBtn").addEventListener("click", () => {
+    if (!confirm("사용자 문제 전체 삭제?")) return;
+    saveCustomQuestions([]);
+    refreshChapterDropdown();
+  });
+
+  document
+    .getElementById("exportCustomBtn")
+    .addEventListener("click", () => {
+      const data = loadCustomQuestions();
+      if (!data.length) {
+        alert("저장된 문제가 없습니다.");
+        return;
+      }
+
+      const blob = new Blob([JSON.stringify(data, null, 2)], {
+        type: "application/json",
+      });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "cre_custom_questions.json";
+      a.click();
+
+      URL.revokeObjectURL(url);
+    });
+}
+
+/******************************************************************
+ * DualView 토글
+ ******************************************************************/
+function setupDualViewToggle() {
+  const cb = document.getElementById("dualViewToggle");
+  cb.addEventListener("change", () => {
+    dualViewEnabled = cb.checked;
+    localStorage.setItem("creDualView", cb.checked ? "1" : "0");
+    if (currentQuiz.length) renderQuiz();
+  });
+
+  const saved = localStorage.getItem("creDualView") === "1";
+  cb.checked = saved;
+  dualViewEnabled = saved;
+}
+
+/******************************************************************
+ * Reset 버튼
+ ******************************************************************/
+function resetQuiz() {
+  stopTimer();
+  quizStarted = false;
+  currentQuiz = [];
+  document.getElementById("quizBox").innerHTML = "";
+  document.getElementById("resultBox").innerHTML = "";
+  document.getElementById("modeDesc").textContent = "";
+  document.getElementById("timer").textContent = "Timer: OFF";
+
+  document.getElementById("startBtn").disabled = false;
+  document.getElementById("submitBtn").disabled = true;
+  document.getElementById("resetBtn").disabled = true;
+}
+
+/******************************************************************
+ * 비밀번호 게이트
+ ******************************************************************/
+function setupGate() {
+  const ov = document.getElementById("gateOverlay");
+  const input = document.getElementById("gatePassword");
+  const btn = document.getElementById("gateBtn");
+  const app = document.getElementById("appContainer");
+  const msg = document.getElementById("gateMessage");
+
+  function enter() {
+    if (input.value === APP_PASSWORD) {
+      ov.style.display = "none";
+      app.style.display = "block";
+
+      renderWrongNotes();
+      renderScoreHistory();
+      refreshChapterDropdown();
+    } else {
+      msg.textContent = "비밀번호가 올바르지 않습니다.";
+    }
+  }
+
+  btn.addEventListener("click", enter);
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") enter();
+  });
+}
+
+/******************************************************************
+ * 초기 실행
+ ******************************************************************/
+document.getElementById("startBtn").addEventListener("click", startQuiz);
+document.getElementById("submitBtn").addEventListener("click", () =>
+  submitQuiz(false)
+);
+document.getElementById("resetBtn").addEventListener("click", resetQuiz);
+
+setupAddQuestionForm();
+setupUploadQuestions();
+setupCustomManagement();
+setupDualViewToggle();
+setupGate();
+</script>
+
+</body>
+</html>
