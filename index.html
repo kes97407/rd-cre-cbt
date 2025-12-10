@@ -128,6 +128,12 @@
     border-radius:12px;
     box-shadow:0 10px 30px rgba(0,0,0,0.4);
   }
+  #gateMessage {
+    font-size:12px;
+    height:16px;
+    color:#dc2626;
+    margin-top:6px;
+  }
 </style>
 </head>
 
@@ -139,7 +145,7 @@
     <h2>CRE 연습 사이트</h2>
     <p style="font-size:13px;color:#4b5563;">비밀번호를 입력하세요.</p>
     <input type="password" id="gatePassword" placeholder="비밀번호" />
-    <div id="gateMessage" style="color:#dc2626; font-size:12px; height:16px;"></div>
+    <div id="gateMessage"></div>
     <button id="gateBtn">입장</button>
   </div>
 </div>
@@ -148,50 +154,30 @@
 <!-- 메인 컨테이너 -->
 <div class="container" id="appContainer">
   <h1>CRE Practice CBT</h1>
-  <p style="font-size:13px;color:#4b5563;">PC · 모바일 동기화 CBT 시스템</p>
+  <p style="font-size:13px;color:#4b5563;">
+    PC · 모바일 완전 동기화 시험 시스템
+  </p>
+<!-- ================================
+     PART 2 — Firebase + 번역엔진 + 문제 자동 병합
+================================ -->
 
 <script>
 /*******************************************************
- * 0. 비밀번호 설정
- *******************************************************/
-const APP_PASSWORD = "cre2025";
-
-/*******************************************************
- * 1. Firebase 설정
- *******************************************************/
-const firebaseConfig = {
-  apiKey: "AIzaSyBYrsPIpbP7wBMJk8QrU9vUtF0JDhfn2C4",
-  authDomain: "rd-cre-cbt-sync.firebaseapp.com",
-  projectId: "rd-cre-cbt-sync",
-  storageBucket: "rd-cre-cbt-sync.firebasestorage.app",
-  messagingSenderId: "1085101263930",
-  appId: "1:1085101263930:web:06d1339169b431b63e3903"
-};
-</script>
-
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-
-<script>
-/*******************************************************
- * 2. Firebase 초기화
+ * 1) Firebase 초기화
  *******************************************************/
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 /*******************************************************
- * 3. deviceId = 고정값 (모든 기기 완전 공유)
+ * 2) deviceId = 고정값 (모든 기기 동일하게 공유)
  *******************************************************/
-const deviceId = "CRE_MASTER_DEVICE";
-
+const deviceId = "CRE_MASTER_DEVICE";  
 function userPath() {
   return `users/${deviceId}`;
 }
-</script>
-<script>
+
 /*******************************************************
- * 4. 자동 번역 엔진 (시험 문제 패턴 기반)
+ * 3) 자동 번역 엔진 (시험 문제 패턴 기반)
  *******************************************************/
 function translateTech(text) {
   if (!text) return "";
@@ -205,13 +191,14 @@ function translateTech(text) {
     "MTTR": "평균수리시간(MTTR)",
     "exponential distribution": "지수분포",
     "weibull": "와이블 분포",
+    "weibull distribution": "와이블 분포",
     "availability": "가용도",
     "preventive maintenance": "예방정비"
   };
 
   for (const [en, ko] of Object.entries(dict)) {
-    const re = new RegExp(en, "gi");
-    out = out.replace(re, `${ko} (${en})`);
+    const reg = new RegExp(en, "gi");
+    out = out.replace(reg, `${ko} (${en})`);
   }
   return out;
 }
@@ -221,54 +208,53 @@ function translateSentence(text) {
   let t = text;
 
   t = t.replace(/Which of the following/gi, "다음 중");
-  t = t.replace(/What is/gi, "무엇은");
   t = t.replace(/Which is NOT/gi, "다음 중 옳지 않은 것은");
+  t = t.replace(/What is/gi, "무엇은");
   t = t.replace(/\?/g, "인가?");
+
   return t;
 }
 
 /*******************************************************
- * 5. 문제 자동 병합 엔진 (BASE + custom/questions/*.json)
+ * 4) 문제 엔진 — BASE 문제
  *******************************************************/
-let BASE_QUESTIONS = [];        // 기본 문제
-let CUSTOM_QUESTIONS = [];      // 업로드 문제
-let MERGED_QUESTIONS = [];      // 병합된 전체 풀
+let BASE_QUESTIONS = [];
 
 async function loadBaseQuestions() {
-  // 기본 문제 2개만 예시로 넣고, 나머지는 JSON 업로드로 추가
+  // 기본 예시 2문제 (나중에는 모두 JSON 기반으로 확장됨)
   BASE_QUESTIONS = [
     {
       id: "Q1",
       chapter: "Sample",
       type: "C",
       text: "For an exponential distribution with MTBF = 800 hours, what is the reliability at 400 hours?",
-      options: ["0.50","0.61","0.37","0.80"],
+      options: ["0.50", "0.61", "0.37", "0.80"],
       answer: 1,
-      explanation: "R(t)=exp(-t/MTBF)=exp(-0.5)=0.606"
+      explanation: "R(t) = exp(-t/MTBF) = exp(-0.5) = 0.606"
     },
     {
       id: "Q2",
       chapter: "Sample",
       type: "A",
       text: "In a Weibull distribution, what does a shape parameter β greater than 1 indicate?",
-      options:["Early failures","Wear-out failures","Constant failure rate","Random failures"],
-      answer:1,
-      explanation:"β>1 → wear-out region"
+      options: ["Early failures", "Wear-out failures", "Constant failure rate", "Random failures"],
+      answer: 1,
+      explanation: "β > 1 → wear-out region"
     }
   ];
 }
 
 /*******************************************************
- * 6. GitHub Pages 내 questions 폴더 자동 스캔
+ * 5) questions 폴더 자동 스캔
+ *   - GitHub Pages는 directory listing 불가 → question-list.json 필요
  *******************************************************/
+let CUSTOM_QUESTIONS = [];
+let MERGED_QUESTIONS = [];
+
 async function autoLoadQuestionFiles() {
   try {
-    // GitHub Pages는 디렉토리 listing을 제공하지 않으므로
-    // question-list.json 파일을 두고 그 파일에 목록을 기록함
-    // => 사용자가 업로드할 때 파일명 자동추가됨 (앞에서 설계함)
-
     const res = await fetch("./questions/question-list.json");
-    const list = await res.json();  // ["ch1.json", "test2.json", ...]
+    const list = await res.json();   // ["set1.json", "cre1.json", ...]
 
     CUSTOM_QUESTIONS = [];
 
@@ -276,21 +262,24 @@ async function autoLoadQuestionFiles() {
       try {
         const r = await fetch("./questions/" + file);
         const arr = await r.json();
-        CUSTOM_QUESTIONS.push(...arr);
+
+        if (Array.isArray(arr)) {
+          CUSTOM_QUESTIONS.push(...arr);
+        }
       } catch (e) {
-        console.error("파일 로드 실패:", file, e);
+        console.warn("⚠ 문제파일 로드 실패:", file);
       }
     }
 
     console.log("📘 커스텀 문제 로드 완료:", CUSTOM_QUESTIONS.length);
 
   } catch (e) {
-    console.warn("question-list.json 없음 → custom 문제 0개");
+    console.warn("⚠ question-list.json 없음 → custom 문제 0개");
   }
 }
 
 /*******************************************************
- * 7. 문제 전체 병합
+ * 6) 전체 문제 병합
  *******************************************************/
 function mergeQuestions() {
   MERGED_QUESTIONS = [...BASE_QUESTIONS, ...CUSTOM_QUESTIONS];
@@ -298,7 +287,7 @@ function mergeQuestions() {
 }
 
 /*******************************************************
- * 8. 챕터 목록 만들기
+ * 7) 챕터 목록 생성
  *******************************************************/
 function buildChapterList() {
   const chapters = new Set(["전체"]);
@@ -313,76 +302,114 @@ function buildChapterList() {
 }
 
 /*******************************************************
- * 9. UI: 문제 카드 한글 번역 패널 생성
+ * 8) 2단 보기(영/한) — 한글 패널
  *******************************************************/
 function buildKoreanPanel(q, idx) {
   return `
-    <div class="ko-header">Q${idx+1} 한글 번역</div>
+    <div class="ko-header">Q${idx + 1} — 한글 번역</div>
 
     <div class="ko-label">기술 번역</div>
     <div>${translateTech(q.text)}</div>
 
-    <div class="ko-label">자연 번역</div>
+    <div class="ko-label" style="margin-top:6px;">문장 번역</div>
     <div>${translateSentence(q.text)}</div>
 
     <div class="ko-label" style="margin-top:6px;">보기 번역</div>
     ${
-      q.options.map((op, i)=>
-        `<div class="ko-option"><b>${String.fromCharCode(65+i)}.</b> 
-         ${translateTech(op)}</div>`
-      ).join("")
+      q.options.map((op, i)=>`
+        <div class="ko-option">
+          <b>${String.fromCharCode(65+i)}.</b>
+          ${translateTech(op)}
+        </div>
+      `).join("")
     }
   `;
 }
 </script>
-  <script>
+<!-- ================================
+     PART 3 — 오답노트·점수기록 동기화 + 즐겨찾기 + 메모
+================================ -->
+<script>
 /*******************************************************
- * 10. Firestore 동기화: 오답노트 & 점수 기록
+ * 1) 오답노트 + 점수기록 변수를 메모리에 유지
  *******************************************************/
-let wrongNotes = []; 
-let scoreHistory = [];
+let wrongNotes = [];      // [{id, text, chapter, type, missCount, lastDate}]
+let scoreHistory = [];    // [{date, correct, total}]
+let favoriteMap = {};     // {"Q1":true, "Q2":true ...}
+let memoCache = {};       // {"Q1":"메모내용", ...}
 
-/* 10-1. 로드 */
+
+/*******************************************************
+ * 2) Firestore 로드 — 오답노트
+ *******************************************************/
 async function loadWrongNotesFromCloud() {
   wrongNotes = [];
   const snap = await db.collection(`${userPath()}/wrongNotes`).get();
-  snap.forEach(d => wrongNotes.push(d.data()));
+  snap.forEach(doc => wrongNotes.push(doc.data()));
+
+  console.log("📥 오답노트 로드:", wrongNotes.length);
 }
 
+/*******************************************************
+ * 3) Firestore 로드 — 점수 기록
+ *******************************************************/
 async function loadScoreHistoryFromCloud() {
   scoreHistory = [];
   const snap = await db.collection(`${userPath()}/scores`).get();
-  snap.forEach(d => scoreHistory.push(d.data()));
+  snap.forEach(doc => scoreHistory.push(doc.data()));
+
+  console.log("📥 점수기록 로드:", scoreHistory.length);
 }
 
-/* 10-2. 저장 */
+/*******************************************************
+ * 4) Firestore 로드 — 즐겨찾기
+ *******************************************************/
+async function loadFavorites() {
+  favoriteMap = {};
+  const snap = await db.collection(`${userPath()}/favorites`).get();
+  snap.forEach(doc => favoriteMap[doc.id] = true);
+
+  console.log("⭐ 즐겨찾기 로드:", Object.keys(favoriteMap).length);
+}
+
+/*******************************************************
+ * 5) Firestore 로드 — 메모
+ *******************************************************/
+async function loadAllMemos() {
+  memoCache = {};
+  const snap = await db.collection(`${userPath()}/notes`).get();
+  snap.forEach(doc => memoCache[doc.id] = doc.data().memo);
+
+  console.log("📝 메모 로드:", Object.keys(memoCache).length);
+}
+
+
+/*******************************************************
+ * 6) Firestore 저장 — 오답노트
+ *******************************************************/
 async function saveWrongNotesToCloud() {
   for (const w of wrongNotes) {
-    await db.collection(`${userPath()}/wrongNotes`).doc(w.id).set(w);
-  }
-}
-
-async function saveScoreHistoryToCloud() {
-  for (const s of scoreHistory) {
-    const key = s.date.replace(/[ :]/g, "_");
-    await db.collection(`${userPath()}/scores`).doc(key).set(s);
+    await db.collection(`${userPath()}/wrongNotes`)
+      .doc(w.id)
+      .set(w);
   }
 }
 
 /*******************************************************
- * 11. 즐겨찾기(Favorites)
+ * 7) Firestore 저장 — 점수 기록
  *******************************************************/
-let favoriteMap = {}; // {"Q1":true,...}
-
-async function loadFavorites() {
-  favoriteMap = {};
-  const snap = await db.collection(`${userPath()}/favorites`).get();
-  snap.forEach(doc => {
-    favoriteMap[doc.id] = true;
-  });
-  console.log("⭐ Favorites loaded:", favoriteMap);
+async function saveScoreHistoryToCloud() {
+  for (const s of scoreHistory) {
+    const key = s.date.replace(/[ :]/g, "_");
+    await db.collection(`${userPath()}/scores`)
+      .doc(key)
+      .set(s);
+  }
 }
 
+/*******************************************************
+ * 8) Firestore 저장 — 즐겨찾기 Toggle
+ *******************************************************/
 async function toggleFavorite(q) {
   const ref = db.collection(`${userPath()}/favorites`).doc(q.id);
 
@@ -399,58 +426,59 @@ async function toggleFavorite(q) {
     });
     favoriteMap[q.id] = true;
   }
+
   renderQuiz();
 }
 
 /*******************************************************
- * 12. 문제 메모 시스템
+ * 9) Firestore 저장 — 메모
  *******************************************************/
-let memoCache = {};  // {"Q1":"메모내용"...}
+async function saveMemoContents(qid, memoText) {
+  memoCache[qid] = memoText;
 
-async function loadAllMemos() {
-  memoCache = {};
-  const snap = await db.collection(`${userPath()}/notes`).get();
-  snap.forEach(doc => {
-    memoCache[doc.id] = doc.data().memo;
-  });
-  console.log("📝 Memos loaded:", memoCache);
+  await db.collection(`${userPath()}/notes`)
+    .doc(qid)
+    .set({
+      id: qid,
+      memo: memoText,
+      updateTime: new Date().toLocaleString()
+    });
 }
 
+
+/*******************************************************
+ * 10) UI — 메모 모달
+ *******************************************************/
 function openMemo(qid) {
   const modal = document.getElementById("memoModal");
   const input = document.getElementById("memoInput");
   const label = document.getElementById("memoQuestionId");
 
-  input.value = memoCache[qid] || "";
   label.textContent = "문제 ID: " + qid;
+  input.value = memoCache[qid] || "";
 
   modal.style.display = "flex";
   modal.dataset.qid = qid;
 }
 
 function closeMemo() {
-  document.getElementById('memoModal').style.display = 'none';
+  document.getElementById("memoModal").style.display = "none";
 }
 
 async function saveMemo() {
   const modal = document.getElementById("memoModal");
   const qid = modal.dataset.qid;
-  const memo = document.getElementById("memoInput").value.trim();
+  const memoText = document.getElementById("memoInput").value.trim();
 
-  memoCache[qid] = memo;
-
-  await db.collection(`${userPath()}/notes`).doc(qid).set({
-    id: qid,
-    memo,
-    updateTime: new Date().toLocaleString()
-  });
+  await saveMemoContents(qid, memoText);
 
   alert("메모 저장됨");
-  modal.style.display = "none";
+  closeMemo();
 }
 
+
 /*******************************************************
- * 13. Quiz 렌더링 엔진
+ * 11) 문제 출력 엔진 (PART 3 확장)
  *******************************************************/
 let currentQuiz = [];
 let dualView = false;
@@ -459,98 +487,144 @@ function renderQuiz() {
   const box = document.getElementById("quizBox");
   box.innerHTML = "";
 
-  currentQuiz.forEach((q, i) => {
-    let star = favoriteMap[q.id] ? "⭐" : "☆";
-    let starColor = favoriteMap[q.id] ? "color:#fbbf24;" : "color:#94a3b8;";
+  currentQuiz.forEach((q, idx) => {
 
-    let starBtn = `
-      <span style="float:right; cursor:pointer; font-size:20px; ${starColor}"
-            onclick="toggleFavorite(currentQuiz[${i}])">${star}</span>`;
+    // ⭐ 즐겨찾기 아이콘
+    const star = favoriteMap[q.id] ? "⭐" : "☆";
+    const starColor = favoriteMap[q.id] ? "color:#fbbf24;" : "color:#94a3b8;";
+    const starBtn = `
+      <span style="float:right; font-size:20px; cursor:pointer; ${starColor}"
+            onclick="toggleFavorite(currentQuiz[${idx}])">
+        ${star}
+      </span>`;
 
-    let memoBtn = `
+    // 📝 메모 버튼
+    const memoBtn = `
       <span style="float:right; margin-right:8px; cursor:pointer; font-size:18px; color:#3b82f6;"
             onclick="openMemo('${q.id}')">📝</span>`;
 
+    /* ---------- 영어 전용 보기 ---------- */
     if (!dualView) {
       let html = `
         <div class="question-block">
           ${starBtn} ${memoBtn}
-          <div class="question-title">Q${i+1}. ${q.text}</div>
+          <div class="question-title">Q${idx + 1}. ${q.text}</div>
           <div class="meta">${q.id} · ${q.chapter} · ${q.type}</div>
       `;
       q.options.forEach((op, j) => {
         html += `
           <div class="option">
-            <label><input type="radio" name="q${i}" value="${j}">
-            ${String.fromCharCode(65+j)}. ${op}</label>
+            <label>
+              <input type="radio" name="q${idx}" value="${j}">
+              ${String.fromCharCode(65 + j)}. ${op}
+            </label>
           </div>`;
       });
       html += `</div>`;
       box.innerHTML += html;
+      return;
     }
 
-    else {
-      let left = `
-        <div class="q-left">
-          ${starBtn} ${memoBtn}
-          <div class="question-title">Q${i+1}. ${q.text}</div>
-          <div class="meta">${q.id} · ${q.chapter} · ${q.type}</div>
-      `;
-      q.options.forEach((op, j) => {
-        left += `
-          <div class="option">
-            <label><input type="radio" name="q${i}" value="${j}">
-            ${String.fromCharCode(65+j)}. ${op}</label>
-          </div>`;
-      });
-      left += `</div>`;
+    /* ---------- 2단 보기(영/한) ---------- */
+    let left = `
+      <div class="q-left">
+        ${starBtn} ${memoBtn}
+        <div class="question-title">Q${idx + 1}. ${q.text}</div>
+        <div class="meta">${q.id} · ${q.chapter} · ${q.type}</div>
+    `;
+    q.options.forEach((op, j) => {
+      left += `
+        <div class="option">
+          <label>
+            <input type="radio" name="q${idx}" value="${j}">
+            ${String.fromCharCode(65 + j)}. ${op}
+          </label>
+        </div>`;
+    });
+    left += `</div>`;
 
-      const right = `<div class="q-right">${buildKoreanPanel(q, i)}</div>`;
+    const right = `
+      <div class="q-right">
+        ${buildKoreanPanel(q, idx)}
+      </div>`;
 
-      box.innerHTML += `<div class="question-block dual">${left}${right}</div>`;
-    }
+    box.innerHTML += `
+      <div class="question-block dual">
+        ${left}${right}
+      </div>`;
   });
 }
 
+
 /*******************************************************
- * 14. 출제 모드
+ * 12) 출제 모드 필터
  *******************************************************/
 function buildQuestionPool() {
   const ch = document.getElementById("chapterSelect").value;
   const tp = document.getElementById("typeSelect").value;
   const mode = document.getElementById("modeSelect").value;
 
-  let all = MERGED_QUESTIONS;
+  let list = MERGED_QUESTIONS;
 
-  // chapter 필터
-  if (ch !== "전체") {
-    all = all.filter(q => q.chapter === ch);
-  }
+  // 챕터 필터
+  if (ch !== "전체") list = list.filter(q => q.chapter === ch);
 
-  // type 필터
-  if (tp !== "all") {
-    all = all.filter(q => q.type === tp);
-  }
+  // 유형 필터
+  if (tp !== "all") list = list.filter(q => q.type === tp);
 
-  // mode 선택
+  // 모드 필터
   if (mode === "favorite") {
     const fav = new Set(Object.keys(favoriteMap));
-    all = all.filter(q => fav.has(q.id));
+    list = list.filter(q => fav.has(q.id));
   }
-  else if (mode === "wrong") {
-    const ids = new Set(wrongNotes.map(n => n.id));
-    all = all.filter(q => ids.has(q.id));
+  if (mode === "wrong") {
+    const wrongIds = new Set(wrongNotes.map(n => n.id));
+    list = list.filter(q => wrongIds.has(q.id));
   }
 
-  return all;
+  return list;
 }
 
+
 /*******************************************************
- * 15. 시험 시작
+ * 13) 타이머
+ *******************************************************/
+let timerId = null;
+let timerSec = 0;
+
+function startTimer(sec) {
+  timerSec = sec;
+  updateTimerUI();
+  if (timerId) clearInterval(timerId);
+
+  timerId = setInterval(() => {
+    timerSec--;
+    updateTimerUI();
+    if (timerSec <= 0) {
+      clearInterval(timerId);
+      alert("시간 종료! 자동 제출합니다.");
+      submitQuiz();
+    }
+  }, 1000);
+}
+
+function updateTimerUI() {
+  const box = document.getElementById("timer");
+  if (timerSec <= 0) {
+    box.textContent = "Timer: OFF";
+    return;
+  }
+  const m = String(Math.floor(timerSec / 60)).padStart(2, "0");
+  const s = String(timerSec % 60).padStart(2, "0");
+  box.textContent = `남은 시간: ${m}:${s}`;
+}
+
+
+/*******************************************************
+ * 14) 시험 시작
  *******************************************************/
 function startQuiz() {
   const pool = buildQuestionPool();
-
   if (!pool.length) {
     alert("출제할 문제가 없습니다.");
     return;
@@ -559,7 +633,7 @@ function startQuiz() {
   const count = Number(document.getElementById("countInput").value);
   const tm = Number(document.getElementById("timerInput").value);
 
-  const shuffled = pool.sort(() => Math.random() - 0.3);
+  const shuffled = pool.sort(() => Math.random() - 0.5);
   currentQuiz = shuffled.slice(0, count);
 
   renderQuiz();
@@ -571,43 +645,44 @@ function startQuiz() {
   if (tm > 0) startTimer(tm * 60);
 }
 
+
 /*******************************************************
- * 16. 제출
+ * 15) 제출 + 오답 저장 + 점수 저장
  *******************************************************/
 function submitQuiz() {
-  stopTimer();
+  if (!currentQuiz.length) return;
+
+  clearInterval(timerId);
 
   let correct = 0;
   const wrongArr = [];
 
   let html = "";
 
-  currentQuiz.forEach((q, i) => {
-    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+  currentQuiz.forEach((q, idx) => {
+    const sel = document.querySelector(`input[name="q${idx}"]:checked`);
     const ans = sel ? Number(sel.value) : null;
     const ok = ans === q.answer;
 
-    if (!ok) wrongArr.push(q);
     if (ok) correct++;
+    else wrongArr.push(q);
 
     html += `
       <div style="margin-bottom:12px;">
-        <b>Q${i+1} (${q.id})</b><br>
+        <b>Q${idx + 1} (${q.id})</b><br>
         선택: ${
-          ans === null ? "무응답" :
-          `${String.fromCharCode(65+ans)}. ${q.options[ans]}`
+          ans === null
+            ? "무응답"
+            : `${String.fromCharCode(65 + ans)}. ${q.options[ans]}`
         }<br>
         정답:
-        <span style="color:${ok ? '#16a34a':'#dc2626'}">
-          ${String.fromCharCode(65+q.answer)}. ${q.options[q.answer]}
+        <span style="color:${ok ? "#16a34a" : "#dc2626"}">
+          ${String.fromCharCode(65 + q.answer)}. ${q.options[q.answer]}
         </span>
-        <div class="explanation">${q.explanation || ""}</div>
-      </div>
-    `;
+      </div>`;
   });
 
-  const pct = Math.round((correct/currentQuiz.length)*100);
-
+  const pct = Math.round((correct / currentQuiz.length) * 100);
   document.getElementById("resultBox").innerHTML =
     `<h3>점수: ${correct}/${currentQuiz.length} (${pct}%)</h3>` + html;
 
@@ -620,6 +695,7 @@ function saveWrong(arr) {
 
   arr.forEach(q => {
     const exist = wrongNotes.find(n => n.id === q.id);
+
     if (exist) {
       exist.missCount++;
       exist.lastDate = now;
@@ -648,9 +724,10 @@ function saveScore(correct, total) {
 }
 </script>
 <!-- ================================
-      PART 4 — UI 전체 구조
-=================================== -->
+     PART 4 — UI 전체 구조
+================================ -->
 
+<!-- 컨트롤 패널 -->
 <div class="controls">
 
   <div>
@@ -710,169 +787,193 @@ function saveScore(correct, total) {
 <!-- 타이머 표시 -->
 <div id="timer" style="font-weight:bold; margin-bottom:10px;">Timer: OFF</div>
 
-<!-- 메인 출제 영역 -->
+<!-- 메인 문제 영역 -->
 <div id="quizBox"></div>
 
 <!-- 결과 출력 영역 -->
 <div id="resultBox"></div>
 
-<!-- 오답노트 + 점수 기록 패널 -->
+<!-- 오답노트 & 점수 기록 패널 -->
 <div class="panel-row">
 
   <div class="panel">
     <h3>오답 노트</h3>
     <div id="wrongNotesBox"></div>
-    <button style="margin-top:6px;" class="danger" onclick="clearWrongNotes()">오답 삭제</button>
+    <button class="danger" style="margin-top:6px;" onclick="clearWrongNotes()">오답 삭제</button>
   </div>
 
   <div class="panel">
     <h3>점수 기록</h3>
     <div id="scoreHistoryBox"></div>
-    <button style="margin-top:6px;" class="danger" onclick="clearScoreHistory()">기록 삭제</button>
+    <button class="danger" style="margin-top:6px;" onclick="clearScoreHistory()">기록 삭제</button>
   </div>
 
 </div>
 
-<!-- ================================
-      메모 모달 UI
-=================================== -->
-<div id="memoModal"
-     style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55);
-            align-items:center; justify-content:center; z-index:99999;">
-  <div style="background:white; width:340px; padding:20px; border-radius:10px;">
 
+<!-- ================================
+     메모 모달
+================================ -->
+<div id="memoModal"
+     style="
+       display:none;
+       position:fixed; inset:0;
+       background:rgba(0,0,0,0.55);
+       align-items:center;
+       justify-content:center;
+       z-index:99999;
+     ">
+  <div style="
+       background:white;
+       width:340px;
+       padding:20px;
+       border-radius:10px;
+     ">
+    
     <h3 id="memoQuestionId" style="margin-top:0; font-size:16px;"></h3>
 
     <textarea id="memoInput"
       style="width:100%; height:140px; padding:8px; font-size:14px;"></textarea>
 
     <div style="margin-top:12px; display:flex; gap:8px;">
+      <button
+        onclick="saveMemo()"
+        style="flex:1; background:#3b82f6; border-color:#3b82f6; color:white;">
+        저장
+      </button>
 
-      <button style="flex:1; background:#3b82f6; border-color:#3b82f6; color:white;"
-              onclick="saveMemo()">저장</button>
-
-      <button class="secondary" style="flex:1;" onclick="closeMemo()">닫기</button>
-
+      <button onclick="closeMemo()" class="secondary" style="flex:1;">
+        닫기
+      </button>
     </div>
+
   </div>
 </div>
-<script>
+
+  <script>
 /*******************************************************
  * PART 5 — 전체 안정화 및 UX 개선
  *******************************************************/
 
-/* ===============================
-   1) 로딩 스피너 표시
-=============================== */
+/* ====================================================
+   1) 로딩 스피너 (문제 로딩/FireStore 로딩 시 표시)
+==================================================== */
 function showLoading(msg = "로딩 중...") {
-  if (!document.getElementById("loadingOverlay")) {
-    const div = document.createElement("div");
-    div.id = "loadingOverlay";
-    div.style = `
+  let box = document.getElementById("loadingOverlay");
+  if (!box) {
+    box = document.createElement("div");
+    box.id = "loadingOverlay";
+    box.style = `
       position:fixed; inset:0; background:rgba(0,0,0,0.55);
       display:flex; align-items:center; justify-content:center;
       color:white; font-size:18px; z-index:999999;
     `;
-    div.innerHTML = `
+    box.innerHTML = `
       <div style="text-align:center;">
         <div class="spinner"
              style="border:4px solid #ddd; border-top:4px solid #3b82f6;
                     width:40px; height:40px; border-radius:50%;
-                    margin:auto; animation:spin 1s linear infinite;"></div>
+                    margin:auto; animation:spin 1s linear infinite;">
+        </div>
         <div style="margin-top:10px;">${msg}</div>
       </div>`;
-    document.body.appendChild(div);
+    document.body.appendChild(box);
   } else {
-    document.getElementById("loadingOverlay").style.display = "flex";
+    box.querySelector("div div:last-child").textContent = msg;
+    box.style.display = "flex";
   }
 }
 
 function hideLoading() {
-  const el = document.getElementById("loadingOverlay");
-  if (el) el.style.display = "none";
+  const box = document.getElementById("loadingOverlay");
+  if (box) box.style.display = "none";
 }
 
-const styleSpin = document.createElement("style");
-styleSpin.innerHTML = `
-@keyframes spin { 0% {transform:rotate(0deg);} 100% {transform:rotate(360deg);} }
-`;
-document.head.appendChild(styleSpin);
+const spinStyle = document.createElement("style");
+spinStyle.innerHTML = `
+@keyframes spin { 
+  0% {transform:rotate(0deg);} 
+  100% {transform:rotate(360deg);} 
+}`;
+document.head.appendChild(spinStyle);
 
 
-/* ===============================
-   2) JSON 문제파일 오류 처리
-=============================== */
+/* ====================================================
+   2) JSON 문제파일 안전 로딩(Fallback)
+==================================================== */
 async function safeFetchJSON(url) {
   try {
     const r = await fetch(url);
-    if (!r.ok) throw new Error("파일 없음");
+    if (!r.ok) throw new Error("404");
     return await r.json();
   } catch (e) {
-    console.warn("⚠ 문제파일 로딩 실패:", url);
+    console.warn("⚠ JSON 로드 실패:", url);
     return null; // 건너뛰기
   }
 }
 
 
-/* ===============================
-   3) 문제 렌더링 후 자동 스크롤
-=============================== */
-function smoothScrollToTop() {
+/* ====================================================
+   3) 문제 렌더링 후 자동 스크롤(UX)
+==================================================== */
+function scrollTopSmooth() {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 
-/* ===============================
-   4) 제출 후 선택지 시각 강조
-=============================== */
+/* ====================================================
+   4) 제출 후 선택지 강조 색상
+==================================================== */
 function highlightAnswers() {
   const blocks = document.querySelectorAll(".question-block");
-  blocks.forEach((b, i) => {
-    const radios = b.querySelectorAll("input[type=radio]");
-    const q = currentQuiz[i];
+  blocks.forEach((blk, idx) => {
+    const q = currentQuiz[idx];
+    const radios = blk.querySelectorAll("input[type=radio]");
 
     radios.forEach(r => {
-      const idx = Number(r.value);
-      if (idx === q.answer) {
-        r.parentElement.style.color = "#16a34a"; // 초록색 정답
+      const v = Number(r.value);
+      if (v === q.answer) {
+        r.parentElement.style.color = "#16a34a";
         r.parentElement.style.fontWeight = "bold";
       } else {
-        r.parentElement.style.color = "#dc2626aa"; // 연한 빨강
+        r.parentElement.style.color = "#dc2626aa";
       }
     });
   });
 }
 
 
-/* ===============================
-   5) 메모 모달 부드러운 애니메이션
-=============================== */
+/* ====================================================
+   5) 메모 모달 애니메이션
+==================================================== */
 function openMemo(qid) {
-  const box = document.getElementById("memoQuestId");
   const modal = document.getElementById("memoModal");
   const input = document.getElementById("memoInput");
+  const label = document.getElementById("memoQuestionId");
 
-  box.textContent = qid;
-  input.value = MEMO[qid] || "";
+  input.value = memoCache[qid] || "";
+  label.textContent = "문제 ID: " + qid;
+  modal.dataset.qid = qid;
 
   modal.style.display = "flex";
   modal.style.opacity = 0;
-  setTimeout(() => modal.style.opacity = 1, 20);
+  setTimeout(() => (modal.style.opacity = 1), 20);
 }
 
 function closeMemo() {
   const modal = document.getElementById("memoModal");
   modal.style.opacity = 0;
-  setTimeout(() => modal.style.display = "none", 200);
+  setTimeout(() => (modal.style.display = "none"), 200);
 }
 
 
-/* ===============================
-   6) 2단 보기(영/한) 전환 애니메이션
-=============================== */
+/* ====================================================
+   6) 2단 보기 전환 시 fade 효과
+==================================================== */
 document.getElementById("dualViewToggle").addEventListener("change", () => {
   const qb = document.getElementById("quizBox");
   qb.style.opacity = 0;
+
   setTimeout(() => {
     dualView = !dualView;
     if (currentQuiz.length) renderQuiz();
@@ -881,57 +982,68 @@ document.getElementById("dualViewToggle").addEventListener("change", () => {
 });
 
 
-/* ===============================
-   7) 번역 캐싱 (속도 향상)
-=============================== */
+/* ====================================================
+   7) 번역 캐싱 속도 개선
+==================================================== */
 const TRANS_CACHE = {};
 
-function cachedTranslate(text) {
-  if (TRANS_CACHE[text]) return TRANS_CACHE[text];
-  const t = translateSentence(text);
-  TRANS_CACHE[text] = t;
-  return t;
+function cachedTranslateSentence(t) {
+  if (TRANS_CACHE[t]) return TRANS_CACHE[t];
+  const v = translateSentence(t);
+  TRANS_CACHE[t] = v;
+  return v;
 }
 
 
-/* ===============================
-   8) Firebase 실패 시 fallback
-=============================== */
-async function safeSyncFromCloud() {
+/* ====================================================
+   8) Firestore 실패 시 fallback 처리
+==================================================== */
+async function safeLoadFromCloud() {
   try {
-    await syncFromCloud();
+    await loadWrongNotesFromCloud();
+    await loadScoreHistoryFromCloud();
+    await loadFavorites();
+    await loadAllMemos();
   } catch (e) {
-    alert("⚠ 클라우드 연결 실패 → 로컬 데이터만 사용합니다.");
+    alert("⚠ Firestore 로딩 실패 → 오프라인 모드로 동작합니다.");
   }
 }
 
-async function safeSyncToCloud() {
+async function safeSaveWrong() {
   try {
-    await syncToCloud();
+    await saveWrongNotesToCloud();
   } catch (e) {
-    alert("⚠ 클라우드 저장 실패 → 인터넷 상태 확인 필요");
+    alert("⚠ 오답 저장 실패 → 인터넷 확인 필요");
+  }
+}
+
+async function safeSaveScore() {
+  try {
+    await saveScoreHistoryToCloud();
+  } catch (e) {
+    alert("⚠ 점수 저장 실패 → 인터넷 확인 필요");
   }
 }
 
 
-/* ===============================
-   9) 앱 로딩 시 진입 과정
-=============================== */
+/* ====================================================
+   9) 전체 초기화 루틴
+==================================================== */
 async function initializeApp() {
   showLoading("문제 불러오는 중...");
 
-  await loadBaseQuestions();
-  await autoLoadQuestionFiles();
-  mergeQuestions();
-  buildChapterList();
+  await loadBaseQuestions();       // 기본 문제 로드
+  await autoLoadQuestionFiles();   // questions/*.json 자동 스캔
+  mergeQuestions();                // 병합 전체 문제풀
+  buildChapterList();              // 챕터 목록 UI
 
   hideLoading();
 }
 
 
-/* ===============================
-   10) START after DOM READY
-=============================== */
+/* ====================================================
+   10) DOM 로딩 완료 → 시스템 시작
+==================================================== */
 window.addEventListener("DOMContentLoaded", async () => {
   await initializeApp();
 });
