@@ -1,0 +1,605 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CRE Practice CBT</title>
+<style>
+  body { font-family: Arial, system-ui, sans-serif; margin: 0; padding: 0; background:#f2f4f7; }
+  .container { max-width: 1100px; margin: 20px auto; background:#fff; border-radius:10px; padding:20px 24px 40px;
+               box-shadow:0 4px 12px rgba(0,0,0,0.08); display:none; }
+  h1 { margin-top:0; }
+  .controls { display:flex; flex-wrap:wrap; gap:12px; margin-bottom:16px; padding:12px; background:#f7f9fc; border-radius:8px; }
+  .controls > div { min-width: 180px; }
+  label { font-size:14px; font-weight:600; display:block; margin-bottom:4px; }
+  select, input[type="number"], input[type="text"], textarea { width:100%; padding:6px 8px; font-size:14px; box-sizing:border-box; }
+  button { padding:8px 14px; font-size:14px; cursor:pointer; border-radius:6px; border:1px solid #1f6feb; background:#1f6feb; color:#fff; }
+  button.secondary { background:#fff; color:#1f2933; border-color:#cbd2e1; }
+  button.danger { background:#e11d48; border-color:#e11d48; color:#fff; }
+  button:disabled { opacity:0.6; cursor:not-allowed; }
+  #timer { font-size:18px; font-weight:bold; color:#e11d48; }
+  .question-block { margin-bottom:20px; padding-bottom:12px; border-bottom:1px solid #e5e7eb; }
+  .question-title { font-weight:bold; margin-bottom:8px; }
+  .meta { font-size:12px; color:#6b7280; margin-bottom:4px; }
+  .question-block.dual { display:flex; gap:16px; }
+  .q-left, .q-right { width:50%; box-sizing:border-box; }
+  .q-right { border-left:1px solid #e5e7eb; padding-left:14px; font-size:13px; color:#374151; }
+  .ko-header { font-weight:bold; margin-bottom:4px; font-size:13px; color:#111827; }
+  .ko-label { font-size:12px; font-weight:bold; color:#4b5563; margin-top:4px; }
+  .ko-option { font-size:13px; margin:3px 0; }
+  @media (max-width: 900px){
+    .question-block.dual{ flex-direction:column; }
+    .q-left,.q-right{ width:100%; }
+    .q-right{ border-left:none; border-top:1px solid #e5e7eb; padding-left:0; padding-top:8px; }
+  }
+  #resultBox { margin-top:24px; padding:16px; border-radius:8px; background:#ecfeff; border:1px solid #7dd3fc; }
+  .tag { display:inline-block; font-size:11px; padding:1px 6px; border-radius:999px; margin-left:4px; background:#e5e7eb; }
+  .tag.A { background:#dbeafe; } .tag.C { background:#fef3c7; }
+  .panel-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:20px; }
+  .panel { flex:1; min-width:260px; background:#f9fafb; border-radius:8px; padding:10px 12px; border:1px solid #e5e7eb;
+           max-height:300px; overflow:auto; }
+  .panel h3 { margin-top:0; font-size:15px; }
+  /* Gate */
+  #gateOverlay { position:fixed; inset:0; background:rgba(15,23,42,0.92); display:flex; align-items:center; justify-content:center; z-index:9999; }
+  #gateBox { background:#f9fafb; padding:24px 26px; width:320px; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.4); }
+  #gateMessage { font-size:12px; height:16px; color:#dc2626; margin-top:6px; }
+</style>
+</head>
+<body>
+<!-- Gate -->
+<div id="gateOverlay">
+  <div id="gateBox">
+    <h2>CRE 연습 사이트</h2>
+    <p style="font-size:13px;color:#4b5563;">비밀번호를 입력하세요.</p>
+    <input type="password" id="gatePassword" placeholder="비밀번호" />
+    <div id="gateMessage"></div>
+    <button id="gateBtn">입장</button>
+  </div>
+</div>
+
+<div class="container" id="appContainer">
+  <h1>CRE Practice CBT</h1>
+  <p style="font-size:13px;color:#4b5563;">PC · 모바일 완전 동기화 시험 시스템</p>
+
+  <!-- Firebase SDK (v8) -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+  <script>
+    /*******************************************************
+     * Config + Firebase init
+     *******************************************************/
+    const APP_PASSWORD = "cre2025";
+    const firebaseConfig = {
+      apiKey: "AIzaSyBYrsPIpbP7wBMJk8QrU9vUtF0JDhfn2C4",
+      authDomain: "rd-cre-cbt-sync.firebaseapp.com",
+      projectId: "rd-cre-cbt-sync",
+      storageBucket: "rd-cre-cbt-sync.firebasestorage.app",
+      messagingSenderId: "1085101263930",
+      appId: "1:1085101263930:web:06d1339169b431b63e3903"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Single shared deviceId for full sync across devices
+    const deviceId = "CRE_MASTER_DEVICE";
+    const userPath = () => `users/${deviceId}`;
+  </script>
+
+  <script>
+    /*******************************************************
+     * Translator (pattern-based)
+     *******************************************************/
+    function translateTech(text) {
+      if (!text) return "";
+      let out = text;
+      const dict = {
+        "reliability": "신뢰도",
+        "failure rate": "고장률",
+        "hazard rate": "위험률",
+        "MTBF": "평균고장간격(MTBF)",
+        "MTTR": "평균수리시간(MTTR)",
+        "exponential distribution": "지수분포",
+        "weibull distribution": "와이블 분포",
+        "weibull": "와이블 분포",
+        "availability": "가용도",
+        "preventive maintenance": "예방정비"
+      };
+      for (const [en, ko] of Object.entries(dict)) {
+        const reg = new RegExp(en, "gi");
+        out = out.replace(reg, `${ko} (${en})`);
+      }
+      return out;
+    }
+    function translateSentence(text) {
+      if (!text) return "";
+      let t = text;
+      t = t.replace(/Which of the following/gi, "다음 중");
+      t = t.replace(/Which is NOT/gi, "다음 중 옳지 않은 것은");
+      t = t.replace(/What is/gi, "무엇은");
+      t = t.replace(/\?/g, "인가?");
+      return t;
+    }
+  </script>
+
+  <script>
+    /*******************************************************
+     * Questions: base + auto-load (question-list.json)
+     *******************************************************/
+    let BASE_QUESTIONS = [];
+    let CUSTOM_QUESTIONS = [];
+    let MERGED_QUESTIONS = [];
+
+    async function loadBaseQuestions() {
+      BASE_QUESTIONS = [
+        { id: "Q1", chapter: "Sample", type: "C",
+          text: "For an exponential distribution with MTBF = 800 hours, what is the reliability at 400 hours?",
+          options: ["0.50","0.61","0.37","0.80"], answer: 1,
+          explanation: "R(t) = exp(-t/MTBF) = exp(-0.5) = 0.606" },
+        { id: "Q2", chapter: "Sample", type: "A",
+          text: "In a Weibull distribution, what does a shape parameter β greater than 1 indicate?",
+          options: ["Early failures","Wear-out failures","Constant failure rate","Random failures"], answer: 1,
+          explanation: "β > 1 → wear-out region" }
+      ];
+    }
+
+    async function autoLoadQuestionFiles() {
+      CUSTOM_QUESTIONS = [];
+      try {
+        const res = await fetch("./questions/question-list.json");
+        if (!res.ok) throw new Error("no list");
+        const list = await res.json(); // ["sample-set.json", ...]
+        for (const file of list) {
+          try {
+            const r = await fetch("./questions/" + file);
+            if (!r.ok) continue;
+            const arr = await r.json();
+            if (Array.isArray(arr)) CUSTOM_QUESTIONS.push(...arr);
+          } catch (e) { console.warn("파일 로드 실패:", file); }
+        }
+      } catch (e) {
+        console.warn("question-list.json 없음 → custom 문제 0개");
+      }
+    }
+
+    function mergeQuestions() {
+      MERGED_QUESTIONS = [...BASE_QUESTIONS, ...CUSTOM_QUESTIONS];
+      console.log("전체 문제:", MERGED_QUESTIONS.length);
+    }
+
+    function buildChapterList() {
+      const chapters = new Set(["전체"]);
+      MERGED_QUESTIONS.forEach(q => chapters.add(q.chapter));
+      let html = "";
+      chapters.forEach(c => html += `<option value="${c}">${c}</option>`);
+      document.getElementById("chapterSelect").innerHTML = html;
+    }
+
+    function buildKoreanPanel(q, idx) {
+      return `
+        <div class="ko-header">Q${idx + 1} — 한글 번역</div>
+        <div class="ko-label">기술 번역</div>
+        <div>${translateTech(q.text)}</div>
+        <div class="ko-label" style="margin-top:6px;">문장 번역</div>
+        <div>${translateSentence(q.text)}</div>
+        <div class="ko-label" style="margin-top:6px;">보기 번역</div>
+        ${q.options.map((op, i)=>`
+          <div class="ko-option"><b>${String.fromCharCode(65+i)}.</b> ${translateTech(op)}</div>
+        `).join("")}
+      `;
+    }
+  </script>
+
+<script>
+  /*******************************************************
+   * Cloud state (wrong notes / scores / favorites / memos)
+   *******************************************************/
+  let wrongNotes = [];
+  let scoreHistory = [];
+  let favoriteMap = {};
+  let memoCache = {};
+
+  async function loadWrongNotesFromCloud() {
+    wrongNotes = [];
+    const snap = await db.collection(`${userPath()}/wrongNotes`).get();
+    snap.forEach(doc => wrongNotes.push(doc.data()));
+  }
+  async function loadScoreHistoryFromCloud() {
+    scoreHistory = [];
+    const snap = await db.collection(`${userPath()}/scores`).get();
+    snap.forEach(doc => scoreHistory.push(doc.data()));
+  }
+  async function loadFavorites() {
+    favoriteMap = {};
+    const snap = await db.collection(`${userPath()}/favorites`).get();
+    snap.forEach(doc => favoriteMap[doc.id] = true);
+  }
+  async function loadAllMemos() {
+    memoCache = {};
+    const snap = await db.collection(`${userPath()}/notes`).get();
+    snap.forEach(doc => { memoCache[doc.id] = doc.data().memo; });
+  }
+
+  async function saveWrongNotesToCloud() {
+    const batch = db.batch();
+    wrongNotes.forEach(w => {
+      const ref = db.collection(`${userPath()}/wrongNotes`).doc(w.id);
+      batch.set(ref, w);
+    });
+    await batch.commit();
+  }
+  async function saveScoreHistoryToCloud() {
+    const batch = db.batch();
+    scoreHistory.forEach(s => {
+      const key = s.date.replace(/[ :]/g, "_");
+      const ref = db.collection(`${userPath()}/scores`).doc(key);
+      batch.set(ref, s);
+    });
+    await batch.commit();
+  }
+  async function clearWrongNotes() {
+    const col = db.collection(`${userPath()}/wrongNotes`);
+    const snap = await col.get();
+    const batch = db.batch();
+    snap.forEach(d => batch.delete(d.ref));
+    await batch.commit();
+    wrongNotes = [];
+    renderWrongNotes();
+  }
+  async function clearScoreHistory() {
+    const col = db.collection(`${userPath()}/scores`);
+    const snap = await col.get();
+    const batch = db.batch();
+    snap.forEach(d => batch.delete(d.ref));
+    await batch.commit();
+    scoreHistory = [];
+    renderScoreHistory();
+  }
+
+  async function toggleFavorite(q) {
+    const ref = db.collection(`${userPath()}/favorites`).doc(q.id);
+    if (favoriteMap[q.id]) {
+      await ref.delete(); delete favoriteMap[q.id];
+    } else {
+      await ref.set({ id:q.id, text:q.text, chapter:q.chapter, type:q.type, star:true });
+      favoriteMap[q.id] = true;
+    }
+    renderQuiz();
+  }
+
+  async function saveMemoContents(qid, memoText) {
+    memoCache[qid] = memoText;
+    await db.collection(`${userPath()}/notes`).doc(qid).set({
+      id: qid, memo: memoText, updateTime: new Date().toLocaleString()
+    });
+  }
+
+  function renderWrongNotes() {
+    const box = document.getElementById("wrongNotesBox");
+    if (!wrongNotes.length) { box.innerHTML = '<div style="font-size:12px;color:#888;">오답 없음</div>'; return; }
+    box.innerHTML = wrongNotes.map(n => `
+      <div class="note-item">
+        <b>${n.id}</b> <span class="tag ${n.type}">${n.type}</span>
+        <div>${n.text}</div>
+        <div style="font-size:11px;color:#666;">${n.chapter} · ${n.missCount}회 · ${n.lastDate}</div>
+      </div>
+    `).join("");
+  }
+
+  function renderScoreHistory() {
+    const box = document.getElementById("scoreHistoryBox");
+    if (!scoreHistory.length) { box.innerHTML = '<div style="font-size:12px;color:#888;">기록 없음</div>'; return; }
+    box.innerHTML = scoreHistory.slice().reverse().map(h => `
+      <div class="score-item">
+        <b>${h.date}</b> — ${h.correct}/${h.total} (${Math.round((h.correct/h.total)*100)}%)
+      </div>
+    `).join("");
+  }
+</script>
+
+<script>
+  /*******************************************************
+   * Quiz rendering + modes
+   *******************************************************/
+  let currentQuiz = [];
+  let dualView = false;
+
+  function renderQuiz() {
+    const box = document.getElementById("quizBox");
+    box.innerHTML = "";
+    currentQuiz.forEach((q, idx) => {
+      const star = favoriteMap[q.id] ? "⭐" : "☆";
+      const starColor = favoriteMap[q.id] ? "color:#fbbf24;" : "color:#94a3b8;";
+      const starBtn = `<span style="float:right; font-size:20px; cursor:pointer; ${starColor}" onclick="toggleFavorite(currentQuiz[${idx}])">${star}</span>`;
+      const memoBtn = `<span style="float:right; margin-right:8px; cursor:pointer; font-size:18px; color:#3b82f6;" onclick="openMemo('${q.id}')">📝</span>`;
+
+      if (!dualView) {
+        let html = \`
+          <div class="question-block">
+            \${starBtn} \${memoBtn}
+            <div class="question-title">Q\${idx + 1}. \${q.text}</div>
+            <div class="meta">\${q.id} · \${q.chapter} · \${q.type}</div>\`;
+        q.options.forEach((op, j) => {
+          html += \`
+            <div class="option">
+              <label><input type="radio" name="q\${idx}" value="\${j}"> \${String.fromCharCode(65 + j)}. \${op}</label>
+            </div>\`;
+        });
+        html += \`</div>\`;
+        box.innerHTML += html;
+        return;
+      }
+
+      // 2-pane
+      let left = \`
+        <div class="q-left">
+          \${starBtn} \${memoBtn}
+          <div class="question-title">Q\${idx + 1}. \${q.text}</div>
+          <div class="meta">\${q.id} · \${q.chapter} · \${q.type}</div>\`;
+      q.options.forEach((op, j) => {
+        left += \`
+          <div class="option">
+            <label><input type="radio" name="q\${idx}" value="\${j}"> \${String.fromCharCode(65 + j)}. \${op}</label>
+          </div>\`;
+      });
+      left += \`</div>\`;
+      const right = \`<div class="q-right">\${buildKoreanPanel(q, idx)}</div>\`;
+      box.innerHTML += \`<div class="question-block dual">\${left}\${right}</div>\`;
+    });
+  }
+
+  function buildQuestionPool() {
+    const ch = document.getElementById("chapterSelect").value;
+    const tp = document.getElementById("typeSelect").value;
+    const mode = document.getElementById("modeSelect").value;
+    let list = MERGED_QUESTIONS;
+    if (ch !== "전체") list = list.filter(q => q.chapter === ch);
+    if (tp !== "all") list = list.filter(q => q.type === tp);
+    if (mode === "favorite") {
+      const fav = new Set(Object.keys(favoriteMap));
+      list = list.filter(q => fav.has(q.id));
+    }
+    if (mode === "wrong") {
+      const wrongIds = new Set(wrongNotes.map(n => n.id));
+      list = list.filter(q => wrongIds.has(q.id));
+    }
+    return list;
+  }
+</script>
+
+<script>
+  /*******************************************************
+   * Timer + Start/Submit/Reset
+   *******************************************************/
+  let timerId = null;
+  let timerSec = 0;
+
+  function startTimer(sec) {
+    timerSec = sec; updateTimerUI();
+    if (timerId) clearInterval(timerId);
+    timerId = setInterval(() => {
+      timerSec--; updateTimerUI();
+      if (timerSec <= 0) { clearInterval(timerId); alert("시간 종료! 자동 제출합니다."); submitQuiz(); }
+    }, 1000);
+  }
+  function updateTimerUI() {
+    const el = document.getElementById("timer");
+    if (timerSec <= 0) { el.textContent = "Timer: OFF"; return; }
+    const m = String(Math.floor(timerSec / 60)).padStart(2, "0");
+    const s = String(timerSec % 60).padStart(2, "0");
+    el.textContent = \`남은 시간: \${m}:\${s}\`;
+  }
+
+  function startQuiz() {
+    const pool = buildQuestionPool();
+    if (!pool.length) { alert("출제할 문제가 없습니다."); return; }
+    const count = Number(document.getElementById("countInput").value);
+    const tm = Number(document.getElementById("timerInput").value);
+    const shuffled = pool.sort(() => Math.random() - 0.5);
+    currentQuiz = shuffled.slice(0, count);
+    renderQuiz();
+    document.getElementById("resultBox").innerHTML = "";
+    document.getElementById("submitBtn").disabled = false;
+    document.getElementById("resetBtn").disabled = false;
+    if (tm > 0) startTimer(tm * 60);
+  }
+
+  function submitQuiz() {
+    if (!currentQuiz.length) return;
+    if (timerId) clearInterval(timerId);
+    let correct = 0; const wrongArr = [];
+    let html = "";
+    currentQuiz.forEach((q, idx) => {
+      const sel = document.querySelector(\`input[name="q\${idx}"]:checked\`);
+      const ans = sel ? Number(sel.value) : null;
+      const ok = ans === q.answer;
+      if (ok) correct++; else wrongArr.push(q);
+      html += \`
+        <div style="margin-bottom:12px;">
+          <b>Q\${idx + 1} (\${q.id})</b><br>
+          선택: \${ans === null ? "무응답" : \`\${String.fromCharCode(65 + ans)}. \${q.options[ans]}\`}<br>
+          정답: <span style="color:\${ok ? '#16a34a' : '#dc2626'}">\${String.fromCharCode(65 + q.answer)}. \${q.options[q.answer]}</span>
+          <div class="explanation">\${q.explanation || ""}</div>
+        </div>\`;
+    });
+    const pct = Math.round((correct / currentQuiz.length) * 100);
+    document.getElementById("resultBox").innerHTML = \`<h3>점수: \${correct}/\${currentQuiz.length} (\${pct}%)</h3>\` + html;
+    saveWrong(wrongArr);
+    saveScore(correct, currentQuiz.length);
+    renderWrongNotes();
+    renderScoreHistory();
+  }
+
+  function saveWrong(arr) {
+    const now = new Date().toLocaleString();
+    arr.forEach(q => {
+      const exist = wrongNotes.find(n => n.id === q.id);
+      if (exist) { exist.missCount++; exist.lastDate = now; }
+      else {
+        wrongNotes.push({ id:q.id, text:q.text, chapter:q.chapter, type:q.type, missCount:1, lastDate:now });
+      }
+    });
+    saveWrongNotesToCloud();
+  }
+
+  function saveScore(correct, total) {
+    scoreHistory.push({ date: new Date().toLocaleString(), correct, total });
+    saveScoreHistoryToCloud();
+  }
+
+  function resetQuiz() {
+    if (timerId) clearInterval(timerId);
+    currentQuiz = [];
+    document.getElementById("quizBox").innerHTML = "";
+    document.getElementById("resultBox").innerHTML = "";
+    document.getElementById("submitBtn").disabled = true;
+    document.getElementById("resetBtn").disabled = true;
+    document.getElementById("timer").textContent = "Timer: OFF";
+  }
+</script>
+
+<!-- Controls -->
+<div class="controls">
+  <div>
+    <label>챕터 선택</label>
+    <select id="chapterSelect"><option>전체</option></select>
+  </div>
+  <div>
+    <label>문제 유형</label>
+    <select id="typeSelect">
+      <option value="all">전체</option><option value="A">A형</option><option value="C">C형</option>
+    </select>
+  </div>
+  <div>
+    <label>모드</label>
+    <select id="modeSelect">
+      <option value="normal">일반 출제</option>
+      <option value="wrong">오답 집중</option>
+      <option value="favorite">즐겨찾기만</option>
+    </select>
+  </div>
+  <div>
+    <label>출제 문제 수</label>
+    <input id="countInput" type="number" value="20" min="1" />
+  </div>
+  <div>
+    <label>타이머(분)</label>
+    <input id="timerInput" type="number" value="0" min="0" />
+  </div>
+  <div style="display:flex; align-items:flex-end;"><button id="startBtn">시험 시작</button></div>
+  <div style="display:flex; align-items:flex-end;"><button id="submitBtn" disabled>제출</button></div>
+  <div style="display:flex; align-items:flex-end;"><button id="resetBtn" disabled class="secondary">초기화</button></div>
+  <div style="display:flex; align-items:flex-end; gap:6px;">
+    <label style="margin:0;">2단 보기</label>
+    <input type="checkbox" id="dualViewToggle" style="zoom:1.4; margin-left:4px;">
+  </div>
+</div>
+
+<div id="timer" style="font-weight:bold; margin-bottom:10px;">Timer: OFF</div>
+<div id="quizBox"></div>
+<div id="resultBox"></div>
+
+<div class="panel-row">
+  <div class="panel">
+    <h3>오답 노트</h3>
+    <div id="wrongNotesBox"></div>
+    <button class="danger" style="margin-top:6px;" onclick="clearWrongNotes()">오답 삭제</button>
+  </div>
+  <div class="panel">
+    <h3>점수 기록</h3>
+    <div id="scoreHistoryBox"></div>
+    <button class="danger" style="margin-top:6px;" onclick="clearScoreHistory()">기록 삭제</button>
+  </div>
+</div>
+
+<!-- Memo Modal -->
+<div id="memoModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); align-items:center; justify-content:center; z-index:99999;">
+  <div style="background:white; width:340px; padding:20px; border-radius:10px;">
+    <h3 id="memoQuestionId" style="margin-top:0; font-size:16px;"></h3>
+    <textarea id="memoInput" style="width:100%; height:140px; padding:8px; font-size:14px;"></textarea>
+    <div style="margin-top:12px; display:flex; gap:8px;">
+      <button onclick="saveMemo()" style="flex:1; background:#3b82f6; border-color:#3b82f6; color:white;">저장</button>
+      <button onclick="document.getElementById('memoModal').style.display='none'" class="secondary" style="flex:1;">닫기</button>
+    </div>
+  </div>
+</div>
+
+  <script>
+    /*******************************************************
+     * UX helpers
+     *******************************************************/
+    function showLoading(msg = "로딩 중...") {
+      let box = document.getElementById("loadingOverlay");
+      if (!box) {
+        box = document.createElement("div");
+        box.id = "loadingOverlay";
+        box.style = "position:fixed; inset:0; background:rgba(0,0,0,0.55); display:flex; align-items:center; justify-content:center; color:white; font-size:18px; z-index:999999;";
+        box.innerHTML = \`
+          <div style="text-align:center;">
+            <div class="spinner" style="border:4px solid #ddd; border-top:4px solid #3b82f6; width:40px; height:40px; border-radius:50%; margin:auto; animation:spin 1s linear infinite;"></div>
+            <div style="margin-top:10px;">\${msg}</div>
+          </div>\`;
+        document.body.appendChild(box);
+      } else {
+        box.querySelector("div div:last-child").textContent = msg;
+        box.style.display = "flex";
+      }
+    }
+    function hideLoading(){ const box = document.getElementById("loadingOverlay"); if (box) box.style.display = "none"; }
+    const spinStyle = document.createElement("style"); spinStyle.innerHTML = "@keyframes spin {0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}"; document.head.appendChild(spinStyle);
+
+    async function initializeApp() {
+      showLoading("문제 불러오는 중...");
+      await loadBaseQuestions();
+      await autoLoadQuestionFiles();
+      mergeQuestions();
+      buildChapterList();
+      hideLoading();
+    }
+
+    function wireUI() {
+      document.getElementById("startBtn").addEventListener("click", startQuiz);
+      document.getElementById("submitBtn").addEventListener("click", submitQuiz);
+      document.getElementById("resetBtn").addEventListener("click", resetQuiz);
+      document.getElementById("dualViewToggle").addEventListener("change", () => {
+        const qb = document.getElementById("quizBox");
+        qb.style.opacity = 0;
+        setTimeout(() => { dualView = !dualView; if (currentQuiz.length) renderQuiz(); qb.style.opacity = 1; }, 200);
+      });
+    }
+
+    function setupGate() {
+      const overlay = document.getElementById("gateOverlay");
+      const app = document.getElementById("appContainer");
+      const input = document.getElementById("gatePassword");
+      const msg = document.getElementById("gateMessage");
+      const btn = document.getElementById("gateBtn");
+
+      async function enter() {
+        if (input.value === APP_PASSWORD) {
+          overlay.style.display = "none";
+          app.style.display = "block";
+          await initializeApp();
+          await loadWrongNotesFromCloud();
+          await loadScoreHistoryFromCloud();
+          await loadFavorites();
+          await loadAllMemos();
+          renderWrongNotes();
+          renderScoreHistory();
+          wireUI();
+        } else {
+          msg.textContent = "비밀번호가 올바르지 않습니다.";
+        }
+      }
+      btn.addEventListener("click", enter);
+      input.addEventListener("keydown", (e)=>{ if (e.key === "Enter") enter(); });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      setupGate();
+    });
+  </script>
+</div><!-- /container -->
+</body>
+</html>
