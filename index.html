@@ -411,22 +411,46 @@ function buildChapterList() {
 }
 
 function buildKoreanPanel(q, idx) {
-  return `
-    <div class="ko-header">Q${idx + 1} — 한글 번역</div>
-    <div class="ko-label">기술 번역</div>
-    <div>${translateTech(q.text)}</div>
-    <div class="ko-label" style="margin-top:6px;">문장 번역</div>
-    <div>${translateSentence(q.text)}</div>
-    <div class="ko-label" style="margin-top:6px;">보기 번역</div>
-    ${
-      q.options.map((op, i) => `
-        <div class="ko-option">
-          <b>${String.fromCharCode(65 + i)}.</b> ${translateTech(op)}
-        </div>
-      `).join("")
-    }
-  `;
-}
+    // 1) 문제 문장
+    const textKo =
+      q.text_ko || q.koreanText || null;   // 다양한 키 이름 허용
+    const sentenceKo = textKo || translateSentence(q.text);
+
+    // 2) 보기
+    const optionsKo =
+      q.options_ko || q.koreanOptions || null;
+
+    // 3) 해설
+    const explKo =
+      q.explanation_ko || q.koreanExplanation || "";
+
+    return `
+      <div class="ko-header">Q${idx + 1} — 한글 번역</div>
+
+      <div class="ko-label">문장 번역</div>
+      <div>${sentenceKo}</div>
+
+      <div class="ko-label" style="margin-top:6px;">보기 번역</div>
+      ${
+        q.options.map((op, i) => {
+          const koOpt = optionsKo && optionsKo[i]
+            ? optionsKo[i]
+            : translateTech(op);
+          return `
+            <div class="ko-option">
+              <b>${String.fromCharCode(65 + i)}.</b> ${koOpt}
+            </div>`;
+        }).join("")
+      }
+
+      ${
+        explKo
+          ? `<div class="ko-label" style="margin-top:6px;">해설 (한글)</div>
+             <div class="ko-option">${explKo}</div>`
+          : ""
+      }
+    `;
+  }
 
 /*******************************************************
  * Cloud state (wrong notes / scores / favorites / memos)
