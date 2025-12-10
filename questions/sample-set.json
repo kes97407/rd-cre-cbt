@@ -1,0 +1,44 @@
+[
+  {
+    "id": "S1",
+    "chapter": "CRE Sample Test 1",
+    "type": "A",
+    "text": "Reliability growth testing is conducted primarily to:",
+    "options": [
+      "Eliminate design weaknesses",
+      "Improve MTTR",
+      "Verify production processes",
+      "Reduce warranty period"
+    ],
+    "answer": 0,
+    "explanation": "Growth testing iteratively finds and fixes design weaknesses."
+  },
+  {
+    "id": "S2_fix",
+    "chapter": "CRE Sample Test 1",
+    "type": "C",
+    "text": "For an exponential distribution with MTBF = 500 hours, what is the failure rate λ?",
+    "options": [
+      "0.002 h^-1",
+      "0.005 h^-1",
+      "0.001 h^-1",
+      "0.01 h^-1"
+    ],
+    "answer": 0,
+    "explanation": "λ = 1/MTBF = 1/500 = 0.002 h^-1."
+  },
+  {
+    "id": "S3",
+    "chapter": "Weibull Basics",
+    "type": "A",
+    "text": "If Weibull shape parameter β < 1, which phase is dominant?",
+    "options": [
+      "Infant mortality (early failures)",
+      "Random failures",
+      "Wear-out failures",
+      "Constant hazard"
+    ],
+    "answer": 0,
+    "explanation": "β<1 indicates decreasing hazard → early failures."
+  }
+]
